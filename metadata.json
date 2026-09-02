@@ -1,0 +1,6 @@
+{
+  "name": "Algorudix.Ai",
+  "description": "AI Development and Business Analyst company helping businesses build custom AI systems, extract data intelligence, automate processes, and engineer modern software.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
