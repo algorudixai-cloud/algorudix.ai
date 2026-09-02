@@ -7,6 +7,7 @@
 This contains everything you need to run your app locally.
 
 View your app in AI Studio: https://ai.studio/apps/6ebe1df4-9623-4894-b4a5-1e1da0acd653
+
 Live-link: https://algorudixai-cloud.github.io/algorudix.ai/
 
 ## Run Locally
