@@ -2,7 +2,6 @@
 export const AUTHORIZED_ADMIN_EMAIL = 'contact@algorudixai.com';
 export const ADMIN_SESSION_KEY = 'algorudix_admin_session';
 export const ADMIN_OTP_TEMP_KEY = 'algorudix_admin_otp_temp';
-export const MASTER_ADMIN_PASSCODE = '849201'; // Backup master passcode for instant verification
 
 export interface AdminSession {
   email: string;
@@ -32,7 +31,7 @@ export async function dispatchAdminOtpEmail(email: string, otp: string): Promise
     params.append('fullName', 'Algorudix Admin Security');
     params.append('company', 'Algorudix AI');
     params.append('service', 'Admin Security Authentication OTP');
-    params.append('details', `AUTHENTICATION OTP: [ ${otp} ]. Use this 6-digit OTP code to log in to the Algorudix Admin Panel. Valid for 5 minutes.`);
+    params.append('details', `AUTHENTICATION SECURITY CODE: [ ${otp} ]. Use this 6-digit OTP code to log in to the Algorudix Admin Panel. Valid for 5 minutes.`);
     params.append('otp', otp);
 
     await fetch(webhookUrl, {
@@ -52,7 +51,7 @@ export async function dispatchAdminOtpEmail(email: string, otp: string): Promise
 }
 
 /**
- * Generates a 6-digit OTP code for the authorized admin email and dispatches it.
+ * Generates a 6-digit OTP code for the authorized admin email and dispatches it via email.
  */
 export async function requestAdminOtp(email: string): Promise<{ success: boolean; message: string }> {
   if (!isAuthorizedAdminEmail(email)) {
@@ -77,28 +76,13 @@ export async function requestAdminOtp(email: string): Promise<{ success: boolean
     console.error('Error saving OTP to local storage:', e);
   }
 
-  // Dispatch email notification asynchronously
+  // Dispatch email notification to Zoho Mail inbox via webhook
   await dispatchAdminOtpEmail(email, generatedOtp);
 
   return {
     success: true,
-    message: `A 6-digit OTP security code has been dispatched to ${email}.`,
+    message: `A 6-digit OTP security code has been sent to ${email}. Please check your email inbox.`,
   };
-}
-
-/**
- * Retrieves active emergency OTP code for instant verification if Zoho email is delayed.
- */
-export function getEmergencyOtp(): string | null {
-  try {
-    const rawTemp = localStorage.getItem(ADMIN_OTP_TEMP_KEY);
-    if (!rawTemp) return null;
-    const payload = JSON.parse(rawTemp);
-    if (Date.now() > payload.expiresAt) return null;
-    return payload.otp || null;
-  } catch (e) {
-    return null;
-  }
 }
 
 /**
@@ -110,18 +94,6 @@ export function verifyAdminOtp(email: string, submittedOtp: string): { success: 
   }
 
   const cleanInput = submittedOtp.trim();
-
-  // Allow Master Admin Passcode
-  if (cleanInput === MASTER_ADMIN_PASSCODE) {
-    const session: AdminSession = {
-      email: AUTHORIZED_ADMIN_EMAIL,
-      isAuthenticated: true,
-      loginTime: Date.now(),
-    };
-    localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session));
-    localStorage.removeItem(ADMIN_OTP_TEMP_KEY);
-    return { success: true, message: 'Admin authentication successful via Master Key!' };
-  }
 
   try {
     const rawTemp = localStorage.getItem(ADMIN_OTP_TEMP_KEY);
@@ -136,7 +108,7 @@ export function verifyAdminOtp(email: string, submittedOtp: string): { success: 
     }
 
     if (payload.otp !== cleanInput) {
-      return { success: false, message: 'Incorrect OTP code. Please check your email or use Emergency Backup OTP.' };
+      return { success: false, message: 'Incorrect OTP code. Please check your email inbox and try again.' };
     }
 
     // Authenticated successfully! Create 24h admin session.

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { X, ShieldCheck, Mail, KeyRound, ArrowRight, AlertCircle, CheckCircle2, Loader2, Lock, Key, Zap } from 'lucide-react';
-import { AUTHORIZED_ADMIN_EMAIL, requestAdminOtp, verifyAdminOtp, getEmergencyOtp, MASTER_ADMIN_PASSCODE } from '../utils/adminAuth';
+import React, { useState } from 'react';
+import { X, ShieldCheck, Mail, KeyRound, ArrowRight, AlertCircle, CheckCircle2, Loader2, Lock } from 'lucide-react';
+import { AUTHORIZED_ADMIN_EMAIL, requestAdminOtp, verifyAdminOtp } from '../utils/adminAuth';
 
 interface AdminOtpModalProps {
   isOpen: boolean;
@@ -19,7 +19,6 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [activeCode, setActiveCode] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
@@ -36,9 +35,7 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
       if (!res.success) {
         setErrorMsg(res.message);
       } else {
-        const generated = getEmergencyOtp();
-        setActiveCode(generated);
-        setSuccessMsg(`OTP dispatched for ${email}. Enter code below or use 1-click Auto-Fill.`);
+        setSuccessMsg(res.message);
         setStep(2);
       }
     } catch (err) {
@@ -67,15 +64,9 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
           setStep(1);
           setOtpCode('');
           setEmail('');
-          setActiveCode(null);
         }, 500);
       }
     }, 600);
-  };
-
-  const handleAutoFillCode = () => {
-    const code = activeCode || getEmergencyOtp() || MASTER_ADMIN_PASSCODE;
-    setOtpCode(code);
   };
 
   return (
@@ -94,7 +85,7 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
               <h3 className="text-base font-bold text-white flex items-center gap-2">
                 Admin Authentication
               </h3>
-              <p className="text-xs text-slate-400">Secure OTP & Passcode Verification</p>
+              <p className="text-xs text-slate-400">Secure Email OTP Verification</p>
             </div>
           </div>
           <button 
@@ -159,7 +150,7 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
                     </>
                   ) : (
                     <>
-                      <span>Send 6-Digit OTP Code</span>
+                      <span>Send 6-Digit OTP to Email</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -172,14 +163,14 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
               
               <div>
                 <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
-                  Enter 6-Digit OTP Code or Master Passcode
+                  Enter 6-Digit OTP Code
                 </label>
                 <div className="relative">
                   <KeyRound className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     required
-                    maxLength={10}
+                    maxLength={6}
                     placeholder="123456"
                     value={otpCode}
                     onChange={(e) => setOtpCode(e.target.value)}
@@ -188,20 +179,9 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
                   />
                 </div>
 
-                <div className="mt-3 p-3 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2">
-                  <p className="text-[11px] text-slate-400">
-                    Dispatched to your admin email via Webhook. If email is delayed by Zoho spam filters:
-                  </p>
-
-                  <button
-                    type="button"
-                    onClick={handleAutoFillCode}
-                    className="w-full py-2 px-3 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <Zap className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>⚡ Auto-Fill Generated Security OTP</span>
-                  </button>
-                </div>
+                <p className="text-[11px] text-slate-400 mt-2">
+                  Please enter the 6-digit verification code sent to your email inbox.
+                </p>
               </div>
 
               <div className="flex items-center justify-between pt-2">
@@ -211,7 +191,6 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
                     setStep(1);
                     setErrorMsg('');
                     setSuccessMsg('');
-                    setActiveCode(null);
                   }}
                   className="text-xs text-slate-400 hover:text-white transition"
                 >
