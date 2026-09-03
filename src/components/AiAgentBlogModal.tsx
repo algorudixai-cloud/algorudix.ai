@@ -45,6 +45,9 @@ export const AiAgentBlogModal: React.FC<AiAgentBlogModalProps> = ({
 }) => {
   const [topic, setTopic] = useState('');
   const [category, setCategory] = useState<'AI & LLMs' | 'Business Intelligence' | 'Process Automation' | 'Data Engineering'>('AI & LLMs');
+  const [userApiKey, setUserApiKey] = useState(() => {
+    return localStorage.getItem('algorudix_gemini_api_key') || (import.meta as any).env?.VITE_GEMINI_API_KEY || '';
+  });
   const [isGenerating, setIsGenerating] = useState(false);
   const [step, setStep] = useState<number>(0);
 
@@ -53,6 +56,13 @@ export const AiAgentBlogModal: React.FC<AiAgentBlogModalProps> = ({
   const handlePresetSelect = (preset: typeof PRESET_TOPICS[0]) => {
     setTopic(preset.title);
     setCategory(preset.category);
+  };
+
+  const handleApiKeyChange = (val: string) => {
+    setUserApiKey(val);
+    try {
+      localStorage.setItem('algorudix_gemini_api_key', val);
+    } catch (e) {}
   };
 
   const handleGenerate = async () => {
@@ -64,7 +74,7 @@ export const AiAgentBlogModal: React.FC<AiAgentBlogModalProps> = ({
     setIsGenerating(true);
     setStep(1);
 
-    const apiKey = (import.meta as any).env?.VITE_GEMINI_API_KEY;
+    const apiKey = userApiKey.trim() || (import.meta as any).env?.VITE_GEMINI_API_KEY;
     let generatedContent = '';
     let usedModel = 'Google Gemini 2.5 Flash (Algorudix v3.6)';
 
@@ -244,6 +254,28 @@ Use clean markdown headers (#, ##, ###).`,
               <option value="Process Automation">Process Automation</option>
               <option value="Data Engineering">Data Engineering</option>
             </select>
+          </div>
+
+          {/* Optional Gemini API Key Field */}
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                Google Gemini API Key <span className="text-[10px] text-slate-500 font-normal">(Optional — Saved in Browser Memory)</span>
+              </label>
+              {userApiKey && (
+                <span className="text-[10px] text-emerald-400 font-mono flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" /> Key Active
+                </span>
+              )}
+            </div>
+            <input
+              type="password"
+              disabled={isGenerating}
+              placeholder="Paste AI Studio Gemini Key (AQ...)"
+              value={userApiKey}
+              onChange={(e) => handleApiKeyChange(e.target.value)}
+              className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-emerald-500"
+            />
           </div>
 
           {/* Live Progress Simulation */}
