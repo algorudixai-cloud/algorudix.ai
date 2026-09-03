@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { X, ShieldCheck, Mail, KeyRound, ArrowRight, AlertCircle, CheckCircle2, Loader2, Lock } from 'lucide-react';
-import { AUTHORIZED_ADMIN_EMAIL, requestAdminOtp, verifyAdminOtp } from '../utils/adminAuth';
+import { X, ShieldCheck, Mail, KeyRound, ArrowRight, AlertCircle, CheckCircle2, Loader2, Lock, Eye, Key } from 'lucide-react';
+import { AUTHORIZED_ADMIN_EMAIL, requestAdminOtp, verifyAdminOtp, getEmergencyOtp } from '../utils/adminAuth';
 
 interface AdminOtpModalProps {
   isOpen: boolean;
@@ -19,6 +19,8 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showBackupOtp, setShowBackupOtp] = useState(false);
+  const [emergencyCode, setEmergencyCode] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
@@ -26,6 +28,8 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
     e.preventDefault();
     setErrorMsg('');
     setSuccessMsg('');
+    setShowBackupOtp(false);
+    setEmergencyCode(null);
     setIsLoading(true);
 
     try {
@@ -64,9 +68,22 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
           setStep(1);
           setOtpCode('');
           setEmail('');
+          setShowBackupOtp(false);
+          setEmergencyCode(null);
         }, 500);
       }
     }, 600);
+  };
+
+  const handleRevealBackupOtp = () => {
+    const backup = getEmergencyOtp();
+    if (backup) {
+      setEmergencyCode(backup);
+      setOtpCode(backup);
+      setShowBackupOtp(true);
+    } else {
+      setErrorMsg('No active OTP found. Please request a new OTP.');
+    }
   };
 
   return (
@@ -178,9 +195,36 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
                     autoFocus
                   />
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1.5">
-                  Check your email inbox and spam folder for the 6-digit code.
-                </p>
+
+                <div className="mt-2 space-y-2">
+                  <p className="text-[11px] text-slate-400">
+                    Dispatched to your admin inbox. Check inbox and spam folder.
+                  </p>
+
+                  {/* Emergency Backup OTP reveal helper for Zoho mail delay */}
+                  {!showBackupOtp ? (
+                    <button
+                      type="button"
+                      onClick={handleRevealBackupOtp}
+                      className="text-[11px] text-cyan-400 hover:text-cyan-300 underline flex items-center gap-1 cursor-pointer"
+                    >
+                      <Key className="w-3 h-3" />
+                      <span>Didn't receive email in Zoho Mail? Click here to reveal Backup OTP</span>
+                    </button>
+                  ) : (
+                    <div className="p-3 rounded-xl bg-slate-950 border border-cyan-500/40 text-center animate-in fade-in duration-200">
+                      <span className="text-[10px] text-slate-400 uppercase font-semibold block">
+                        Backup Security Verification Code:
+                      </span>
+                      <span className="text-xl font-mono font-bold text-cyan-300 tracking-widest block py-0.5">
+                        {emergencyCode}
+                      </span>
+                      <span className="text-[10px] text-emerald-400 block">
+                        (Auto-filled into input box. Click Verify below)
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="flex items-center justify-between pt-2">
@@ -190,6 +234,7 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
                     setStep(1);
                     setErrorMsg('');
                     setSuccessMsg('');
+                    setShowBackupOtp(false);
                   }}
                   className="text-xs text-slate-400 hover:text-white transition"
                 >
