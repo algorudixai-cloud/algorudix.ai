@@ -12,18 +12,25 @@ import {
   ArrowRight,
   BookOpen
 } from 'lucide-react';
+import { Edit3, Trash2 } from 'lucide-react';
 import { BlogPost } from '../types';
 
 interface BlogArticleModalProps {
   post: BlogPost | null;
+  isAdmin?: boolean;
   onClose: () => void;
   onOpenConsultation: (serviceName?: string) => void;
+  onEdit?: (post: BlogPost) => void;
+  onDelete?: (postId: string) => void;
 }
 
 export const BlogArticleModal: React.FC<BlogArticleModalProps> = ({
   post,
+  isAdmin,
   onClose,
   onOpenConsultation,
+  onEdit,
+  onDelete,
 }) => {
   if (!post) return null;
 
@@ -66,16 +73,41 @@ export const BlogArticleModal: React.FC<BlogArticleModalProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Admin Controls inside Modal Header */}
+            {isAdmin && (
+              <>
+                <button
+                  onClick={() => onEdit && onEdit(post)}
+                  className="px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition flex items-center gap-1 cursor-pointer"
+                  title="Edit post (Admin Only)"
+                >
+                  <Edit3 className="w-3.5 h-3.5" /> Edit Post
+                </button>
+                <button
+                  onClick={() => {
+                    if (confirm(`Are you sure you want to delete "${post.title}"?`)) {
+                      onDelete && onDelete(post.id);
+                      onClose();
+                    }
+                  }}
+                  className="px-3 py-1.5 rounded-lg text-xs font-semibold text-rose-300 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/20 transition flex items-center gap-1 cursor-pointer"
+                  title="Delete post (Admin Only)"
+                >
+                  <Trash2 className="w-3.5 h-3.5" /> Delete Post
+                </button>
+              </>
+            )}
+
             <button
               onClick={handleShare}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
               title="Share article"
             >
               <Share2 className="w-4 h-4" />
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
               title="Close modal"
             >
               <X className="w-5 h-5" />

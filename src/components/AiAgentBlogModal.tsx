@@ -46,7 +46,7 @@ export const AiAgentBlogModal: React.FC<AiAgentBlogModalProps> = ({
   const [topic, setTopic] = useState('');
   const [category, setCategory] = useState<'AI & LLMs' | 'Business Intelligence' | 'Process Automation' | 'Data Engineering'>('AI & LLMs');
   const [userApiKey, setUserApiKey] = useState(() => {
-    return localStorage.getItem('algorudix_gemini_api_key') || (import.meta as any).env?.VITE_GEMINI_API_KEY || '';
+    return localStorage.getItem('algorudix_gemini_api_key') || '';
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [step, setStep] = useState<number>(0);
@@ -74,7 +74,7 @@ export const AiAgentBlogModal: React.FC<AiAgentBlogModalProps> = ({
     setIsGenerating(true);
     setStep(1);
 
-    const apiKey = userApiKey.trim() || (import.meta as any).env?.VITE_GEMINI_API_KEY;
+    const apiKey = userApiKey.trim();
     let parsedData: {
       title?: string;
       excerpt?: string;

@@ -14,13 +14,21 @@ import {
   TrendingUp,
   Cpu,
   Plus,
-  ArrowLeft
+  ArrowLeft,
+  ShieldCheck,
+  Lock,
+  LogOut,
+  Edit3,
+  Trash2
 } from 'lucide-react';
 import { BlogPost } from '../types';
 import { INITIAL_BLOG_POSTS } from '../data/blogData';
 import { BlogArticleModal } from './BlogArticleModal';
 import { CreateBlogPostModal } from './CreateBlogPostModal';
 import { AiAgentBlogModal } from './AiAgentBlogModal';
+import { EditBlogPostModal } from './EditBlogPostModal';
+import { AdminOtpModal } from './AdminOtpModal';
+import { getAdminSession, logoutAdmin, AdminSession, AUTHORIZED_ADMIN_EMAIL } from '../utils/adminAuth';
 
 interface BlogProps {
   onOpenConsultation: (serviceName?: string) => void;
@@ -41,7 +49,13 @@ export const Blog: React.FC<BlogProps> = ({ onOpenConsultation, onBackToHome }) 
     return INITIAL_BLOG_POSTS;
   });
 
+  // Admin Auth State
+  const [adminSession, setAdminSession] = useState<AdminSession | null>(() => getAdminSession());
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
+
+  // Modals state
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [isManualModalOpen, setIsManualModalOpen] = useState(false);
   const [isAgentModalOpen, setIsAgentModalOpen] = useState(false);
 
@@ -59,9 +73,45 @@ export const Blog: React.FC<BlogProps> = ({ onOpenConsultation, onBackToHome }) 
     }
   }, [posts]);
 
+  // Admin Actions
   const handleAddPost = (newPost: BlogPost) => {
+    if (!adminSession) {
+      alert('Unauthorized: Only logged in admin contact@algorudixai.com can create blog posts.');
+      return;
+    }
     setPosts((prev) => [newPost, ...prev]);
     setSelectedPost(newPost);
+  };
+
+  const handleSaveEditPost = (updatedPost: BlogPost) => {
+    if (!adminSession) {
+      alert('Unauthorized: Only logged in admin contact@algorudixai.com can edit blog posts.');
+      return;
+    }
+    setPosts((prev) => prev.map((p) => (p.id === updatedPost.id ? updatedPost : p)));
+    if (selectedPost?.id === updatedPost.id) {
+      setSelectedPost(updatedPost);
+    }
+  };
+
+  const handleDeletePost = (postId: string) => {
+    if (!adminSession) {
+      alert('Unauthorized: Only logged in admin contact@algorudixai.com can delete blog posts.');
+      return;
+    }
+    setPosts((prev) => prev.filter((p) => p.id !== postId));
+    if (selectedPost?.id === postId) {
+      setSelectedPost(null);
+    }
+  };
+
+  const handleAdminLogout = () => {
+    logoutAdmin();
+    setAdminSession(null);
+  };
+
+  const handleLoginSuccess = () => {
+    setAdminSession(getAdminSession());
   };
 
   // Filter logic
@@ -96,9 +146,9 @@ export const Blog: React.FC<BlogProps> = ({ onOpenConsultation, onBackToHome }) 
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Back to Home Button */}
-        {onBackToHome && (
-          <div className="mb-6">
+        {/* Top Toolbar Bar */}
+        <div className="flex items-center justify-between gap-4 mb-6">
+          {onBackToHome ? (
             <button
               onClick={onBackToHome}
               className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 hover:text-cyan-300 bg-slate-900/80 px-3.5 py-2 rounded-xl border border-slate-800 hover:border-cyan-500/40 transition cursor-pointer"
@@ -106,8 +156,35 @@ export const Blog: React.FC<BlogProps> = ({ onOpenConsultation, onBackToHome }) 
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Algorudix Homepage</span>
             </button>
-          </div>
-        )}
+          ) : <div />}
+
+          {/* Admin Authentication Banner & Trigger */}
+          {adminSession ? (
+            <div className="inline-flex items-center gap-3 p-1.5 pl-3.5 rounded-xl bg-cyan-950/60 border border-cyan-500/40 text-xs">
+              <div className="flex items-center gap-2 text-cyan-300 font-medium">
+                <ShieldCheck className="w-4 h-4 text-cyan-400 animate-pulse" />
+                <span className="font-semibold text-white">Admin Authenticated:</span>
+                <span className="font-mono text-cyan-400 hidden sm:inline">{AUTHORIZED_ADMIN_EMAIL}</span>
+              </div>
+              <button
+                onClick={handleAdminLogout}
+                className="px-2.5 py-1 rounded-lg bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 transition flex items-center gap-1 cursor-pointer"
+                title="Log out of Admin session"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Log Out</span>
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setIsOtpModalOpen(true)}
+              className="inline-flex items-center gap-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-900/90 hover:bg-slate-800 px-3.5 py-2 rounded-xl border border-slate-800 hover:border-cyan-500/40 transition cursor-pointer"
+            >
+              <Lock className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Admin Login ({AUTHORIZED_ADMIN_EMAIL})</span>
+            </button>
+          )}
+        </div>
 
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
@@ -124,24 +201,26 @@ export const Blog: React.FC<BlogProps> = ({ onOpenConsultation, onBackToHome }) 
             </p>
           </div>
 
-          {/* Action CTAs for Creating Posts */}
-          <div className="flex items-center gap-3 shrink-0">
-            <button
-              onClick={() => setIsManualModalOpen(true)}
-              className="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 hover:border-slate-500 text-slate-200 hover:text-white text-xs font-semibold transition flex items-center gap-2 shadow-md cursor-pointer"
-            >
-              <PenTool className="w-4 h-4 text-cyan-400" />
-              <span>✍️ Write Post</span>
-            </button>
+          {/* Action CTAs for Creating Posts (ADMIN ONLY) */}
+          {adminSession && (
+            <div className="flex items-center gap-3 shrink-0">
+              <button
+                onClick={() => setIsManualModalOpen(true)}
+                className="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 hover:border-slate-500 text-slate-200 hover:text-white text-xs font-semibold transition flex items-center gap-2 shadow-md cursor-pointer"
+              >
+                <PenTool className="w-4 h-4 text-cyan-400" />
+                <span>✍️ Write Post</span>
+              </button>
 
-            <button
-              onClick={() => setIsAgentModalOpen(true)}
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 hover:from-emerald-400 hover:to-cyan-500 text-white text-xs font-semibold transition flex items-center gap-2 shadow-lg shadow-emerald-950 cursor-pointer"
-            >
-              <Bot className="w-4 h-4 text-emerald-200 animate-pulse" />
-              <span>🤖 AI Agent Auto-Post</span>
-            </button>
-          </div>
+              <button
+                onClick={() => setIsAgentModalOpen(true)}
+                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 hover:from-emerald-400 hover:to-cyan-500 text-white text-xs font-semibold transition flex items-center gap-2 shadow-lg shadow-emerald-950 cursor-pointer"
+              >
+                <Bot className="w-4 h-4 text-emerald-200 animate-pulse" />
+                <span>🤖 AI Agent Auto-Post</span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Filter Toolbar */}
@@ -232,12 +311,42 @@ export const Blog: React.FC<BlogProps> = ({ onOpenConsultation, onBackToHome }) 
                 onClick={() => setSelectedPost(post)}
                 className="group relative rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800/80 hover:border-cyan-500/50 shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between"
               >
-                {/* Featured Badge if applicable */}
-                {post.featured && (
-                  <div className="absolute top-3 left-3 z-20 px-2.5 py-1 rounded-full bg-cyan-500/90 text-slate-950 font-bold text-[10px] uppercase tracking-wider shadow-md">
-                    Featured Article
-                  </div>
-                )}
+                {/* Top Action Overlay Badges */}
+                <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-none">
+                  {post.featured ? (
+                    <span className="px-2.5 py-1 rounded-full bg-cyan-500/90 text-slate-950 font-bold text-[10px] uppercase tracking-wider shadow-md pointer-events-auto">
+                      Featured Article
+                    </span>
+                  ) : <div />}
+
+                  {/* Admin Direct Action Buttons on Card */}
+                  {adminSession && (
+                    <div className="flex items-center gap-1.5 pointer-events-auto">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditingPost(post);
+                        }}
+                        className="p-1.5 rounded-lg bg-slate-950/90 text-amber-300 hover:text-white border border-amber-500/40 hover:bg-amber-600 transition shadow-md"
+                        title="Edit Post (Admin Only)"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (confirm(`Are you sure you want to delete "${post.title}"?`)) {
+                            handleDeletePost(post.id);
+                          }
+                        }}
+                        className="p-1.5 rounded-lg bg-slate-950/90 text-rose-300 hover:text-white border border-rose-500/40 hover:bg-rose-600 transition shadow-md"
+                        title="Delete Post (Admin Only)"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  )}
+                </div>
 
                 {/* Article Image Container */}
                 <div>
@@ -338,22 +447,45 @@ export const Blog: React.FC<BlogProps> = ({ onOpenConsultation, onBackToHome }) 
       {/* Article Full View Modal */}
       <BlogArticleModal
         post={selectedPost}
+        isAdmin={Boolean(adminSession)}
         onClose={() => setSelectedPost(null)}
         onOpenConsultation={onOpenConsultation}
+        onEdit={(postToEdit) => setEditingPost(postToEdit)}
+        onDelete={handleDeletePost}
       />
 
-      {/* Manual Post Modal */}
-      <CreateBlogPostModal
-        isOpen={isManualModalOpen}
-        onClose={() => setIsManualModalOpen(false)}
-        onSavePost={handleAddPost}
-      />
+      {/* Admin Edit Modal */}
+      {adminSession && (
+        <EditBlogPostModal
+          post={editingPost}
+          onClose={() => setEditingPost(null)}
+          onSaveEdit={handleSaveEditPost}
+        />
+      )}
 
-      {/* AI Agent Blog Modal */}
-      <AiAgentBlogModal
-        isOpen={isAgentModalOpen}
-        onClose={() => setIsAgentModalOpen(false)}
-        onSavePost={handleAddPost}
+      {/* Admin Manual Post Creator Modal */}
+      {adminSession && (
+        <CreateBlogPostModal
+          isOpen={isManualModalOpen}
+          onClose={() => setIsManualModalOpen(false)}
+          onSavePost={handleAddPost}
+        />
+      )}
+
+      {/* Admin AI Agent Blog Writer Modal */}
+      {adminSession && (
+        <AiAgentBlogModal
+          isOpen={isAgentModalOpen}
+          onClose={() => setIsAgentModalOpen(false)}
+          onSavePost={handleAddPost}
+        />
+      )}
+
+      {/* Admin OTP Login Modal */}
+      <AdminOtpModal
+        isOpen={isOtpModalOpen}
+        onClose={() => setIsOtpModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
       />
 
     </section>
