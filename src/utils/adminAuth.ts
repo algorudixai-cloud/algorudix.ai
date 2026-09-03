@@ -2,7 +2,6 @@
 export const AUTHORIZED_ADMIN_EMAIL = 'contact@algorudixai.com';
 export const ADMIN_SESSION_KEY = 'algorudix_admin_session';
 export const ADMIN_OTP_TEMP_KEY = 'algorudix_admin_otp_temp';
-export const MASTER_ADMIN_PASSCODE = '849201';
 
 export interface AdminSession {
   email: string;
@@ -32,7 +31,7 @@ export async function dispatchAdminOtpEmail(email: string, otp: string): Promise
     params.append('fullName', 'Algorudix Admin Security');
     params.append('company', 'Algorudix AI');
     params.append('service', 'Admin Security Authentication OTP');
-    params.append('details', `AUTHENTICATION SECURITY CODE: [ ${otp} ]. Use this 6-digit OTP code to log in to the Algorudix Admin Panel. Valid for 5 minutes.`);
+    params.append('details', `AUTHENTICATION SECURITY CODE: [ ${otp} ]. Use this 6-digit OTP code to log in to the Algorudix Admin Panel. Valid for 10 minutes.`);
     params.append('otp', otp);
 
     await fetch(webhookUrl, {
@@ -52,7 +51,7 @@ export async function dispatchAdminOtpEmail(email: string, otp: string): Promise
 }
 
 /**
- * Generates a 6-digit OTP code for the authorized admin email and dispatches it via email.
+ * Generates a 6-digit OTP code for the authorized admin email and dispatches it via email webhook.
  */
 export async function requestAdminOtp(email: string): Promise<{ success: boolean; message: string }> {
   if (!isAuthorizedAdminEmail(email)) {
@@ -82,12 +81,12 @@ export async function requestAdminOtp(email: string): Promise<{ success: boolean
 
   return {
     success: true,
-    message: `A 6-digit OTP security code has been sent to ${email}. Please check your email inbox (or use Master Passcode 849201).`,
+    message: `A 6-digit OTP security code has been sent to ${email}. Please check your email inbox.`,
   };
 }
 
 /**
- * Verifies the 6-digit OTP code or Master Passcode submitted by the admin.
+ * Verifies the 6-digit OTP code submitted by the admin.
  */
 export function verifyAdminOtp(email: string, submittedOtp: string): { success: boolean; message: string } {
   if (!isAuthorizedAdminEmail(email)) {
@@ -96,36 +95,36 @@ export function verifyAdminOtp(email: string, submittedOtp: string): { success: 
 
   const cleanInput = submittedOtp.trim();
 
-  // Allow verification via generated OTP or Master Admin Security Passcode 849201
-  let isValid = (cleanInput === MASTER_ADMIN_PASSCODE);
+  try {
+    const rawTemp = localStorage.getItem(ADMIN_OTP_TEMP_KEY);
+    if (!rawTemp) {
+      return { success: false, message: 'No active OTP request found. Please request a new OTP code.' };
+    }
 
-  if (!isValid) {
-    try {
-      const rawTemp = localStorage.getItem(ADMIN_OTP_TEMP_KEY);
-      if (rawTemp) {
-        const payload = JSON.parse(rawTemp);
-        if (Date.now() <= payload.expiresAt && payload.otp === cleanInput) {
-          isValid = true;
-        }
-      }
-    } catch (e) {}
+    const payload = JSON.parse(rawTemp);
+    if (Date.now() > payload.expiresAt) {
+      localStorage.removeItem(ADMIN_OTP_TEMP_KEY);
+      return { success: false, message: 'OTP code has expired. Please request a new code.' };
+    }
+
+    if (payload.otp !== cleanInput) {
+      return { success: false, message: 'Incorrect OTP code. Please check your email inbox and enter the exact 6-digit code.' };
+    }
+
+    // Authenticated successfully! Create 24h admin session.
+    const session: AdminSession = {
+      email: AUTHORIZED_ADMIN_EMAIL,
+      isAuthenticated: true,
+      loginTime: Date.now(),
+    };
+
+    localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session));
+    localStorage.removeItem(ADMIN_OTP_TEMP_KEY);
+
+    return { success: true, message: 'Admin authentication successful!' };
+  } catch (e) {
+    return { success: false, message: 'An error occurred while verifying OTP.' };
   }
-
-  if (!isValid) {
-    return { success: false, message: 'Incorrect OTP code. Please check your email inbox or use Master Passcode 849201.' };
-  }
-
-  // Authenticated successfully! Create 24h admin session.
-  const session: AdminSession = {
-    email: AUTHORIZED_ADMIN_EMAIL,
-    isAuthenticated: true,
-    loginTime: Date.now(),
-  };
-
-  localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session));
-  localStorage.removeItem(ADMIN_OTP_TEMP_KEY);
-
-  return { success: true, message: 'Admin authentication successful!' };
 }
 
 /**
