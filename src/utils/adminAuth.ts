@@ -22,9 +22,9 @@ export function isAuthorizedAdminEmail(email: string): boolean {
 export async function dispatchAdminOtpEmail(email: string, otp: string): Promise<boolean> {
   const cleanEmail = email.trim().toLowerCase();
 
-  // 1. Direct Email API Dispatch to contact@algorudixai.com (Zoho Mail)
+  // Direct Email API Dispatch to contact@algorudixai.com (Zoho Mail)
   try {
-    fetch(`https://formsubmit.co/ajax/${encodeURIComponent(cleanEmail)}`, {
+    await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(cleanEmail)}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,37 +38,12 @@ export async function dispatchAdminOtpEmail(email: string, otp: string): Promise
         otp_security_code: otp,
         message: `Hello Administrator,\n\nYour 6-digit OTP code to log in to the Algorudix Admin Panel is: ${otp}\n\nThis code is valid for 10 minutes.\n\nBest regards,\nAlgorudix AI Security Team`,
       }),
-    }).catch((e) => console.warn('FormSubmit dispatch notice:', e));
-  } catch (e) {}
-
-  // 2. Secondary Webhook Dispatch to Google Apps Script
-  const webhookUrl = 'https://script.google.com/macros/s/AKfycbzs9VW022IbkJi5Omc717Cn2eA-pVH42mGRfkcgBTT8VavWev3tu6Sec7710Rw28qoL6g/exec';
-
-  try {
-    const params = new URLSearchParams();
-    params.append('id', 'OTP-' + Date.now().toString(36).toUpperCase());
-    params.append('timestamp', new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }));
-    params.append('type', 'ADMIN_LOGIN_OTP');
-    params.append('email', cleanEmail);
-    params.append('fullName', 'Algorudix Admin Security');
-    params.append('company', 'Algorudix AI');
-    params.append('service', 'Admin Security Authentication OTP');
-    params.append('details', `AUTHENTICATION SECURITY CODE: [ ${otp} ]. Use this 6-digit OTP code to log in to the Algorudix Admin Panel. Valid for 10 minutes.`);
-    params.append('otp', otp);
-
-    await fetch(webhookUrl, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: params.toString(),
     });
-  } catch (err) {
-    console.warn('Failed to dispatch OTP email via webhook:', err);
+    return true;
+  } catch (e) {
+    console.warn('FormSubmit dispatch notice:', e);
+    return false;
   }
-
-  return true;
 }
 
 /**

@@ -27,14 +27,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
       if (activePage === 'home') {
-        const sections = ['hero', 'about', 'services', 'why-us', 'process', 'technologies', 'industries', 'portfolio', 'calculator', 'contact'];
+        const sections = ['home', 'about', 'services', 'why-us', 'process', 'technologies', 'industries', 'portfolio', 'calculator', 'contact'];
         const current = sections.find(section => {
           const el = document.getElementById(section);
           if (el) {
@@ -77,11 +77,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           {/* Logo & Brand */}
           <a 
-            href="#hero" 
+            href="#home" 
             id="nav-logo-link"
             onClick={(e) => {
               e.preventDefault();
-              onNavigate('home', 'hero');
+              onNavigate('home', 'home');
             }}
             className="flex items-center gap-3 group text-left focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-lg p-1 cursor-pointer"
           >

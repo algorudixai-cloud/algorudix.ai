@@ -119,7 +119,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation, onGetStarted }) 
   }, []);
 
   return (
-    <section id="hero" className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden">
+    <section id="home" className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden">
       {/* Background Animated Canvas */}
       <canvas
         ref={canvasRef}

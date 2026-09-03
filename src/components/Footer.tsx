@@ -24,7 +24,7 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation, onNavigate }) => {
   const quickLinks = [
-    { label: 'Home', href: '#hero' },
+    { label: 'Home', href: '#home' },
     { label: 'About', href: '#about' },
     { label: 'Services', href: '#services' },
     { label: 'Solutions', href: '#industries' },
@@ -77,11 +77,11 @@ export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation,
           {/* Company Brand & Description */}
           <div className="lg:col-span-4 space-y-4">
             <a 
-              href="#hero" 
+              href="#home" 
               onClick={(e) => {
                 if (onNavigate) {
                   e.preventDefault();
-                  onNavigate('home', 'hero');
+                  onNavigate('home', 'home');
                 }
               }}
               className="flex items-center gap-3 group cursor-pointer"

@@ -61,7 +61,7 @@ export default function App() {
       window.location.hash = '#blog';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      window.location.hash = targetId ? `#${targetId}` : '#hero';
+      window.location.hash = targetId ? `#${targetId}` : '#home';
       if (targetId) {
         setTimeout(() => {
           const el = document.getElementById(targetId);
@@ -178,7 +178,7 @@ export default function App() {
           /* Separate Standalone Blog Page View */
           <Blog 
             onOpenConsultation={handleOpenConsultation}
-            onBackToHome={() => handleNavigate('home', 'hero')}
+            onBackToHome={() => handleNavigate('home', 'home')}
           />
         ) : (
           /* Homepage Single Page View */
