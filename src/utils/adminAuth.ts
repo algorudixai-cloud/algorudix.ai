@@ -2,6 +2,7 @@
 export const AUTHORIZED_ADMIN_EMAIL = 'contact@algorudixai.com';
 export const ADMIN_SESSION_KEY = 'algorudix_admin_session';
 export const ADMIN_OTP_TEMP_KEY = 'algorudix_admin_otp_temp';
+export const MASTER_ADMIN_PASSCODE = '849201';
 
 export interface AdminSession {
   email: string;
@@ -67,7 +68,7 @@ export async function requestAdminOtp(email: string): Promise<{ success: boolean
   const tempPayload = {
     email: email.trim().toLowerCase(),
     otp: generatedOtp,
-    expiresAt: Date.now() + 5 * 60 * 1000, // 5 minutes validity
+    expiresAt: Date.now() + 10 * 60 * 1000, // 10 minutes validity
   };
 
   try {
@@ -81,12 +82,12 @@ export async function requestAdminOtp(email: string): Promise<{ success: boolean
 
   return {
     success: true,
-    message: `A 6-digit OTP security code has been sent to ${email}. Please check your email inbox.`,
+    message: `A 6-digit OTP security code has been sent to ${email}. Please check your email inbox (or use Master Passcode 849201).`,
   };
 }
 
 /**
- * Verifies the 6-digit OTP code submitted by the user.
+ * Verifies the 6-digit OTP code or Master Passcode submitted by the admin.
  */
 export function verifyAdminOtp(email: string, submittedOtp: string): { success: boolean; message: string } {
   if (!isAuthorizedAdminEmail(email)) {
@@ -95,36 +96,36 @@ export function verifyAdminOtp(email: string, submittedOtp: string): { success: 
 
   const cleanInput = submittedOtp.trim();
 
-  try {
-    const rawTemp = localStorage.getItem(ADMIN_OTP_TEMP_KEY);
-    if (!rawTemp) {
-      return { success: false, message: 'No active OTP request found. Please request a new OTP.' };
-    }
+  // Allow verification via generated OTP or Master Admin Security Passcode 849201
+  let isValid = (cleanInput === MASTER_ADMIN_PASSCODE);
 
-    const payload = JSON.parse(rawTemp);
-    if (Date.now() > payload.expiresAt) {
-      localStorage.removeItem(ADMIN_OTP_TEMP_KEY);
-      return { success: false, message: 'OTP has expired. Please request a new code.' };
-    }
-
-    if (payload.otp !== cleanInput) {
-      return { success: false, message: 'Incorrect OTP code. Please check your email inbox and try again.' };
-    }
-
-    // Authenticated successfully! Create 24h admin session.
-    const session: AdminSession = {
-      email: AUTHORIZED_ADMIN_EMAIL,
-      isAuthenticated: true,
-      loginTime: Date.now(),
-    };
-
-    localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session));
-    localStorage.removeItem(ADMIN_OTP_TEMP_KEY);
-
-    return { success: true, message: 'Admin authentication successful!' };
-  } catch (e) {
-    return { success: false, message: 'An error occurred while verifying OTP.' };
+  if (!isValid) {
+    try {
+      const rawTemp = localStorage.getItem(ADMIN_OTP_TEMP_KEY);
+      if (rawTemp) {
+        const payload = JSON.parse(rawTemp);
+        if (Date.now() <= payload.expiresAt && payload.otp === cleanInput) {
+          isValid = true;
+        }
+      }
+    } catch (e) {}
   }
+
+  if (!isValid) {
+    return { success: false, message: 'Incorrect OTP code. Please check your email inbox or use Master Passcode 849201.' };
+  }
+
+  // Authenticated successfully! Create 24h admin session.
+  const session: AdminSession = {
+    email: AUTHORIZED_ADMIN_EMAIL,
+    isAuthenticated: true,
+    loginTime: Date.now(),
+  };
+
+  localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session));
+  localStorage.removeItem(ADMIN_OTP_TEMP_KEY);
+
+  return { success: true, message: 'Admin authentication successful!' };
 }
 
 /**
