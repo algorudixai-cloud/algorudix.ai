@@ -123,10 +123,7 @@ export const AiAgentBlogModal: React.FC<AiAgentBlogModalProps> = ({
         date: new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
         readTime: result.readTime,
         category: result.category,
-        tags: result.tags,
-        image: category === 'Business Intelligence'
-          ? 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80'
-          : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
+        image: result.image,
         createdType: 'agent',
         creationMethod: 'ai',
         status: 'draft', // Draft status requiring Admin review

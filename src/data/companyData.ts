@@ -12,8 +12,8 @@ export const COMPANY_CONFIG = {
   tagline: 'AI Development & Business Analyst Solutions',
   subtitle: 'We are an AI development and business analyst company helping businesses build custom AI systems, extract actionable intelligence from data, streamline operations, and engineer modern software solutions.',
   email: 'contact@algorudixai.com',
-  phone: '+91 6351070355',
-  secondaryPhone: '+91 9876543210',
+  phone: '+91 9876543210',
+  secondaryPhone: '+91 6351070355',
   location: 'Banglore, Karnataka, India',
   hours: 'Mon - Fri: 8:00 AM - 6:00 PM (IST) / 24/7 Priority Support',
   googleSheetsWebhookUrl: 'https://script.google.com/macros/s/AKfycbzs9VW022IbkJi5Omc717Cn2eA-pVH42mGRfkcgBTT8VavWev3tu6Sec7710Rw28qoL6g/exec', // Optional: Add your Google Apps Script Webhook URL here to auto-append rows to Google Sheets / Excel

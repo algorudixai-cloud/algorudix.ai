@@ -19,6 +19,7 @@ export interface GeneratedArticleResult {
   category: 'AI & LLMs' | 'Business Intelligence' | 'Process Automation' | 'Data Engineering';
   tags: string[];
   imagePrompt: string;
+  image: string;
   seo: BlogSeoData;
   providerName: string;
   modelName: string;
