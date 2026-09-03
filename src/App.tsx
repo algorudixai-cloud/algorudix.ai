@@ -8,6 +8,7 @@ import { Process } from './components/Process';
 import { Technologies } from './components/Technologies';
 import { Industries } from './components/Industries';
 import { Portfolio } from './components/Portfolio';
+import { Blog } from './components/Blog';
 import { RoiEstimator } from './components/RoiEstimator';
 import { CTA } from './components/CTA';
 import { ContactForm } from './components/ContactForm';
@@ -154,6 +155,11 @@ export default function App() {
         {/* 8. Portfolio / Case Studies Section */}
         <Portfolio 
           onSelectCaseStudy={(study) => setSelectedCaseStudy(study)}
+        />
+
+        {/* 9. Blog & Technical Journal Section (Agent & Manual Posts) */}
+        <Blog 
+          onOpenConsultation={handleOpenConsultation}
         />
 
         {/* Interactive Scope & ROI Estimator */}

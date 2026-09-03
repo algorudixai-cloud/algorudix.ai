@@ -73,3 +73,32 @@ export interface ConsultationFormData {
   timeline?: string;
   projectDescription: string;
 }
+
+export interface BlogAuthor {
+  name: string;
+  role: string;
+  avatar: string;
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  author: BlogAuthor;
+  date: string;
+  readTime: string;
+  category: 'AI & LLMs' | 'Business Intelligence' | 'Process Automation' | 'Data Engineering';
+  tags: string[];
+  image: string;
+  createdType: 'manual' | 'agent';
+  agentDetails?: {
+    model: string;
+    executionTimeMs: number;
+    tokensUsed: number;
+    confidenceScore: string;
+  };
+  featured?: boolean;
+}
+

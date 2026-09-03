@@ -29,7 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      const sections = ['hero', 'about', 'services', 'why-us', 'process', 'technologies', 'industries', 'portfolio', 'calculator', 'contact'];
+      const sections = ['hero', 'about', 'services', 'why-us', 'process', 'technologies', 'industries', 'portfolio', 'blog', 'calculator', 'contact'];
       const current = sections.find(section => {
         const el = document.getElementById(section);
         if (el) {
@@ -53,6 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { label: 'Technologies', href: '#technologies' },
     { label: 'Industries', href: '#industries' },
     { label: 'Case Studies', href: '#portfolio' },
+    { label: 'Blog', href: '#blog' },
     { label: 'Contact', href: '#contact' },
   ];
 

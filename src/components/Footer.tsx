@@ -28,6 +28,7 @@ export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation 
     { label: 'Services', href: '#services' },
     { label: 'Solutions', href: '#industries' },
     { label: 'Portfolio', href: '#portfolio' },
+    { label: 'Blog & Articles', href: '#blog' },
     { label: 'Contact', href: '#contact' },
   ];
 
