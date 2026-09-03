@@ -236,7 +236,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                     <p className="text-sm font-semibold text-white">
                       {COMPANY_CONFIG.location}
                     </p>
-                    <p className="text-xs text-slate-400 mt-0.5">Serving North America, EMEA & APAC</p>
                   </div>
                 </div>
 
