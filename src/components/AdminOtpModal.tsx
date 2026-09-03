@@ -16,31 +16,32 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
   const [step, setStep] = useState<1 | 2>(1);
   const [email, setEmail] = useState('');
   const [otpCode, setOtpCode] = useState('');
-  const [activeOtp, setActiveOtp] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleRequestOtp = (e: React.FormEvent) => {
+  const handleRequestOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
     setSuccessMsg('');
     setIsLoading(true);
 
-    setTimeout(() => {
-      const res = requestAdminOtp(email);
+    try {
+      const res = await requestAdminOtp(email);
       setIsLoading(false);
 
       if (!res.success) {
         setErrorMsg(res.message);
       } else {
-        setActiveOtp(res.otp || null);
-        setSuccessMsg(`OTP sent to ${AUTHORIZED_ADMIN_EMAIL}. Check the demo box below.`);
+        setSuccessMsg(res.message);
         setStep(2);
       }
-    }, 600);
+    } catch (err) {
+      setIsLoading(false);
+      setErrorMsg('Failed to dispatch OTP. Please check network connection and try again.');
+    }
   };
 
   const handleVerifyOtp = (e: React.FormEvent) => {
@@ -56,13 +57,13 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
       if (!res.success) {
         setErrorMsg(res.message);
       } else {
-        setSuccessMsg('Authentication Successful! Welcome Admin.');
+        setSuccessMsg('Authentication Successful! Accessing Admin Dashboard...');
         setTimeout(() => {
           onLoginSuccess();
           onClose();
           setStep(1);
           setOtpCode('');
-          setActiveOtp(null);
+          setEmail('');
         }, 500);
       }
     }, 600);
@@ -82,9 +83,9 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
             </div>
             <div>
               <h3 className="text-base font-bold text-white flex items-center gap-2">
-                Admin Control Authentication
+                Admin Authentication
               </h3>
-              <p className="text-xs text-slate-400">OTP Security Verification</p>
+              <p className="text-xs text-slate-400">Secure OTP Email Verification</p>
             </div>
           </div>
           <button 
@@ -128,6 +129,7 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="admin@example.com"
                     className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-cyan-500 font-mono"
+                    autoFocus
                   />
                 </div>
                 <p className="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1">
@@ -138,17 +140,17 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
               <div className="pt-2">
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || !email.trim()}
                   className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold text-xs shadow-lg shadow-cyan-950 transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {isLoading ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Sending OTP...</span>
+                      <span>Sending OTP Email...</span>
                     </>
                   ) : (
                     <>
-                      <span>Send 6-Digit OTP Code</span>
+                      <span>Send 6-Digit OTP to Email</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -159,21 +161,6 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
             /* Step 2: OTP Entry Form */
             <form onSubmit={handleVerifyOtp} className="space-y-4">
               
-              {/* On-Screen Demo Banner for instant testing */}
-              {activeOtp && (
-                <div className="p-4 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-center space-y-1">
-                  <span className="text-[11px] text-cyan-400 font-semibold uppercase tracking-wider block">
-                    Security Verification OTP Code
-                  </span>
-                  <div className="text-2xl font-mono font-bold text-white tracking-widest py-1 text-cyan-300">
-                    {activeOtp}
-                  </div>
-                  <span className="text-[10px] text-slate-400 block">
-                    (Use this 6-digit code above to authenticate as Admin)
-                  </span>
-                </div>
-              )}
-
               <div>
                 <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
                   Enter 6-Digit OTP Code
@@ -191,6 +178,9 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
                     autoFocus
                   />
                 </div>
+                <p className="text-[11px] text-slate-400 mt-1.5">
+                  Check your email inbox and spam folder for the 6-digit code.
+                </p>
               </div>
 
               <div className="flex items-center justify-between pt-2">
@@ -203,7 +193,7 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
                   }}
                   className="text-xs text-slate-400 hover:text-white transition"
                 >
-                  ← Back to Email
+                  ← Resend / Change Email
                 </button>
 
                 <button
@@ -219,7 +209,7 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
                   ) : (
                     <>
                       <ShieldCheck className="w-4 h-4" />
-                      <span>Verify & Access Admin Panel</span>
+                      <span>Verify & Access Admin</span>
                     </>
                   )}
                 </button>

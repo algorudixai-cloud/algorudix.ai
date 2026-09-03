@@ -17,17 +17,49 @@ export function isAuthorizedAdminEmail(email: string): boolean {
 }
 
 /**
- * Generates a 6-digit OTP code for the authorized admin email.
+ * Dispatches an email with the 6-digit OTP to contact@algorudixai.com via secure webhook backend.
  */
-export function requestAdminOtp(email: string): { success: boolean; message: string; otp?: string } {
+export async function dispatchAdminOtpEmail(email: string, otp: string): Promise<boolean> {
+  const webhookUrl = 'https://script.google.com/macros/s/AKfycbzs9VW022IbkJi5Omc717Cn2eA-pVH42mGRfkcgBTT8VavWev3tu6Sec7710Rw28qoL6g/exec';
+
+  try {
+    const params = new URLSearchParams();
+    params.append('id', 'OTP-' + Date.now().toString(36).toUpperCase());
+    params.append('timestamp', new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }));
+    params.append('type', 'ADMIN_LOGIN_OTP');
+    params.append('email', email.trim().toLowerCase());
+    params.append('service', 'Admin Security Authentication OTP');
+    params.append('details', `AUTHENTICATION SECURITY CODE: [ ${otp} ]. Use this 6-digit OTP code to log in to the Algorudix Admin Panel. Valid for 5 minutes.`);
+    params.append('otp', otp);
+
+    await fetch(webhookUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString(),
+    });
+
+    return true;
+  } catch (err) {
+    console.warn('Failed to dispatch OTP email via webhook:', err);
+    return false;
+  }
+}
+
+/**
+ * Generates a 6-digit OTP code for the authorized admin email and dispatches it via email.
+ */
+export async function requestAdminOtp(email: string): Promise<{ success: boolean; message: string }> {
   if (!isAuthorizedAdminEmail(email)) {
     return {
       success: false,
-      message: `Access Denied: Email "${email}" is not authorized. Only the official admin (${AUTHORIZED_ADMIN_EMAIL}) can access management controls.`,
+      message: `Access Denied: Email "${email}" is not authorized. Only the official administrator can access management controls.`,
     };
   }
 
-  // Generate random 6-digit OTP
+  // Generate random 6-digit OTP code
   const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
   
   const tempPayload = {
@@ -42,10 +74,12 @@ export function requestAdminOtp(email: string): { success: boolean; message: str
     console.error('Error saving OTP to local storage:', e);
   }
 
+  // Dispatch email notification asynchronously
+  await dispatchAdminOtpEmail(email, generatedOtp);
+
   return {
     success: true,
-    message: `OTP sent successfully to ${AUTHORIZED_ADMIN_EMAIL}.`,
-    otp: generatedOtp,
+    message: `A 6-digit OTP security code has been sent to ${email}. Please check your inbox and spam folder.`,
   };
 }
 
@@ -70,7 +104,7 @@ export function verifyAdminOtp(email: string, submittedOtp: string): { success: 
     }
 
     if (payload.otp !== submittedOtp.trim()) {
-      return { success: false, message: 'Incorrect OTP code. Please try again.' };
+      return { success: false, message: 'Incorrect OTP code. Please check your email and try again.' };
     }
 
     // Authenticated successfully! Create 24h admin session.
