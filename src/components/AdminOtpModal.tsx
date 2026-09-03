@@ -14,7 +14,7 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
   onLoginSuccess,
 }) => {
   const [step, setStep] = useState<1 | 2>(1);
-  const [email, setEmail] = useState(AUTHORIZED_ADMIN_EMAIL);
+  const [email, setEmail] = useState('');
   const [otpCode, setOtpCode] = useState('');
   const [activeOtp, setActiveOtp] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
@@ -126,12 +126,12 @@ export const AdminOtpModal: React.FC<AdminOtpModalProps> = ({
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="contact@algorudixai.com"
+                    placeholder="admin@example.com"
                     className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-cyan-500 font-mono"
                   />
                 </div>
                 <p className="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1">
-                  <Lock className="w-3 h-3 text-cyan-400" /> Only {AUTHORIZED_ADMIN_EMAIL} is granted admin privileges.
+                  <Lock className="w-3 h-3 text-cyan-400" /> Only authorized administrator email can receive an OTP.
                 </p>
               </div>
 

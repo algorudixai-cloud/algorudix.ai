@@ -223,7 +223,7 @@ export const Blog: React.FC<BlogProps> = ({ onOpenConsultation, onBackToHome }) 
               className="inline-flex items-center gap-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-900/90 hover:bg-slate-800 px-3.5 py-2 rounded-xl border border-slate-800 hover:border-cyan-500/40 transition cursor-pointer"
             >
               <Lock className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Admin Login ({AUTHORIZED_ADMIN_EMAIL})</span>
+              <span>Admin Login</span>
             </button>
           )}
         </div>
