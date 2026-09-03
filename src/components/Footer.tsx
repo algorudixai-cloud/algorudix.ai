@@ -19,9 +19,10 @@ import { exportSubmissionsToExcel } from '../utils/excelStorage';
 interface FooterProps {
   companyName: string;
   onOpenConsultation: () => void;
+  onNavigate?: (page: 'home' | 'blog', targetId?: string) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation }) => {
+export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation, onNavigate }) => {
   const quickLinks = [
     { label: 'Home', href: '#hero' },
     { label: 'About', href: '#about' },
@@ -75,7 +76,16 @@ export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation 
           
           {/* Company Brand & Description */}
           <div className="lg:col-span-4 space-y-4">
-            <a href="#hero" className="flex items-center gap-3 group">
+            <a 
+              href="#hero" 
+              onClick={(e) => {
+                if (onNavigate) {
+                  e.preventDefault();
+                  onNavigate('home', 'hero');
+                }
+              }}
+              className="flex items-center gap-3 group cursor-pointer"
+            >
               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-md shadow-cyan-500/20">
                 <BrainCircuit className="w-5 h-5 text-white" />
               </div>
@@ -138,7 +148,18 @@ export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation 
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="hover:text-cyan-400 transition"
+                    onClick={(e) => {
+                      if (onNavigate) {
+                        e.preventDefault();
+                        const targetId = link.href.replace('#', '');
+                        if (targetId === 'blog') {
+                          onNavigate('blog');
+                        } else {
+                          onNavigate('home', targetId);
+                        }
+                      }
+                    }}
+                    className="hover:text-cyan-400 transition cursor-pointer"
                   >
                     {link.label}
                   </a>

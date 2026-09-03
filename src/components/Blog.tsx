@@ -13,7 +13,8 @@ import {
   CheckCircle2,
   TrendingUp,
   Cpu,
-  Plus
+  Plus,
+  ArrowLeft
 } from 'lucide-react';
 import { BlogPost } from '../types';
 import { INITIAL_BLOG_POSTS } from '../data/blogData';
@@ -23,9 +24,10 @@ import { AiAgentBlogModal } from './AiAgentBlogModal';
 
 interface BlogProps {
   onOpenConsultation: (serviceName?: string) => void;
+  onBackToHome?: () => void;
 }
 
-export const Blog: React.FC<BlogProps> = ({ onOpenConsultation }) => {
+export const Blog: React.FC<BlogProps> = ({ onOpenConsultation, onBackToHome }) => {
   const [posts, setPosts] = useState<BlogPost[]>(() => {
     try {
       const saved = localStorage.getItem('algorudix_blog_posts');
@@ -87,13 +89,26 @@ export const Blog: React.FC<BlogProps> = ({ onOpenConsultation }) => {
   const categories = ['All', 'AI & LLMs', 'Business Intelligence', 'Process Automation', 'Data Engineering'];
 
   return (
-    <section id="blog" className="py-24 bg-[#0b0f19] relative overflow-hidden">
+    <section id="blog" className="pt-32 pb-24 bg-[#0b0f19] relative min-h-screen">
       
       {/* Background Ambient Glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-tr from-cyan-500/10 via-blue-600/10 to-indigo-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
+        {/* Back to Home Button */}
+        {onBackToHome && (
+          <div className="mb-6">
+            <button
+              onClick={onBackToHome}
+              className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 hover:text-cyan-300 bg-slate-900/80 px-3.5 py-2 rounded-xl border border-slate-800 hover:border-cyan-500/40 transition cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back to Algorudix Homepage</span>
+            </button>
+          </div>
+        )}
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -24,6 +24,11 @@ export default function App() {
   const [companyName, setCompanyName] = useState<string>(COMPANY_CONFIG.defaultName);
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
 
+  // Page Routing state: 'home' vs 'blog'
+  const [activePage, setActivePage] = useState<'home' | 'blog'>(() => {
+    return window.location.hash === '#blog' ? 'blog' : 'home';
+  });
+
   // Modals state
   const [isConsultationOpen, setIsConsultationOpen] = useState<boolean>(false);
   const [consultationPreselect, setConsultationPreselect] = useState<string>('Custom AI Development');
@@ -35,23 +40,65 @@ export default function App() {
   const [formPrefillService, setFormPrefillService] = useState<string>('Custom AI Development');
   const [formPrefillDesc, setFormPrefillDesc] = useState<string>('');
 
+  // Handle URL hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#blog') {
+        setActivePage('blog');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        setActivePage('home');
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleNavigate = (page: 'home' | 'blog', targetId?: string) => {
+    setActivePage(page);
+    if (page === 'blog') {
+      window.location.hash = '#blog';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.location.hash = targetId ? `#${targetId}` : '#hero';
+      if (targetId) {
+        setTimeout(() => {
+          const el = document.getElementById(targetId);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          else window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 50);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  };
+
   const handleOpenConsultation = (serviceName?: string) => {
     if (serviceName) setConsultationPreselect(serviceName);
     setIsConsultationOpen(true);
   };
 
   const handleGetStarted = () => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+    if (activePage !== 'home') {
+      handleNavigate('home', 'contact');
+    } else {
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
   const handleBookService = (serviceName: string) => {
     setFormPrefillService(serviceName);
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+    if (activePage !== 'home') {
+      handleNavigate('home', 'contact');
+    } else {
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -60,25 +107,33 @@ export default function App() {
     setFormPrefillDesc(
       `Inquiry generated from ROI Estimator: We are interested in ${scope.service} to save ~${scope.hoursSaved.toLocaleString()} hours/month and achieve estimated ~$${scope.costSavings.toLocaleString()}/yr in operational efficiencies.`
     );
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+    if (activePage !== 'home') {
+      handleNavigate('home', 'contact');
+    } else {
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
   const handleStartSimilarProject = (projectTitle: string) => {
     setFormPrefillService('AI & Custom Software Development');
     setFormPrefillDesc(`We are interested in building a solution similar to your case study: "${projectTitle}".`);
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+    if (activePage !== 'home') {
+      handleNavigate('home', 'contact');
+    } else {
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
   return (
     <div className="min-h-screen bg-[#0b0f19] text-slate-100 font-sans selection:bg-cyan-500 selection:text-white">
       
-      {/* Optional Company Name Customizer Bar for the user's convenience */}
+      {/* Optional Company Name Customizer Bar */}
       <div className="bg-slate-950/90 border-b border-slate-800/80 py-1.5 px-4 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
         <span>Company Brand:</span>
         {isEditingName ? (
@@ -111,78 +166,87 @@ export default function App() {
       {/* Navigation Header */}
       <Navbar 
         companyName={companyName}
+        activePage={activePage}
+        onNavigate={handleNavigate}
         onOpenConsultation={() => handleOpenConsultation()}
         onOpenContact={handleGetStarted}
       />
 
-      {/* Main Content Sections */}
+      {/* Main View Area */}
       <main>
-        {/* 1. Hero Section */}
-        <Hero 
-          onOpenConsultation={() => handleOpenConsultation()}
-          onGetStarted={handleGetStarted}
-        />
+        {activePage === 'blog' ? (
+          /* Separate Standalone Blog Page View */
+          <Blog 
+            onOpenConsultation={handleOpenConsultation}
+            onBackToHome={() => handleNavigate('home', 'hero')}
+          />
+        ) : (
+          /* Homepage Single Page View */
+          <>
+            {/* 1. Hero Section */}
+            <Hero 
+              onOpenConsultation={() => handleOpenConsultation()}
+              onGetStarted={handleGetStarted}
+            />
 
-        {/* 2. About Us Section */}
-        <About 
-          onOpenConsultation={() => handleOpenConsultation()}
-        />
+            {/* 2. About Us Section */}
+            <About 
+              onOpenConsultation={() => handleOpenConsultation()}
+            />
 
-        {/* 3. Services Section */}
-        <Services 
-          onSelectService={(service) => setSelectedServiceDetail(service)}
-          onBookService={handleBookService}
-        />
+            {/* 3. Services Section */}
+            <Services 
+              onSelectService={(service) => setSelectedServiceDetail(service)}
+              onBookService={handleBookService}
+            />
 
-        {/* 4. Why Choose Us Section */}
-        <WhyChooseUs 
-          onOpenConsultation={() => handleOpenConsultation()}
-        />
+            {/* 4. Why Choose Us Section */}
+            <WhyChooseUs 
+              onOpenConsultation={() => handleOpenConsultation()}
+            />
 
-        {/* 5. Our Process Section */}
-        <Process 
-          onOpenConsultation={() => handleOpenConsultation()}
-        />
+            {/* 5. Our Process Section */}
+            <Process 
+              onOpenConsultation={() => handleOpenConsultation()}
+            />
 
-        {/* 6. Technologies We Use Section */}
-        <Technologies />
+            {/* 6. Technologies We Use Section */}
+            <Technologies />
 
-        {/* 7. Industries We Serve Section */}
-        <Industries 
-          onOpenConsultation={handleOpenConsultation}
-        />
+            {/* 7. Industries We Serve Section */}
+            <Industries 
+              onOpenConsultation={handleOpenConsultation}
+            />
 
-        {/* 8. Portfolio / Case Studies Section */}
-        <Portfolio 
-          onSelectCaseStudy={(study) => setSelectedCaseStudy(study)}
-        />
+            {/* 8. Portfolio / Case Studies Section */}
+            <Portfolio 
+              onSelectCaseStudy={(study) => setSelectedCaseStudy(study)}
+            />
 
-        {/* 9. Blog & Technical Journal Section (Agent & Manual Posts) */}
-        <Blog 
-          onOpenConsultation={handleOpenConsultation}
-        />
+            {/* Interactive Scope & ROI Estimator */}
+            <RoiEstimator 
+              onApplyScopeToContact={handleApplyRoiEstimate}
+            />
 
-        {/* Interactive Scope & ROI Estimator */}
-        <RoiEstimator 
-          onApplyScopeToContact={handleApplyRoiEstimate}
-        />
+            {/* 9. Call to Action Section */}
+            <CTA 
+              onStartProject={handleGetStarted}
+              onTalkToExpert={() => handleOpenConsultation('Executive Strategy Call')}
+            />
 
-        {/* 9. Call to Action Section */}
-        <CTA 
-          onStartProject={handleGetStarted}
-          onTalkToExpert={() => handleOpenConsultation('Executive Strategy Call')}
-        />
-
-        {/* 10. Contact Section */}
-        <ContactForm 
-          prefilledService={formPrefillService}
-          prefilledDescription={formPrefillDesc}
-        />
+            {/* 10. Contact Section */}
+            <ContactForm 
+              prefilledService={formPrefillService}
+              prefilledDescription={formPrefillDesc}
+            />
+          </>
+        )}
       </main>
 
-      {/* 11. Footer Section */}
+      {/* Footer Section */}
       <Footer 
         companyName={companyName}
+        onNavigate={handleNavigate}
         onOpenConsultation={() => handleOpenConsultation()}
       />
 

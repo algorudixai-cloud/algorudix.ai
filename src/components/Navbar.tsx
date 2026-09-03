@@ -12,12 +12,16 @@ import {
 
 interface NavbarProps {
   companyName: string;
+  activePage: 'home' | 'blog';
+  onNavigate: (page: 'home' | 'blog', targetId?: string) => void;
   onOpenConsultation: (preselectedService?: string) => void;
   onOpenContact: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
-  companyName, 
+  companyName,
+  activePage,
+  onNavigate,
   onOpenConsultation, 
   onOpenContact 
 }) => {
@@ -29,21 +33,23 @@ export const Navbar: React.FC<NavbarProps> = ({
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      const sections = ['hero', 'about', 'services', 'why-us', 'process', 'technologies', 'industries', 'portfolio', 'blog', 'calculator', 'contact'];
-      const current = sections.find(section => {
-        const el = document.getElementById(section);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          return rect.top <= 120 && rect.bottom >= 120;
-        }
-        return false;
-      });
-      if (current) setActiveSection(current);
+      if (activePage === 'home') {
+        const sections = ['hero', 'about', 'services', 'why-us', 'process', 'technologies', 'industries', 'portfolio', 'calculator', 'contact'];
+        const current = sections.find(section => {
+          const el = document.getElementById(section);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            return rect.top <= 120 && rect.bottom >= 120;
+          }
+          return false;
+        });
+        if (current) setActiveSection(current);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [activePage]);
 
   const navLinks = [
     { label: 'About', href: '#about' },
@@ -73,7 +79,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a 
             href="#hero" 
             id="nav-logo-link"
-            className="flex items-center gap-3 group text-left focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-lg p-1"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate('home', 'hero');
+            }}
+            className="flex items-center gap-3 group text-left focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-lg p-1 cursor-pointer"
           >
             <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-md shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-all duration-300">
               <BrainCircuit className="w-5 h-5 text-white animate-pulse" />
@@ -96,13 +106,24 @@ export const Navbar: React.FC<NavbarProps> = ({
           <nav className="hidden lg:flex items-center gap-1 bg-slate-900/60 p-1.5 rounded-full border border-slate-800/80 backdrop-blur-md">
             {navLinks.map((link) => {
               const targetId = link.href.replace('#', '');
-              const isActive = activeSection === targetId;
+              const isActive = activePage === 'blog' 
+                ? targetId === 'blog' 
+                : activeSection === targetId;
+
               return (
                 <a
                   key={link.label}
                   id={`nav-link-${targetId}`}
                   href={link.href}
-                  className={`px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-medium transition-all duration-200 ${
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (targetId === 'blog') {
+                      onNavigate('blog');
+                    } else {
+                      onNavigate('home', targetId);
+                    }
+                  }}
+                  className={`px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-medium transition-all duration-200 cursor-pointer ${
                     isActive
                       ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-sm shadow-cyan-500/30 font-semibold'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
@@ -148,17 +169,28 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="lg:hidden fixed inset-x-0 top-full bg-[#0b0f19]/98 border-b border-slate-800 backdrop-blur-2xl px-6 py-6 shadow-2xl transition-all animate-in slide-in-from-top duration-200"
         >
           <div className="flex flex-col space-y-3">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-4 py-3 rounded-lg text-slate-200 hover:text-cyan-400 hover:bg-slate-900/80 border border-transparent hover:border-slate-800 transition"
-              >
-                <span className="font-medium text-sm">{link.label}</span>
-                <ChevronRight className="w-4 h-4 text-slate-500" />
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const targetId = link.href.replace('#', '');
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMobileMenuOpen(false);
+                    if (targetId === 'blog') {
+                      onNavigate('blog');
+                    } else {
+                      onNavigate('home', targetId);
+                    }
+                  }}
+                  className="flex items-center justify-between px-4 py-3 rounded-lg text-slate-200 hover:text-cyan-400 hover:bg-slate-900/80 border border-transparent hover:border-slate-800 transition cursor-pointer"
+                >
+                  <span className="font-medium text-sm">{link.label}</span>
+                  <ChevronRight className="w-4 h-4 text-slate-500" />
+                </a>
+              );
+            })}
             
             <div className="pt-4 border-t border-slate-800/80 flex flex-col gap-2.5">
               <button
