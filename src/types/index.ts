@@ -74,6 +74,25 @@ export interface ConsultationFormData {
   projectDescription: string;
 }
 
+export type BlogStatus = 'draft' | 'published' | 'scheduled' | 'archived';
+export type CreationMethod = 'ai' | 'manual';
+
+export interface BlogSeoData {
+  seoTitle: string;
+  metaDescription: string;
+  keywords: string[];
+  score: number; // 0-100 SEO health score
+}
+
+export interface AiGenerationHistory {
+  provider: string;
+  model: string;
+  prompt: string;
+  targetAudience?: string;
+  tone?: string;
+  generatedAt: string;
+}
+
 export interface BlogAuthor {
   name: string;
   role: string;
@@ -93,6 +112,12 @@ export interface BlogPost {
   tags: string[];
   image: string;
   createdType: 'manual' | 'agent';
+  creationMethod?: CreationMethod;
+  status: BlogStatus;
+  targetAudience?: string;
+  tone?: string;
+  seo?: BlogSeoData;
+  aiHistory?: AiGenerationHistory;
   agentDetails?: {
     model: string;
     executionTimeMs: number;
@@ -101,4 +126,14 @@ export interface BlogPost {
   };
   featured?: boolean;
 }
+
+export interface DashboardStats {
+  totalBlogs: number;
+  publishedBlogs: number;
+  draftBlogs: number;
+  aiGeneratedBlogs: number;
+  manualBlogs: number;
+  scheduledBlogs: number;
+}
+
 
