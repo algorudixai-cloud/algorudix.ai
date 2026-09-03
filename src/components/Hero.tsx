@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { 
-  Sparkles, 
-  ArrowRight, 
-  Bot, 
-  BarChart3, 
-  Cpu, 
-  ShieldCheck, 
-  Zap, 
+import {
+  Sparkles,
+  ArrowRight,
+  Bot,
+  BarChart3,
+  Cpu,
+  ShieldCheck,
+  Zap,
   Database,
   CheckCircle2,
   TrendingUp,
@@ -136,10 +136,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation, onGetStarted }) 
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
+
           {/* Left Column: Core Copy & CTAs */}
           <div className="lg:col-span-7 text-center lg:text-left">
-            
+
             {/* Top Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/30 text-cyan-400 text-xs font-semibold tracking-wide mb-6 shadow-sm shadow-cyan-950">
               <span className="flex h-2 w-2 relative">
@@ -204,10 +204,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation, onGetStarted }) 
           {/* Right Column: AI Technology Visual & Interactive HUD */}
           <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
-              
+
               {/* Main Futuristic Card HUD */}
               <div className="relative rounded-2xl bg-gradient-to-b from-slate-900/90 via-[#0d1527]/95 to-slate-950/90 border border-slate-700/60 p-6 shadow-2xl backdrop-blur-xl">
-                
+
                 {/* Header Strip of HUD */}
                 <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
                   <div className="flex items-center gap-2.5">
@@ -245,7 +245,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation, onGetStarted }) 
                         <BarChart3 className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-xs font-semibold text-white">Power BI & ETL Pipelines</p>
+                        <p className="text-xs font-semibold text-white"> BI & ETL Pipelines</p>
                         <p className="text-[11px] text-slate-400">10M+ Daily Streaming Events</p>
                       </div>
                     </div>

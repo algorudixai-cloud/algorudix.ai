@@ -178,9 +178,16 @@ export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation 
             </div>
             <div className="flex items-center gap-2 text-slate-300">
               <Phone className="w-4 h-4 text-blue-400 shrink-0" />
-              <a href={`tel:${COMPANY_CONFIG.phone}`} className="hover:text-white transition">
-                {COMPANY_CONFIG.phone}
-              </a>
+              <div className="flex flex-col">
+                <a href={`tel:${COMPANY_CONFIG.phone}`} className="hover:text-white transition">
+                  {COMPANY_CONFIG.phone}
+                </a>
+                {COMPANY_CONFIG.secondaryPhone && (
+                  <a href={`tel:${COMPANY_CONFIG.secondaryPhone}`} className="hover:text-white transition text-slate-400 text-xs">
+                    {COMPANY_CONFIG.secondaryPhone}
+                  </a>
+                )}
+              </div>
             </div>
             <div className="flex items-start gap-2 text-slate-300">
               <MapPin className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />

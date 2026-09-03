@@ -202,15 +202,25 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                   </div>
                   <div>
                     <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">
-                      Phone Number
+                      Phone Numbers
                     </span>
-                    <a 
-                      href={`tel:${COMPANY_CONFIG.phone}`} 
-                      className="text-sm font-semibold text-white hover:text-cyan-400 transition"
-                    >
-                      {COMPANY_CONFIG.phone}
-                    </a>
-                    <p className="text-xs text-slate-400 mt-0.5">Direct line to enterprise consulting</p>
+                    <div className="flex flex-col gap-0.5">
+                      <a 
+                        href={`tel:${COMPANY_CONFIG.phone}`} 
+                        className="text-sm font-semibold text-white hover:text-cyan-400 transition"
+                      >
+                        {COMPANY_CONFIG.phone}
+                      </a>
+                      {COMPANY_CONFIG.secondaryPhone && (
+                        <a 
+                          href={`tel:${COMPANY_CONFIG.secondaryPhone}`} 
+                          className="text-sm font-semibold text-slate-300 hover:text-cyan-400 transition"
+                        >
+                          {COMPANY_CONFIG.secondaryPhone}
+                        </a>
+                      )}
+                    </div>
+                    <p className="text-xs text-slate-400 mt-0.5">Direct lines to enterprise consulting</p>
                   </div>
                 </div>
 
