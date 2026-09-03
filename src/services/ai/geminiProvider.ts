@@ -2,74 +2,89 @@ import { GoogleGenAI } from '@google/genai';
 import { IAIProvider, GenerateArticleInput, GeneratedArticleResult } from './aiTypes';
 
 /**
- * Curated Pool of High-Resolution Enterprise Unsplash Images.
- * Dynamically selects unique images based on topic keywords and deterministic hashing.
+ * Rich Library of High-Resolution Unsplash Technology & Business Photography.
+ * Dynamically selects a unique image URL based on words extracted from the article Title / Heading.
  */
 export function getDynamicTopicImage(topic: string, category: string): string {
   const t = topic.toLowerCase();
   const c = category.toLowerCase();
 
-  const IMAGE_MAP: { keywords: string[]; url: string }[] = [
+  // Curated multi-category Unsplash HD photo assets
+  const PHOTO_DATABASE: { keywords: string[]; url: string }[] = [
     {
-      keywords: ['small business', 'small businesses', 'support', 'productivity', 'customer'],
+      keywords: ['small business', 'small businesses', 'productivity', 'customer', 'office', 'entrepreneur'],
       url: 'https://images.unsplash.com/photo-1664575602276-acd073f104c1?auto=format&fit=crop&w=1200&q=80',
     },
     {
-      keywords: ['power bi', 'bi', 'dashboard', 'analytics', 'report', 'dax', 'tableau', 'domo'],
+      keywords: ['power bi', 'bi', 'dashboard', 'dax', 'chart', 'visualization', 'analytics', 'tableau', 'domo'],
       url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
     },
     {
-      keywords: ['rpa', 'automation', 'python', 'invoice', 'payable', 'reconciliation', 'script'],
+      keywords: ['python', 'automation', 'rpa', 'script', 'code', 'workflow', 'bot'],
       url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
     },
     {
-      keywords: ['rag', 'vector', 'legal', 'contract', 'llm', 'chroma', 'langchain', 'claude'],
+      keywords: ['rag', 'vector', 'legal', 'contract', 'llm', 'chroma', 'langchain', 'ai agent'],
       url: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80',
     },
     {
-      keywords: ['retail', 'store', 'e-commerce', 'sales', 'inventory'],
+      keywords: ['retail', 'store', 'e-commerce', 'shopping', 'sales', 'inventory'],
       url: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=1200&q=80',
     },
     {
-      keywords: ['health', 'healthcare', 'medical', 'clinical', 'patient'],
+      keywords: ['health', 'healthcare', 'medical', 'hospital', 'clinical'],
       url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
     },
     {
-      keywords: ['finance', 'banking', 'fraud', 'audit', 'credit'],
+      keywords: ['finance', 'banking', 'money', 'audit', 'credit', 'accounting'],
       url: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80',
     },
     {
-      keywords: ['manufacturing', 'factory', 'iot', 'telemetry', 'maintenance'],
+      keywords: ['manufacturing', 'factory', 'industrial', 'iot', 'robotics'],
       url: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80',
     },
     {
-      keywords: ['cloud', 'pipeline', 'etl', 'snowflake', 'databricks', 'synapse', 'warehouse'],
+      keywords: ['cloud', 'pipeline', 'etl', 'snowflake', 'databricks', 'synapse', 'database', 'sql'],
       url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80',
+    },
+    {
+      keywords: ['cyber', 'security', 'protection', 'guardrail', 'privacy', 'network'],
+      url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
+    },
+    {
+      keywords: ['strategy', 'leadership', 'executive', 'management', 'growth'],
+      url: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80',
+    },
+    {
+      keywords: ['developer', 'software', 'engineering', 'programming', 'web'],
+      url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80',
     },
   ];
 
-  // Match keyword in topic or category
-  for (const item of IMAGE_MAP) {
+  // Search keyword match against Title / Heading
+  for (const item of PHOTO_DATABASE) {
     if (item.keywords.some((kw) => t.includes(kw) || c.includes(kw))) {
       return item.url;
     }
   }
 
-  // Fallback pool with deterministic hash selection
-  const POOL = [
+  // Unique hash fallback pool ensuring different images per title heading
+  const EXTENDED_POOL = [
     'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
     'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80',
     'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80',
     'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
   ];
 
   let hash = 0;
   for (let i = 0; i < topic.length; i++) {
     hash = topic.charCodeAt(i) + ((hash << 5) - hash);
   }
-  const index = Math.abs(hash) % POOL.length;
-  return POOL[index];
+  const index = Math.abs(hash) % EXTENDED_POOL.length;
+  return EXTENDED_POOL[index];
 }
 
 export class GeminiProvider implements IAIProvider {
@@ -81,51 +96,52 @@ export class GeminiProvider implements IAIProvider {
     
     const topicStr = input.topic.trim();
     const ideaStr = input.basicIdea?.trim() || topicStr;
-    const audienceStr = input.targetAudience?.trim() || 'Enterprise Leaders & Business Owners';
+    const audienceStr = input.targetAudience?.trim() || 'Technology & Business Professionals';
     const toneStr = input.tone || 'Professional';
     const categoryStr = input.category;
-    const keywordsStr = input.keywords?.length ? input.keywords.join(', ') : 'AI, Automation, Business Efficiency';
+    const keywordsStr = input.keywords?.length ? input.keywords.join(', ') : 'Technology, Innovation, Strategy';
     const lengthStr = input.desiredLength || 'Standard (~800 words)';
+    
+    // Generate unique image based on heading
     const generatedImage = getDynamicTopicImage(topicStr, categoryStr);
 
     if (keyToUse) {
-      // Try Gemini API models
       const modelsToTry = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.0-flash'];
       for (const modelName of modelsToTry) {
         try {
           const ai = new GoogleGenAI({ apiKey: keyToUse });
           const response = await ai.models.generateContent({
             model: modelName,
-            contents: `You are a Senior Principal AI & BI Architect at Algorudix.ai writing a deeply researched, realistic, high-quality technical article.
+            contents: `You are an expert senior technology journalist and industry analyst writing for a major technology news publication (such as MIT Technology Review, TechCrunch, or Harvard Business Review).
 
-USER INPUT:
-- Title / Topic: "${topicStr}"
-- Basic Idea / Concept: "${ideaStr}"
-- Target Audience: "${audienceStr}"
-- Tone: "${toneStr}"
-- Category: "${categoryStr}"
-- Keywords: "${keywordsStr}"
-- Length: "${lengthStr}"
+USER ARTICLE REQUEST:
+- Article Heading / Topic: "${topicStr}"
+- Key Idea / Background: "${ideaStr}"
+- Target Readers: "${audienceStr}"
+- Editorial Tone: "${toneStr}"
+- Field / Category: "${categoryStr}"
+- Focus Keywords: "${keywordsStr}"
+- Article Depth: "${lengthStr}"
 
-CRITICAL QUALITY CONSTRAINTS:
-1. Write a real-world, highly relevant article tailored explicitly to "${topicStr}" and "${ideaStr}".
-2. Explain practical scenarios, implementation challenges, solutions, and enterprise ROI.
-3. Include real code snippets (in Python, DAX, or SQL) with detailed comments relevant to ${categoryStr}.
-4. Do NOT invent fake statistical claims or fake companies.
-5. Format in clean GitHub Markdown with clear section headers.
+CRITICAL EDITORIAL STYLE GUIDELINES (HUMAN-READABLE NEWS JOURNAL):
+1. Write in clear, engaging, natural human prose like a published tech journalist.
+2. DO NOT include any AI boilerplate or robotic clichés (avoid phrases like "In today's fast-paced digital world", "Autonomously generated", "It is important to note", "Furthermore").
+3. DO NOT self-promote any specific vendor, agency, or company inside the article body. Focus purely on valuable technology news, real-world industry trends, operational insights, and practical code/framework implementation.
+4. If code is applicable to ${categoryStr}, include clean, production-grade Python, DAX, or SQL code blocks with helpful inline comments.
+5. Format with natural markdown headings (# Heading, ## Subheading, ### Technical Breakdown).
 
-Return a JSON object:
+Return JSON format:
 {
-  "title": "A compelling, SEO-optimized title",
-  "slug": "seo-friendly-url-slug",
-  "excerpt": "A 2-sentence executive summary highlighting key outcomes",
+  "title": "An engaging, professional headline for the news journal",
+  "slug": "url-friendly-slug",
+  "excerpt": "A concise 2-sentence journalistic summary of the article",
   "readTime": "5 min read",
-  "tags": ["Tag1", "Tag2", "Tag3", "Tag4"],
-  "content": "Full markdown content with code blocks and headings...",
+  "tags": ["Tag1", "Tag2", "Tag3"],
+  "content": "Full human-readable markdown article text with headings and code blocks...",
   "seoTitle": "Meta Title (50-60 chars)",
   "metaDescription": "Meta Description (150-160 chars)",
   "keywords": ["Keyword1", "Keyword2"],
-  "imagePrompt": "Detailed prompt describing the visual image"
+  "imagePrompt": "Visual graphic description matching topic"
 }`,
             config: {
               responseMimeType: 'application/json',
@@ -137,17 +153,17 @@ Return a JSON object:
             return {
               title: parsed.title || topicStr,
               slug: parsed.slug || topicStr.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-              excerpt: parsed.excerpt || `In-depth analysis on ${topicStr}.`,
-              content: parsed.content || `# Overview\n${ideaStr}`,
+              excerpt: parsed.excerpt || `In-depth reporting on ${topicStr}.`,
+              content: parsed.content || `# ${topicStr}\n\n${ideaStr}`,
               readTime: parsed.readTime || '5 min read',
               category: categoryStr,
-              tags: parsed.tags || [categoryStr.split(' ')[0], 'AI', 'Automation'],
-              imagePrompt: parsed.imagePrompt || `Professional business visual for ${topicStr}`,
+              tags: parsed.tags || [categoryStr.split(' ')[0], 'Technology', 'Insights'],
+              imagePrompt: parsed.imagePrompt || `Editorial header image for ${topicStr}`,
               image: generatedImage,
               seo: {
                 seoTitle: parsed.seoTitle || parsed.title || topicStr,
-                metaDescription: parsed.metaDescription || parsed.excerpt || `Technical guide on ${topicStr}`,
-                keywords: parsed.keywords || [categoryStr, 'AI', 'Analytics'],
+                metaDescription: parsed.metaDescription || parsed.excerpt || `Article on ${topicStr}`,
+                keywords: parsed.keywords || [categoryStr, 'Tech News', 'Insights'],
                 score: 95,
               },
               providerName: this.name,
@@ -155,131 +171,109 @@ Return a JSON object:
             };
           }
         } catch (err) {
-          console.warn(`Gemini API model ${modelName} call error:`, err);
+          console.warn(`Gemini model ${modelName} attempt error:`, err);
         }
       }
     }
 
-    // Fully Dynamic Real-World Fallback Generator
-    return this.generateDynamicFallback(input, generatedImage);
+    // Human-Readable Journalistic Fallback Generator
+    return this.generateHumanJournalisticFallback(input, generatedImage);
   }
 
-  private generateDynamicFallback(input: GenerateArticleInput, image: string): GeneratedArticleResult {
+  private generateHumanJournalisticFallback(input: GenerateArticleInput, image: string): GeneratedArticleResult {
     const topic = input.topic.trim();
     const idea = input.basicIdea?.trim() || topic;
     const category = input.category;
-    const tone = input.tone || 'Professional';
-    const audience = input.targetAudience || 'Small Business Owners & Enterprise Leaders';
+    const audience = input.targetAudience || 'Business & Technology Leaders';
     const slug = topic.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
-    // Synthesize custom dynamic code block tailored to topic & category
+    // Code snippet relevant to category & topic without any company self-promotion
     let codeSnippet = '';
     if (category === 'Business Intelligence' || topic.toLowerCase().includes('bi') || topic.toLowerCase().includes('power bi')) {
       codeSnippet = `\`\`\`dax
-// Custom Power BI / DAX Measure for: ${topic}
-${topic.replace(/[^a-zA-Z0-9]/g, '_')}_KPI := 
-VAR CurrentRevenue = SUM(Sales[Revenue])
-VAR PreviousTarget = CALCULATE(SUM(Targets[MonthlyTarget]), DATEADD(DimDate[Date], -1, MONTH))
-VAR GrowthRatio = DIVIDE(CurrentRevenue - PreviousTarget, PreviousTarget, 0)
+// Optimized Data Model Measure: ${topic}
+${topic.replace(/[^a-zA-Z0-9]/g, '_')}_GrowthRate := 
+VAR CurrentVal = SUM(Sales[Revenue])
+VAR PriorVal = CALCULATE(SUM(Sales[Revenue]), DATEADD(DimDate[Date], -1, YEAR))
 RETURN
-    IF(GrowthRatio > 0.15, "EXCEEDS_TARGET", "STABLE")
+    DIVIDE(CurrentVal - PriorVal, PriorVal, 0)
 \`\`\``;
     } else if (category === 'Process Automation' || topic.toLowerCase().includes('rpa') || topic.toLowerCase().includes('python')) {
       codeSnippet = `\`\`\`python
-# Algorudix Automation Engine: ${topic}
+# Automated Processing Workflow: ${topic}
 import time
-import requests
 
-def execute_automated_workflow(input_data):
+def process_automated_task(records):
     """
-    Automates: ${idea.substring(0, 100)}...
+    Executes automated batch processing for ${topic}
     """
-    print(f"[START] Processing workflow for ${topic}")
-    payload = {
-        "status": "active",
-        "topic": "${topic}",
-        "data": input_data
-    }
-    # Simulate API execution
-    time.sleep(0.4)
-    print(f"[SUCCESS] Completed execution with sub-second response SLA.")
-    return {"status": 200, "result": "SUCCESS"}
+    processed_count = 0
+    for item in records:
+        # Validate data integrity
+        if item.get("valid"):
+            processed_count += 1
+    print(f"Successfully processed {processed_count} records.")
+    return processed_count
 \`\`\``;
     } else {
       codeSnippet = `\`\`\`python
-# Algorudix Intelligent AI Agent Pipeline: ${topic}
+# Knowledge Retrieval Pipeline: ${topic}
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 
-# Initialize AI Knowledge Pipeline for ${topic}
 embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-db = Chroma(collection_name="knowledge_base", embedding_function=embeddings)
+vector_store = Chroma(collection_name="tech_news_db", embedding_function=embeddings)
 
-def generate_agent_response(query: str):
-    """
-    Core Idea: ${idea.substring(0, 120)}...
-    """
-    docs = db.similarity_search(query, k=3)
-    context = " ".join([d.page_content for d in docs])
-    return f"Synthesized Insights for {query}: {context[:200]}"
+def search_relevant_context(query_string: str):
+    docs = vector_store.similarity_search(query_string, k=3)
+    return [doc.page_content for doc in docs]
 \`\`\``;
     }
 
-    const title = `${topic}: Strategic Execution Guide`;
-    const excerpt = `${idea} Discover how ${audience.toLowerCase()} leverage ${category.toLowerCase()} to boost efficiency, eliminate repetitive tasks, and achieve measurable ROI.`;
+    const title = topic;
+    const excerpt = `${idea} An in-depth reporting guide on how ${audience.toLowerCase()} implement modern ${category.toLowerCase()} strategies to improve operational workflow and accuracy.`;
 
     const content = `
-# Executive Overview: ${topic}
-*Autonomously generated research by Algorudix AI Agent*
+# ${topic}
+*Technology & Business Journal Report*
 
 ${idea}
 
-Targeted specifically for **${audience}**, this analysis presents an end-to-end framework for implementing **${topic}** using a **${tone.toLowerCase()}** engineering methodology.
+Across the tech industry, **${topic}** has rapidly become a central priority for ${audience.toLowerCase()}. Rather than relying on fragmented, manual systems, forward-thinking teams are modernizing their technical stack to gain speed and precision.
 
 ---
 
-## Key Challenges Solved
+## Current Industry Landscape
 
-Traditional manual processes often suffer from:
-1. **High Operational Overhead**: Repetitive manual tasks consume valuable hours that should be spent on growth.
-2. **Delayed Decision Loops**: Lack of real-time data visibility delays executive action.
-3. **Inconsistent Quality**: Human error in manual execution leads to customer friction.
+Recent industry shifts reveal that traditional manual processes struggle under expanding workloads. Key drivers accelerating adoption include:
+
+1. **Elimination of Repetitive Bottlenecks**: Automating repetitive data entry and manual checking frees up engineering and management capacity.
+2. **Real-Time Data Visibility**: Decisions backed by live metrics reduce guesswork and accelerate turn-around times.
+3. **Consistent Quality Safeguards**: Standardized data models ensure consistent accuracy across team workflows.
 
 ---
 
-## Recommended Solution Architecture
+## Technical Implementation Breakdown
 
-To address these challenges, we implement a decoupled workflow combining automated pipelines with context guardrails:
+When modernizing workflows for **${topic}**, engineering teams focus on clean architecture, modular execution, and automated validation.
 
-\`\`\`
-[Input Data Sources] ──> [AI Agent Processing Engine] ──> [Real-time Analytics Dashboard]
-\`\`\`
-
-### Runnable Implementation Blueprint
+### Implementation Blueprint
 
 ${codeSnippet}
 
 ---
 
-## Quantifiable Business Impact
+## Key Industry Takeaways
 
-- **70%+ Reduction in Manual Processing Time**: Accelerates operational throughput.
-- **Sub-Second Execution SLA**: Delivers real-time answers and execution across channels.
-- **Enhanced Accuracy & Compliance**: Automated validation checks eliminate downstream errors.
-
----
-
-## Strategic Action Items for ${audience}
-
-1. **Conduct an Audit**: Identify high-friction manual bottlenecks across operations.
-2. **Deploy an MVP**: Start with a high-impact prototype before enterprise scaling.
-3. **Enforce Guardrails**: Monitor model outputs, query latencies, and accuracy benchmarks continuously.
+- **Operational Speed**: Significantly reduces processing cycle times.
+- **Data Integrity**: Automated checks prevent common human errors.
+- **Future Scalability**: Establishes a flexible foundation ready for enterprise growth.
 
 ---
-*Published by Algorudix AI Engine. Tailored for enterprise excellence.*
+*Published in Technology & Engineering Journal.*
     `;
 
-    const keywords = [category, topic.split(' ')[0], 'AI Agent', 'Algorudix'];
+    const keywords = [category, topic.split(' ')[0], 'Tech News', 'Insights'];
 
     return {
       title,
@@ -289,15 +283,15 @@ ${codeSnippet}
       readTime: '5 min read',
       category,
       tags: keywords,
-      imagePrompt: `Professional tech workspace concept for ${topic}`,
+      imagePrompt: `Clean tech journalism header graphic for ${topic}`,
       image,
       seo: {
-        seoTitle: `${title} | Algorudix.ai`,
+        seoTitle: `${title} | Tech Insights Journal`,
         metaDescription: excerpt.substring(0, 155),
         keywords,
         score: 95,
       },
-      providerName: 'Gemini Engine (Dynamic)',
+      providerName: 'Gemini Engine (Journalistic)',
       modelName: this.model,
     };
   }
@@ -309,16 +303,16 @@ ${codeSnippet}
         const ai = new GoogleGenAI({ apiKey: keyToUse });
         const response = await ai.models.generateContent({
           model: this.model,
-          contents: `Rewrite and improve this technical article section based on the instruction below:
+          contents: `Rewrite and improve this article section in natural human journalistic style based on:
 Instruction: "${instruction}"
 Original Section:
 "${sectionContent}"
 
-Return only the rewritten markdown text.`,
+Return only the clean rewritten markdown text without AI clichés.`,
         });
         if (response?.text) return response.text.trim();
       } catch (e) {}
     }
-    return `### Updated Section\n*Modified based on instruction: ${instruction}*\n\n${sectionContent}`;
+    return `### Updated Section\n*Refined: ${instruction}*\n\n${sectionContent}`;
   }
 }
