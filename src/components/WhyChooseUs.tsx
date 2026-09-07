@@ -1,12 +1,12 @@
 import React from 'react';
-import { 
-  Sparkles, 
-  Layers, 
-  TrendingUp, 
-  ShieldCheck, 
-  Scale, 
-  CheckCircle2, 
-  Check, 
+import {
+  Sparkles,
+  Layers,
+  TrendingUp,
+  ShieldCheck,
+  Scale,
+  CheckCircle2,
+  Check,
   ArrowRight,
   Zap,
   Lock,
@@ -29,12 +29,12 @@ const iconMap: Record<string, React.ElementType> = {
 export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onOpenConsultation }) => {
   return (
     <section id="why-us" className="relative py-24 bg-gradient-to-b from-[#0b0f19] via-[#0d1424] to-[#0b0f19] border-t border-slate-800/60">
-      
+
       {/* Ambience */}
       <div className="absolute top-1/3 left-1/4 w-[500px] h-[300px] bg-cyan-500/10 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/60 border border-blue-500/30 text-cyan-400 text-xs font-semibold mb-4">
@@ -62,9 +62,8 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onOpenConsultation }) 
               <div
                 key={item.id}
                 id={`why-card-${item.id}`}
-                className={`group rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-950/30 flex flex-col justify-between ${
-                  isWide ? 'lg:col-span-1 md:col-span-1' : ''
-                }`}
+                className={`group rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-950/30 flex flex-col justify-between ${isWide ? 'lg:col-span-1 md:col-span-1' : ''
+                  }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  Sparkles, 
-  Bot, 
-  BarChart3, 
-  Database, 
-  AppWindow, 
-  ArrowRight, 
-  TrendingUp, 
-  CheckCircle2, 
+import {
+  Sparkles,
+  Bot,
+  BarChart3,
+  Database,
+  AppWindow,
+  ArrowRight,
+  TrendingUp,
+  CheckCircle2,
   ExternalLink,
   Layers
 } from 'lucide-react';
@@ -36,12 +36,12 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onSelectCaseStudy }) => {
 
   return (
     <section id="portfolio" className="relative py-24 bg-gradient-to-b from-[#0b0f19] via-[#0d1424] to-[#0b0f19] border-t border-slate-800/60">
-      
+
       {/* Ambience */}
       <div className="absolute top-1/3 right-1/4 w-[500px] h-[300px] bg-blue-600/10 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/60 border border-blue-500/30 text-cyan-400 text-xs font-semibold mb-4">
@@ -71,13 +71,13 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onSelectCaseStudy }) => {
                 className="group rounded-2xl bg-gradient-to-b from-slate-900/90 to-[#0d1322]/90 border border-slate-800 hover:border-cyan-500/40 p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-950/40"
               >
                 <div>
-                  
+
                   {/* Top Visual Card Mockup with Tech Metrics HUD */}
                   <div className={`relative h-48 rounded-xl bg-gradient-to-br ${project.imagePlaceholderGradient} border border-slate-700/60 p-5 mb-6 overflow-hidden flex flex-col justify-between`}>
-                    
+
                     {/* Background Tech Wireframe Pattern */}
                     <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
-                    
+
                     {/* Top Bar of Graphic */}
                     <div className="flex items-center justify-between relative z-10">
                       <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-950/80 border border-slate-700/60 backdrop-blur-md">

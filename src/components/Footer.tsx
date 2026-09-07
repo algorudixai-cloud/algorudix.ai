@@ -1,15 +1,15 @@
 import React from 'react';
-import { 
-  BrainCircuit, 
-  Linkedin, 
-  Twitter, 
-  Instagram, 
-  Facebook, 
-  ArrowRight, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  ShieldCheck, 
+import {
+  BrainCircuit,
+  Linkedin,
+  Twitter,
+  Instagram,
+  Facebook,
+  ArrowRight,
+  Mail,
+  Phone,
+  MapPin,
+  ShieldCheck,
   Heart,
   FileSpreadsheet
 } from 'lucide-react';
@@ -51,7 +51,7 @@ export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation,
 
   return (
     <footer id="main-footer" className="relative bg-[#070a12] border-t border-slate-800/80 text-slate-400 text-sm">
-      
+
       {/* Top Banner / Ticker */}
       <div className="border-b border-slate-800/60 py-6 bg-slate-950/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -73,11 +73,11 @@ export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation,
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
-          
+
           {/* Company Brand & Description */}
           <div className="lg:col-span-4 space-y-4">
-            <a 
-              href="#home" 
+            <a
+              href="#home"
               onClick={(e) => {
                 if (onNavigate) {
                   e.preventDefault();

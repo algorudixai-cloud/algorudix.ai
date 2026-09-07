@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { 
-  Calculator, 
-  Sparkles, 
-  ArrowRight, 
-  DollarSign, 
-  Clock, 
-  TrendingUp, 
-  CheckCircle2 
+import {
+  Calculator,
+  Sparkles,
+  ArrowRight,
+  DollarSign,
+  Clock,
+  TrendingUp,
+  CheckCircle2
 } from 'lucide-react';
 
 interface RoiEstimatorProps {
@@ -35,12 +35,12 @@ export const RoiEstimator: React.FC<RoiEstimatorProps> = ({ onApplyScopeToContac
 
   return (
     <section id="calculator" className="relative py-20 bg-[#0b0f19] border-t border-slate-800/60">
-      
+
       {/* Ambience */}
       <div className="absolute top-1/2 left-1/3 w-80 h-80 bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         <div className="max-w-3xl mx-auto text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-semibold mb-3">
             <Calculator className="w-3.5 h-3.5" />
@@ -59,10 +59,10 @@ export const RoiEstimator: React.FC<RoiEstimatorProps> = ({ onApplyScopeToContac
 
         <div className="max-w-4xl mx-auto rounded-2xl bg-gradient-to-b from-slate-900 via-[#0d1424] to-slate-950 border border-slate-800 p-6 sm:p-10 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
+
             {/* Left Inputs */}
             <div className="lg:col-span-6 space-y-6">
-              
+
               {/* Service Type Selection */}
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
@@ -114,22 +114,20 @@ export const RoiEstimator: React.FC<RoiEstimatorProps> = ({ onApplyScopeToContac
                   <button
                     type="button"
                     onClick={() => setUrgency('standard')}
-                    className={`py-2 px-3 rounded-lg text-xs font-medium border transition ${
-                      urgency === 'standard'
+                    className={`py-2 px-3 rounded-lg text-xs font-medium border transition ${urgency === 'standard'
                         ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/50'
                         : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white'
-                    }`}
+                      }`}
                   >
                     Standard Agile ({currentConfig.timeline})
                   </button>
                   <button
                     type="button"
                     onClick={() => setUrgency('accelerated')}
-                    className={`py-2 px-3 rounded-lg text-xs font-medium border transition ${
-                      urgency === 'accelerated'
+                    className={`py-2 px-3 rounded-lg text-xs font-medium border transition ${urgency === 'accelerated'
                         ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/50'
                         : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white'
-                    }`}
+                      }`}
                   >
                     Rapid MVP (2 - 4 weeks)
                   </button>
@@ -140,7 +138,7 @@ export const RoiEstimator: React.FC<RoiEstimatorProps> = ({ onApplyScopeToContac
 
             {/* Right Output HUD */}
             <div className="lg:col-span-6 rounded-xl bg-slate-950/80 border border-slate-800 p-6 flex flex-col justify-between">
-              
+
               <div className="border-b border-slate-800/80 pb-4 mb-4">
                 <div className="text-[11px] font-mono text-cyan-400 uppercase font-semibold">
                   Projected Annual Business Impact

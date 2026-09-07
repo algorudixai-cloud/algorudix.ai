@@ -12,7 +12,7 @@ export const COMPANY_CONFIG = {
   tagline: 'AI Development & Business Analyst Solutions',
   subtitle: 'We are an AI development and business analyst company helping businesses build custom AI systems, extract actionable intelligence from data, streamline operations, and engineer modern software solutions.',
   email: 'contact@algorudixai.com',
-  phone: '+91 9876543210',
+  phone: '+91 6369266589',
   secondaryPhone: '+91 6351070355',
   location: 'Banglore, Karnataka, India',
   hours: 'Mon - Fri: 8:00 AM - 6:00 PM (IST) / 24/7 Priority Support',

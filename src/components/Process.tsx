@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { 
-  Sparkles, 
-  Search, 
-  Compass, 
-  Code, 
-  Rocket, 
-  TrendingUp, 
-  CheckCircle2, 
+import {
+  Sparkles,
+  Search,
+  Compass,
+  Code,
+  Rocket,
+  TrendingUp,
+  CheckCircle2,
   ArrowRight,
   Clock,
   FileCheck,
@@ -26,12 +26,12 @@ export const Process: React.FC<ProcessProps> = ({ onOpenConsultation }) => {
 
   return (
     <section id="process" className="relative py-24 bg-[#0b0f19] border-t border-slate-800/60">
-      
+
       {/* Background Ambience */}
       <div className="absolute top-1/2 right-1/4 w-[500px] h-[300px] bg-blue-600/10 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-semibold mb-4">
@@ -60,16 +60,14 @@ export const Process: React.FC<ProcessProps> = ({ onOpenConsultation }) => {
                 key={step.stepNumber}
                 id={`process-step-btn-${step.stepNumber}`}
                 onClick={() => setActiveStepIndex(idx)}
-                className={`p-4 rounded-xl text-left border transition-all duration-300 cursor-pointer flex flex-col justify-between ${
-                  isActive
+                className={`p-4 rounded-xl text-left border transition-all duration-300 cursor-pointer flex flex-col justify-between ${isActive
                     ? 'bg-gradient-to-b from-cyan-950/80 to-blue-950/80 border-cyan-500/60 shadow-lg shadow-cyan-950/40'
                     : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900'
-                }`}
+                  }`}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className={`font-mono text-xs font-bold px-2 py-0.5 rounded ${
-                    isActive ? 'bg-cyan-500 text-slate-950' : 'bg-slate-800 text-slate-400'
-                  }`}>
+                  <span className={`font-mono text-xs font-bold px-2 py-0.5 rounded ${isActive ? 'bg-cyan-500 text-slate-950' : 'bg-slate-800 text-slate-400'
+                    }`}>
                     Step {step.stepNumber}
                   </span>
                   <IconComponent className={`w-4 h-4 ${isActive ? 'text-cyan-400' : 'text-slate-500'}`} />
@@ -90,7 +88,7 @@ export const Process: React.FC<ProcessProps> = ({ onOpenConsultation }) => {
         {/* Active Step Deep-Dive Showcase */}
         <div className="rounded-2xl bg-gradient-to-b from-slate-900/95 to-[#0d1424]/95 border border-slate-800 p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
+
             {/* Left Column: Step Overview */}
             <div className="lg:col-span-6">
               <div className="flex items-center gap-3 mb-4">
@@ -136,7 +134,7 @@ export const Process: React.FC<ProcessProps> = ({ onOpenConsultation }) => {
 
             {/* Right Column: Key Activities & Concrete Deliverables */}
             <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              
+
               {/* Key Activities */}
               <div className="p-5 rounded-xl bg-slate-950/70 border border-slate-800/80">
                 <div className="flex items-center gap-2 mb-3 text-cyan-400">

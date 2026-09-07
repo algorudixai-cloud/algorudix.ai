@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Sparkles, 
-  Menu, 
-  X, 
-  ChevronRight, 
-  PhoneCall, 
+import {
+  Sparkles,
+  Menu,
+  X,
+  ChevronRight,
+  PhoneCall,
   ShieldCheck,
   BrainCircuit,
   ArrowRight
@@ -18,12 +18,12 @@ interface NavbarProps {
   onOpenContact: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ 
+export const Navbar: React.FC<NavbarProps> = ({
   companyName,
   activePage,
   onNavigate,
-  onOpenConsultation, 
-  onOpenContact 
+  onOpenConsultation,
+  onOpenContact
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -64,20 +64,19 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header 
-      id="main-navbar" 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-[#0b0f19]/90 backdrop-blur-md border-b border-slate-800/80 shadow-lg shadow-black/40 py-3.5' 
+    <header
+      id="main-navbar"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+          ? 'bg-[#0b0f19]/90 backdrop-blur-md border-b border-slate-800/80 shadow-lg shadow-black/40 py-3.5'
           : 'bg-transparent py-5'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          
+
           {/* Logo & Brand */}
-          <a 
-            href="#home" 
+          <a
+            href="#home"
             id="nav-logo-link"
             onClick={(e) => {
               e.preventDefault();
@@ -106,8 +105,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           <nav className="hidden lg:flex items-center gap-1 bg-slate-900/60 p-1.5 rounded-full border border-slate-800/80 backdrop-blur-md">
             {navLinks.map((link) => {
               const targetId = link.href.replace('#', '');
-              const isActive = activePage === 'blog' 
-                ? targetId === 'blog' 
+              const isActive = activePage === 'blog'
+                ? targetId === 'blog'
                 : activeSection === targetId;
 
               return (
@@ -123,11 +122,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                       onNavigate('home', targetId);
                     }
                   }}
-                  className={`px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-medium transition-all duration-200 cursor-pointer ${
-                    isActive
+                  className={`px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-medium transition-all duration-200 cursor-pointer ${isActive
                       ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-sm shadow-cyan-500/30 font-semibold'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </a>
@@ -164,8 +162,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div 
-          id="mobile-drawer" 
+        <div
+          id="mobile-drawer"
           className="lg:hidden fixed inset-x-0 top-full bg-[#0b0f19]/98 border-b border-slate-800 backdrop-blur-2xl px-6 py-6 shadow-2xl transition-all animate-in slide-in-from-top duration-200"
         >
           <div className="flex flex-col space-y-3">
@@ -191,7 +189,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </a>
               );
             })}
-            
+
             <div className="pt-4 border-t border-slate-800/80 flex flex-col gap-2.5">
               <button
                 onClick={() => {

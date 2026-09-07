@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
-  Brain, 
-  BarChart3, 
-  Code2, 
-  Headphones, 
-  CheckCircle2, 
+import {
+  Brain,
+  BarChart3,
+  Code2,
+  Headphones,
+  CheckCircle2,
   Sparkles,
   ArrowRight,
   Layers,
@@ -67,13 +67,13 @@ export const About: React.FC<AboutProps> = ({ onOpenConsultation }) => {
 
   return (
     <section id="about" className="relative py-24 bg-gradient-to-b from-[#0b0f19] via-[#0d1322] to-[#0b0f19] border-t border-slate-800/60">
-      
+
       {/* Background glow & subtle patterns */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-10 right-0 w-96 h-96 bg-blue-600/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/60 border border-blue-500/30 text-cyan-400 text-xs font-semibold mb-4">

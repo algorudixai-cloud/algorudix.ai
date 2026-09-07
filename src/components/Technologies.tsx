@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import { 
-  Sparkles, 
-  Bot, 
-  Brain, 
-  BarChart2, 
-  Activity, 
-  PieChart, 
-  Terminal, 
-  Database, 
-  Flame, 
-  Box, 
-  Grid, 
-  GitBranch, 
-  Code, 
-  Layers, 
-  FileCode, 
-  Server, 
-  Share2, 
-  CloudRain, 
-  Cloud, 
+import {
+  Sparkles,
+  Bot,
+  Brain,
+  BarChart2,
+  Activity,
+  PieChart,
+  Terminal,
+  Database,
+  Flame,
+  Box,
+  Grid,
+  GitBranch,
+  Code,
+  Layers,
+  FileCode,
+  Server,
+  Share2,
+  CloudRain,
+  Cloud,
   Globe,
   CheckCircle2,
   Cpu
@@ -68,12 +68,12 @@ export const Technologies: React.FC = () => {
 
   return (
     <section id="technologies" className="relative py-24 bg-gradient-to-b from-[#0b0f19] via-[#0d1322] to-[#0b0f19] border-t border-slate-800/60">
-      
+
       {/* Ambience */}
       <div className="absolute top-1/3 right-10 w-96 h-96 bg-indigo-600/10 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/60 border border-blue-500/30 text-cyan-400 text-xs font-semibold mb-4">
@@ -98,11 +98,10 @@ export const Technologies: React.FC = () => {
               key={cat.id}
               id={`tech-filter-${cat.id}`}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${
-                selectedCategory === cat.id
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${selectedCategory === cat.id
                   ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-md shadow-cyan-950'
                   : 'bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
-              }`}
+                }`}
             >
               {cat.label}
             </button>

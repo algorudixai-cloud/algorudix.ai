@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { 
-  Sparkles, 
-  ShoppingBag, 
-  HeartPulse, 
-  Landmark, 
-  Factory, 
-  Rocket, 
-  GraduationCap, 
+import {
+  Sparkles,
+  ShoppingBag,
+  HeartPulse,
+  Landmark,
+  Factory,
+  Rocket,
+  GraduationCap,
   Truck,
   CheckCircle2,
   ArrowRight,
@@ -34,12 +34,12 @@ export const Industries: React.FC<IndustriesProps> = ({ onOpenConsultation }) =>
 
   return (
     <section id="industries" className="relative py-24 bg-[#0b0f19] border-t border-slate-800/60">
-      
+
       {/* Ambience */}
       <div className="absolute top-1/4 left-10 w-96 h-96 bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-semibold mb-4">
@@ -68,19 +68,17 @@ export const Industries: React.FC<IndustriesProps> = ({ onOpenConsultation }) =>
                 key={ind.id}
                 id={`industry-card-${ind.id}`}
                 onClick={() => setSelectedIndustry(ind)}
-                className={`group rounded-2xl p-6 border transition-all duration-300 cursor-pointer flex flex-col justify-between ${
-                  isSelected
+                className={`group rounded-2xl p-6 border transition-all duration-300 cursor-pointer flex flex-col justify-between ${isSelected
                     ? 'bg-gradient-to-b from-slate-900 via-blue-950/40 to-slate-900 border-cyan-500/60 shadow-xl shadow-cyan-950/50 -translate-y-1'
                     : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900'
-                }`}
+                  }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all ${
-                      isSelected 
-                        ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 scale-105' 
+                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all ${isSelected
+                        ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 scale-105'
                         : 'bg-slate-800 text-slate-400 group-hover:text-cyan-400 group-hover:bg-slate-800/80'
-                    }`}>
+                      }`}>
                       <IconComponent className="w-5 h-5" />
                     </div>
                     <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
@@ -88,9 +86,8 @@ export const Industries: React.FC<IndustriesProps> = ({ onOpenConsultation }) =>
                     </span>
                   </div>
 
-                  <h3 className={`font-display font-bold text-base mb-1.5 transition-colors ${
-                    isSelected ? 'text-cyan-300' : 'text-white group-hover:text-cyan-300'
-                  }`}>
+                  <h3 className={`font-display font-bold text-base mb-1.5 transition-colors ${isSelected ? 'text-cyan-300' : 'text-white group-hover:text-cyan-300'
+                    }`}>
                     {ind.name}
                   </h3>
 
@@ -101,9 +98,8 @@ export const Industries: React.FC<IndustriesProps> = ({ onOpenConsultation }) =>
 
                 <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
                   <span className="text-slate-400 font-medium">Domain Solutions</span>
-                  <span className={`flex items-center text-xs font-semibold ${
-                    isSelected ? 'text-cyan-400' : 'text-slate-500 group-hover:text-slate-300'
-                  }`}>
+                  <span className={`flex items-center text-xs font-semibold ${isSelected ? 'text-cyan-400' : 'text-slate-500 group-hover:text-slate-300'
+                    }`}>
                     View Details <ArrowRight className="w-3.5 h-3.5 ml-1" />
                   </span>
                 </div>
@@ -124,7 +120,7 @@ export const Industries: React.FC<IndustriesProps> = ({ onOpenConsultation }) =>
                 <p className="text-slate-200 text-sm sm:text-base leading-relaxed mb-4">
                   {selectedIndustry.description}
                 </p>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {selectedIndustry.useCases.map((useCase, idx) => (
                     <div key={idx} className="p-3 rounded-lg bg-slate-950/70 border border-slate-800 text-xs text-slate-300 flex items-center gap-2">

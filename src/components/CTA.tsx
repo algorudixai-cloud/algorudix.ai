@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
-  Sparkles, 
-  ArrowRight, 
-  PhoneCall, 
-  CheckCircle2, 
-  ShieldCheck, 
+import {
+  Sparkles,
+  ArrowRight,
+  PhoneCall,
+  CheckCircle2,
+  ShieldCheck,
   Zap,
   Bot
 } from 'lucide-react';
@@ -17,15 +17,15 @@ interface CTAProps {
 export const CTA: React.FC<CTAProps> = ({ onStartProject, onTalkToExpert }) => {
   return (
     <section id="cta" className="relative py-24 bg-gradient-to-b from-[#0b0f19] via-[#0e1629] to-[#0b0f19] border-t border-slate-800/60 overflow-hidden">
-      
+
       {/* Glow Rings */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-cyan-500/20 via-blue-600/20 to-indigo-600/20 blur-[140px] rounded-full pointer-events-none" />
       <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         <div className="max-w-4xl mx-auto rounded-3xl bg-gradient-to-b from-slate-900/95 via-[#0d1527]/98 to-slate-950/95 border border-cyan-500/40 p-8 sm:p-14 text-center shadow-2xl backdrop-blur-2xl relative overflow-hidden">
-          
+
           {/* Top Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 text-xs font-semibold mb-6 shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-cyan-300" />

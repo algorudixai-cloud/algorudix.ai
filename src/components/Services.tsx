@@ -1,14 +1,14 @@
 import React from 'react';
-import { 
-  Brain, 
-  BarChart3, 
-  Database, 
-  Cpu, 
-  Code2, 
-  Cloud, 
-  ArrowRight, 
-  Sparkles, 
-  Check, 
+import {
+  Brain,
+  BarChart3,
+  Database,
+  Cpu,
+  Code2,
+  Cloud,
+  ArrowRight,
+  Sparkles,
+  Check,
   Layers
 } from 'lucide-react';
 import { SERVICES_DATA } from '../data/companyData';
@@ -31,13 +31,13 @@ const iconMap: Record<string, React.ElementType> = {
 export const Services: React.FC<ServicesProps> = ({ onSelectService, onBookService }) => {
   return (
     <section id="services" className="relative py-24 bg-[#0b0f19] border-t border-slate-800/60">
-      
+
       {/* Background Ambience */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-blue-600/10 blur-[130px] rounded-full pointer-events-none" />
       <div className="absolute bottom-10 left-0 w-96 h-96 bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-semibold mb-4">
@@ -68,7 +68,7 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService, onBookServi
               >
                 {/* Card Top */}
                 <div>
-                  
+
                   {/* Category Pill & Icon */}
                   <div className="flex items-center justify-between mb-5">
                     <div className="w-13 h-13 rounded-xl bg-gradient-to-br from-cyan-500/20 via-blue-600/10 to-indigo-600/20 border border-cyan-500/30 text-cyan-400 flex items-center justify-center group-hover:scale-105 group-hover:border-cyan-400 transition-all duration-300 shadow-md">

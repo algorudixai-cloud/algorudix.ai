@@ -132,7 +132,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0b0f19] text-slate-100 font-sans selection:bg-cyan-500 selection:text-white">
-      
+
       {/* Optional Company Name Customizer Bar */}
       <div className="bg-slate-950/90 border-b border-slate-800/80 py-1.5 px-4 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
         <span>Company Brand:</span>
@@ -153,7 +153,7 @@ export default function App() {
             </button>
           </div>
         ) : (
-          <span 
+          <span
             onClick={() => setIsEditingName(true)}
             className="text-cyan-300 font-semibold hover:underline cursor-pointer flex items-center gap-1"
             title="Click to rename company"
@@ -164,7 +164,7 @@ export default function App() {
       </div>
 
       {/* Navigation Header */}
-      <Navbar 
+      <Navbar
         companyName={companyName}
         activePage={activePage}
         onNavigate={handleNavigate}
@@ -176,7 +176,7 @@ export default function App() {
       <main>
         {activePage === 'blog' ? (
           /* Separate Standalone Blog Page View */
-          <Blog 
+          <Blog
             onOpenConsultation={handleOpenConsultation}
             onBackToHome={() => handleNavigate('home', 'home')}
           />
@@ -184,29 +184,29 @@ export default function App() {
           /* Homepage Single Page View */
           <>
             {/* 1. Hero Section */}
-            <Hero 
+            <Hero
               onOpenConsultation={() => handleOpenConsultation()}
               onGetStarted={handleGetStarted}
             />
 
             {/* 2. About Us Section */}
-            <About 
+            <About
               onOpenConsultation={() => handleOpenConsultation()}
             />
 
             {/* 3. Services Section */}
-            <Services 
+            <Services
               onSelectService={(service) => setSelectedServiceDetail(service)}
               onBookService={handleBookService}
             />
 
             {/* 4. Why Choose Us Section */}
-            <WhyChooseUs 
+            <WhyChooseUs
               onOpenConsultation={() => handleOpenConsultation()}
             />
 
             {/* 5. Our Process Section */}
-            <Process 
+            <Process
               onOpenConsultation={() => handleOpenConsultation()}
             />
 
@@ -214,28 +214,28 @@ export default function App() {
             <Technologies />
 
             {/* 7. Industries We Serve Section */}
-            <Industries 
+            <Industries
               onOpenConsultation={handleOpenConsultation}
             />
 
             {/* 8. Portfolio / Case Studies Section */}
-            <Portfolio 
+            <Portfolio
               onSelectCaseStudy={(study) => setSelectedCaseStudy(study)}
             />
 
             {/* Interactive Scope & ROI Estimator */}
-            <RoiEstimator 
+            <RoiEstimator
               onApplyScopeToContact={handleApplyRoiEstimate}
             />
 
             {/* 9. Call to Action Section */}
-            <CTA 
+            <CTA
               onStartProject={handleGetStarted}
               onTalkToExpert={() => handleOpenConsultation('Executive Strategy Call')}
             />
 
             {/* 10. Contact Section */}
-            <ContactForm 
+            <ContactForm
               prefilledService={formPrefillService}
               prefilledDescription={formPrefillDesc}
             />
@@ -244,26 +244,26 @@ export default function App() {
       </main>
 
       {/* Footer Section */}
-      <Footer 
+      <Footer
         companyName={companyName}
         onNavigate={handleNavigate}
         onOpenConsultation={() => handleOpenConsultation()}
       />
 
       {/* Interactive Modals */}
-      <ConsultationModal 
+      <ConsultationModal
         isOpen={isConsultationOpen}
         onClose={() => setIsConsultationOpen(false)}
         preselectedService={consultationPreselect}
       />
 
-      <ServiceDetailModal 
+      <ServiceDetailModal
         service={selectedServiceDetail}
         onClose={() => setSelectedServiceDetail(null)}
         onBookService={handleBookService}
       />
 
-      <CaseStudyModal 
+      <CaseStudyModal
         caseStudy={selectedCaseStudy}
         onClose={() => setSelectedCaseStudy(null)}
         onStartSimilarProject={handleStartSimilarProject}

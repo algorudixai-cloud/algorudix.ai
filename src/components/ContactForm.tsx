@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Send, 
-  CheckCircle2, 
-  Clock, 
-  Sparkles, 
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  CheckCircle2,
+  Clock,
+  Sparkles,
   AlertCircle,
   Linkedin,
   Twitter,
@@ -26,9 +26,9 @@ interface ContactFormProps {
   prefilledDescription?: string;
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({ 
-  prefilledService, 
-  prefilledDescription 
+export const ContactForm: React.FC<ContactFormProps> = ({
+  prefilledService,
+  prefilledDescription
 }) => {
   const [formData, setFormData] = useState<ConsultationFormData>({
     fullName: '',
@@ -140,13 +140,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({
 
   return (
     <section id="contact" className="relative py-24 bg-[#0b0f19] border-t border-slate-800/60">
-      
+
       {/* Ambience */}
       <div className="absolute top-1/3 left-10 w-96 h-96 bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-600/10 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-semibold mb-4">
@@ -165,17 +165,17 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
+
           {/* Left Column: Direct Company Contact Info */}
           <div className="lg:col-span-5 space-y-8">
-            
+
             <div className="rounded-2xl bg-gradient-to-b from-slate-900 via-[#0d1424] to-slate-950 border border-slate-800 p-8 shadow-xl">
               <h3 className="font-display font-bold text-xl text-white mb-6">
                 Consultation Hub
               </h3>
-              
+
               <div className="space-y-6">
-                
+
                 {/* Business Email */}
                 <div className="flex items-start gap-4">
                   <div className="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center shrink-0">
@@ -185,8 +185,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                     <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">
                       Business Email
                     </span>
-                    <a 
-                      href={`mailto:${COMPANY_CONFIG.email}`} 
+                    <a
+                      href={`mailto:${COMPANY_CONFIG.email}`}
                       className="text-sm font-semibold text-white hover:text-cyan-400 transition"
                     >
                       {COMPANY_CONFIG.email}
@@ -205,15 +205,15 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                       Phone Numbers
                     </span>
                     <div className="flex flex-col gap-0.5">
-                      <a 
-                        href={`tel:${COMPANY_CONFIG.phone}`} 
+                      <a
+                        href={`tel:${COMPANY_CONFIG.phone}`}
                         className="text-sm font-semibold text-white hover:text-cyan-400 transition"
                       >
                         {COMPANY_CONFIG.phone}
                       </a>
                       {COMPANY_CONFIG.secondaryPhone && (
-                        <a 
-                          href={`tel:${COMPANY_CONFIG.secondaryPhone}`} 
+                        <a
+                          href={`tel:${COMPANY_CONFIG.secondaryPhone}`}
                           className="text-sm font-semibold text-slate-300 hover:text-cyan-400 transition"
                         >
                           {COMPANY_CONFIG.secondaryPhone}
@@ -308,7 +308,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           {/* Right Column: Interactive Working Contact Form */}
           <div className="lg:col-span-7">
             <div className="rounded-2xl bg-gradient-to-b from-slate-900/95 via-[#0d1424]/95 to-slate-950/95 border border-slate-800 p-8 sm:p-10 shadow-2xl backdrop-blur-xl">
-              
+
               {isSubmitted ? (
                 <div className="text-center py-12 space-y-6">
                   <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center mx-auto animate-bounce">
@@ -345,9 +345,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate className="space-y-5">
-                  
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    
+
                     {/* Full Name */}
                     <div>
                       <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
@@ -361,9 +361,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                           value={formData.fullName}
                           onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                           placeholder="e.g. Alex Morgan"
-                          className={`w-full bg-slate-950 border ${
-                            errors.fullName ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-cyan-500'
-                          } rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none transition`}
+                          className={`w-full bg-slate-950 border ${errors.fullName ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-cyan-500'
+                            } rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none transition`}
                         />
                       </div>
                       {errors.fullName && (
@@ -386,9 +385,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                           value={formData.companyName}
                           onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                           placeholder="e.g. Acme Innovations Corp"
-                          className={`w-full bg-slate-950 border ${
-                            errors.companyName ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-cyan-500'
-                          } rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none transition`}
+                          className={`w-full bg-slate-950 border ${errors.companyName ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-cyan-500'
+                            } rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none transition`}
                         />
                       </div>
                       {errors.companyName && (
@@ -401,7 +399,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    
+
                     {/* Email Address */}
                     <div>
                       <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
@@ -415,9 +413,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           placeholder="alex@acmecorp.com"
-                          className={`w-full bg-slate-950 border ${
-                            errors.email ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-cyan-500'
-                          } rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none transition`}
+                          className={`w-full bg-slate-950 border ${errors.email ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-cyan-500'
+                            } rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none transition`}
                         />
                       </div>
                       {errors.email && (
@@ -440,9 +437,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           placeholder="+1 (555) 019-2834"
-                          className={`w-full bg-slate-950 border ${
-                            errors.phone ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-cyan-500'
-                          } rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none transition`}
+                          className={`w-full bg-slate-950 border ${errors.phone ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-cyan-500'
+                            } rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none transition`}
                         />
                       </div>
                       {errors.phone && (
@@ -491,9 +487,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                         value={formData.projectDescription}
                         onChange={(e) => setFormData({ ...formData, projectDescription: e.target.value })}
                         placeholder="Describe your current business bottlenecks, data sources, goals, or desired AI capabilities..."
-                        className={`w-full bg-slate-950 border ${
-                          errors.projectDescription ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-cyan-500'
-                        } rounded-xl p-4 text-sm text-white placeholder:text-slate-600 focus:outline-none transition resize-none`}
+                        className={`w-full bg-slate-950 border ${errors.projectDescription ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-cyan-500'
+                          } rounded-xl p-4 text-sm text-white placeholder:text-slate-600 focus:outline-none transition resize-none`}
                       />
                     </div>
                     {errors.projectDescription && (
