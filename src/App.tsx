@@ -16,6 +16,7 @@ import { Footer } from './components/Footer';
 import { ConsultationModal } from './components/ConsultationModal';
 import { ServiceDetailModal } from './components/ServiceDetailModal';
 import { CaseStudyModal } from './components/CaseStudyModal';
+import { PolicyModal, PolicyType } from './components/PolicyModal';
 import { ServiceItem, CaseStudyItem } from './types';
 import { COMPANY_CONFIG } from './data/companyData';
 export default function App() {
@@ -32,6 +33,10 @@ export default function App() {
 
   const [selectedServiceDetail, setSelectedServiceDetail] = useState<ServiceItem | null>(null);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudyItem | null>(null);
+
+  // Policy modal state
+  const [isPolicyOpen, setIsPolicyOpen] = useState<boolean>(false);
+  const [policyType, setPolicyType] = useState<PolicyType>('privacy');
 
   // Pre-filled form state
   const [formPrefillService, setFormPrefillService] = useState<string>('Custom AI Development');
@@ -74,6 +79,11 @@ export default function App() {
   const handleOpenConsultation = (serviceName?: string) => {
     if (serviceName) setConsultationPreselect(serviceName);
     setIsConsultationOpen(true);
+  };
+
+  const handleOpenPolicy = (type: PolicyType) => {
+    setPolicyType(type);
+    setIsPolicyOpen(true);
   };
 
   const handleGetStarted = () => {
@@ -215,6 +225,7 @@ export default function App() {
         companyName={companyName}
         onNavigate={handleNavigate}
         onOpenConsultation={() => handleOpenConsultation()}
+        onOpenPolicy={handleOpenPolicy}
       />
 
       {/* Interactive Modals */}
@@ -234,6 +245,13 @@ export default function App() {
         caseStudy={selectedCaseStudy}
         onClose={() => setSelectedCaseStudy(null)}
         onStartSimilarProject={handleStartSimilarProject}
+      />
+
+      <PolicyModal
+        isOpen={isPolicyOpen}
+        initialType={policyType}
+        onClose={() => setIsPolicyOpen(false)}
+        onOpenContact={handleGetStarted}
       />
 
     </div>

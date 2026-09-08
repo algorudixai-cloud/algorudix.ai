@@ -10,19 +10,18 @@ import {
   Phone,
   MapPin,
   ShieldCheck,
-  Heart,
-  FileSpreadsheet
+  Heart
 } from 'lucide-react';
 import { COMPANY_CONFIG } from '../data/companyData';
-import { exportSubmissionsToExcel } from '../utils/excelStorage';
 
 interface FooterProps {
   companyName: string;
   onOpenConsultation: () => void;
   onNavigate?: (page: 'home' | 'blog', targetId?: string) => void;
+  onOpenPolicy?: (type: 'privacy' | 'terms' | 'security') => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation, onNavigate }) => {
+export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation, onNavigate, onOpenPolicy }) => {
   const quickLinks = [
     { label: 'Home', href: '#home' },
     { label: 'About', href: '#about' },
@@ -231,18 +230,25 @@ export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation,
           <div>
             © 2026 {companyName}. All Rights Reserved.
           </div>
-          <div className="flex items-center gap-4 sm:gap-6">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
             <button
-              onClick={exportSubmissionsToExcel}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-950/80 hover:bg-emerald-900/80 border border-emerald-500/40 text-emerald-300 font-semibold text-[11px] transition cursor-pointer"
-              title="Download all customer inquiries & bookings as an Excel CSV sheet"
+              onClick={() => onOpenPolicy?.('privacy')}
+              className="hover:text-cyan-300 text-slate-400 transition cursor-pointer"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5" />
-              <span>Export Inquiries to Excel</span>
+              Privacy Policy
             </button>
-            <a href="#contact" className="hover:text-slate-200 transition">Privacy Policy</a>
-            <a href="#contact" className="hover:text-slate-200 transition">Terms of Service</a>
-            <a href="#contact" className="hover:text-slate-200 transition">Security Protocols</a>
+            <button
+              onClick={() => onOpenPolicy?.('terms')}
+              className="hover:text-cyan-300 text-slate-400 transition cursor-pointer"
+            >
+              Terms of Service
+            </button>
+            <button
+              onClick={() => onOpenPolicy?.('security')}
+              className="hover:text-cyan-300 text-slate-400 transition cursor-pointer"
+            >
+              Security Protocols
+            </button>
           </div>
         </div>
 
