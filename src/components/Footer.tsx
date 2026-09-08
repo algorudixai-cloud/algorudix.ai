@@ -200,15 +200,16 @@ export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation,
             </div>
             <div className="flex items-center gap-2 text-slate-300">
               <Phone className="w-4 h-4 text-blue-400 shrink-0" />
-              <div className="flex flex-col">
-                <a href={`tel:${COMPANY_CONFIG.phone}`} className="hover:text-white transition">
-                  {COMPANY_CONFIG.phone}
-                </a>
-                {COMPANY_CONFIG.secondaryPhone && (
-                  <a href={`tel:${COMPANY_CONFIG.secondaryPhone}`} className="hover:text-white transition text-slate-400 text-xs">
-                    {COMPANY_CONFIG.secondaryPhone}
+              <div className="flex flex-col gap-0.5">
+                {COMPANY_CONFIG.phone.split('|').map((num, idx) => (
+                  <a
+                    key={idx}
+                    href={`tel:${num.trim()}`}
+                    className="hover:text-white transition text-xs sm:text-sm text-slate-300"
+                  >
+                    {num.trim()}
                   </a>
-                )}
+                ))}
               </div>
             </div>
             <div className="flex items-start gap-2 text-slate-300">

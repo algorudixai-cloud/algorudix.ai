@@ -205,20 +205,15 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                       Phone Numbers
                     </span>
                     <div className="flex flex-col gap-0.5">
-                      <a
-                        href={`tel:${COMPANY_CONFIG.phone}`}
-                        className="text-sm font-semibold text-white hover:text-cyan-400 transition"
-                      >
-                        {COMPANY_CONFIG.phone}
-                      </a>
-                      {COMPANY_CONFIG.secondaryPhone && (
+                      {COMPANY_CONFIG.phone.split('|').map((num, idx) => (
                         <a
-                          href={`tel:${COMPANY_CONFIG.secondaryPhone}`}
-                          className="text-sm font-semibold text-slate-300 hover:text-cyan-400 transition"
+                          key={idx}
+                          href={`tel:${num.trim()}`}
+                          className="text-sm font-semibold text-white hover:text-cyan-400 transition"
                         >
-                          {COMPANY_CONFIG.secondaryPhone}
+                          {num.trim()}
                         </a>
-                      )}
+                      ))}
                     </div>
                     <p className="text-xs text-slate-400 mt-0.5">Direct lines to enterprise consulting</p>
                   </div>
