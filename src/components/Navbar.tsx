@@ -93,9 +93,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="font-display font-bold text-lg sm:text-xl tracking-tight text-white group-hover:text-cyan-300 transition-colors">
                   {companyName}
                 </span>
-                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-                  AI Dev & BA
-                </span>
               </div>
               <p className="text-[11px] text-slate-400 font-medium tracking-wide">AI Development & Business Analysis</p>
             </div>

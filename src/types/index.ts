@@ -109,11 +109,11 @@ export interface BlogPost {
   date: string;
   readTime: string;
   category: 'AI & LLMs' | 'Business Intelligence' | 'Process Automation' | 'Data Engineering';
-  tags: string[];
+  tags?: string[];
   image: string;
   createdType: 'manual' | 'agent';
   creationMethod?: CreationMethod;
-  status: BlogStatus;
+  status?: BlogStatus;
   targetAudience?: string;
   tone?: string;
   seo?: BlogSeoData;
