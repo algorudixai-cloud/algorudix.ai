@@ -18,11 +18,8 @@ import { ServiceDetailModal } from './components/ServiceDetailModal';
 import { CaseStudyModal } from './components/CaseStudyModal';
 import { ServiceItem, CaseStudyItem } from './types';
 import { COMPANY_CONFIG } from './data/companyData';
-import { Sparkles, Edit3 } from 'lucide-react';
-
 export default function App() {
-  const [companyName, setCompanyName] = useState<string>(COMPANY_CONFIG.defaultName);
-  const [isEditingName, setIsEditingName] = useState<boolean>(false);
+  const companyName = COMPANY_CONFIG.defaultName;
 
   // Page Routing state: 'home' vs 'blog'
   const [activePage, setActivePage] = useState<'home' | 'blog'>(() => {
@@ -132,36 +129,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0b0f19] text-slate-100 font-sans selection:bg-cyan-500 selection:text-white">
-
-      {/* Optional Company Name Customizer Bar */}
-      <div className="bg-slate-950/90 border-b border-slate-800/80 py-1.5 px-4 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-        <span>Company Brand:</span>
-        {isEditingName ? (
-          <div className="inline-flex items-center gap-2">
-            <input
-              type="text"
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
-              className="bg-slate-900 border border-cyan-500/50 text-white px-2 py-0.5 rounded text-xs focus:outline-none"
-              autoFocus
-            />
-            <button
-              onClick={() => setIsEditingName(false)}
-              className="text-cyan-400 hover:text-cyan-300 font-semibold px-2 py-0.5 bg-cyan-950 rounded border border-cyan-500/30"
-            >
-              Save
-            </button>
-          </div>
-        ) : (
-          <span
-            onClick={() => setIsEditingName(true)}
-            className="text-cyan-300 font-semibold hover:underline cursor-pointer flex items-center gap-1"
-            title="Click to rename company"
-          >
-            {companyName} <Edit3 className="w-3 h-3 text-slate-500" />
-          </span>
-        )}
-      </div>
 
       {/* Navigation Header */}
       <Navbar
