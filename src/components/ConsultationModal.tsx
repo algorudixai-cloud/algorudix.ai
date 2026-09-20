@@ -107,7 +107,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm animate-in fade-in duration-150">
       <div
         id="consultation-modal-card"
-        className="relative w-full max-w-xl rounded-2xl bg-white dark:bg-[#121215] border border-slate-200/90 dark:border-zinc-800 p-6 sm:p-8 shadow-xl overflow-hidden text-slate-900 dark:text-zinc-100"
+        className="relative w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-2xl bg-white dark:bg-[#121215] border border-slate-200/90 dark:border-zinc-800 p-6 sm:p-8 shadow-xl text-slate-900 dark:text-zinc-100"
       >
         {/* Close Button */}
         <button

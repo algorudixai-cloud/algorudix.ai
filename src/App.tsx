@@ -19,6 +19,7 @@ import { PolicyModal, PolicyType } from './components/PolicyModal';
 import { ServiceItem, CaseStudyItem } from './types';
 import { COMPANY_CONFIG } from './data/companyData';
 import { ThemeProvider } from './context/ThemeContext';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 function MainApp() {
   const companyName = COMPANY_CONFIG.defaultName;
@@ -242,8 +243,10 @@ function MainApp() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <MainApp />
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <MainApp />
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }

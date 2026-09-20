@@ -187,7 +187,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-get-started-btn"
               onClick={onOpenContact}
-              className="inline-flex items-center justify-center px-4 py-2 text-xs font-semibold text-white bg-slate-900 hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-xl shadow-xs transition-all duration-150 cursor-pointer group"
+              className="hidden sm:inline-flex items-center justify-center px-4 py-2 text-xs font-semibold text-white bg-slate-900 hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-xl shadow-xs transition-all duration-150 cursor-pointer group"
             >
               <span>Get started</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />

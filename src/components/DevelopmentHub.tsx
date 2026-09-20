@@ -104,7 +104,7 @@ export const DevelopmentHub: React.FC<DevelopmentHubProps> = ({ onNavigateHome }
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Back Navigation Bar */}
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100 dark:border-zinc-800/80">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-8 pb-4 border-b border-slate-100 dark:border-zinc-800/80">
           <button
             onClick={onNavigateHome}
             className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition cursor-pointer"
