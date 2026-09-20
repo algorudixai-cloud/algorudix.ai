@@ -62,7 +62,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       });
 
       transition.ready.then(() => {
-        const isToDark = nextTheme === 'dark';
         const clipPath = [
           `circle(0px at ${x}px ${y}px)`,
           `circle(${endRadius}px at ${x}px ${y}px)`,
@@ -70,18 +69,24 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
         document.documentElement.animate(
           {
-            clipPath: isToDark ? clipPath : [...clipPath].reverse(),
+            clipPath: clipPath,
           },
           {
-            duration: 450,
-            easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-            pseudoElement: isToDark
-              ? '::view-transition-new(root)'
-              : '::view-transition-old(root)',
+            duration: 480,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            pseudoElement: '::view-transition-new(root)',
           }
         );
       });
       return;
+    }
+
+    // Graceful fallback for browsers without View Transitions API
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.add('theme-transitioning');
+      setTimeout(() => {
+        document.documentElement.classList.remove('theme-transitioning');
+      }, 500);
     }
 
     setThemeState(nextTheme);

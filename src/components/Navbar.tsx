@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { BrandLogo } from './BrandLogo';
+import { ThemeToggleSwitch } from './ThemeToggleSwitch';
 
 interface NavbarProps {
   companyName: string;
@@ -152,26 +153,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right Controls: Theme Switcher & Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Theme Toggle Button with Zoom-in to Zoom-out Animation */}
-            <button
-              id="theme-toggle-btn"
-              onClick={(e) => toggleTheme(e)}
-              aria-label="Toggle light or dark theme"
-              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              className="relative w-9 h-9 rounded-xl flex items-center justify-center text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 transition-all duration-200 active:scale-90 hover:scale-105 cursor-pointer overflow-hidden group shadow-2xs"
-            >
-              {theme === 'dark' ? (
-                <Sun
-                  key="sun-icon"
-                  className="w-4 h-4 text-amber-400 theme-icon-dark-enter"
-                />
-              ) : (
-                <Moon
-                  key="moon-icon"
-                  className="w-4 h-4 text-slate-700 dark:text-zinc-300 theme-icon-white-enter"
-                />
-              )}
-            </button>
+            {/* Premium Theme Toggle Switch (Circle Reveal + Sun/Moon Morph) */}
+            <ThemeToggleSwitch />
 
             {/* Book Consultation Button */}
             <button
@@ -238,6 +221,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
 
             <div className="pt-4 mt-2 border-t border-slate-100 dark:border-zinc-800 flex flex-col gap-2">
+              <div className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-zinc-900/60 border border-slate-200/60 dark:border-zinc-800 mb-1">
+                <span className="text-xs font-semibold text-slate-700 dark:text-zinc-300">Theme Mode</span>
+                <ThemeToggleSwitch />
+              </div>
+
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
