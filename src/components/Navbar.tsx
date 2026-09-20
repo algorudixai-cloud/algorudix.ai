@@ -152,18 +152,24 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right Controls: Theme Switcher & Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Theme Toggle Button */}
+            {/* Theme Toggle Button with Zoom-in to Zoom-out Animation */}
             <button
               id="theme-toggle-btn"
-              onClick={toggleTheme}
+              onClick={(e) => toggleTheme(e)}
               aria-label="Toggle light or dark theme"
               title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              className="p-2 rounded-xl text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 transition cursor-pointer"
+              className="relative w-9 h-9 rounded-xl flex items-center justify-center text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 transition-all duration-200 active:scale-90 hover:scale-105 cursor-pointer overflow-hidden group shadow-2xs"
             >
               {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-amber-400" />
+                <Sun
+                  key="sun-icon"
+                  className="w-4 h-4 text-amber-400 theme-icon-dark-enter"
+                />
               ) : (
-                <Moon className="w-4 h-4 text-slate-600" />
+                <Moon
+                  key="moon-icon"
+                  className="w-4 h-4 text-slate-700 dark:text-zinc-300 theme-icon-white-enter"
+                />
               )}
             </button>
 
