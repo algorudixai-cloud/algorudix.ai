@@ -11,11 +11,19 @@
     <meta name="theme-color" content="#10b981" />
     <link rel="icon" type="image/png" href="./assets/brand/logo-transparent.png" />
     <link rel="apple-touch-icon" href="./assets/brand/logo-transparent.png" />
+    <script>
+      (function() {
+        var p = window.location.pathname;
+        if (window.location.hostname.endsWith('github.io') && p.indexOf('/algorudix.ai') === 0 && !p.endsWith('/')) {
+          window.location.replace(window.location.origin + p + '/' + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./assets/index-M5NpRWWN.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CxW8SwUq.css">
+    <script type="module" crossorigin src="./assets/index-AWiRh2M3.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-MhQLViK9.css">
   </head>
   <body class="bg-slate-50 text-slate-900 dark:bg-[#0b0f17] dark:text-slate-100 antialiased selection:bg-emerald-500 selection:text-white font-sans transition-colors duration-200 overflow-x-hidden">
     <div id="root"></div>
