@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';
+const THEME_STORAGE_KEY = 'algorudix-theme-mode';
 
 interface ThemeContextType {
   theme: Theme;
@@ -14,14 +15,19 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [theme, setThemeState] = useState<Theme>(() => {
     try {
       if (typeof window !== 'undefined') {
-        const savedTheme = localStorage.getItem('algorudix-theme') as Theme | null;
-        if (savedTheme === 'light' || savedTheme === 'dark') {
-          return savedTheme;
+        // Clear any old test keys to ensure white/light is the clean default
+        if (localStorage.getItem('algorudix-theme')) {
+          localStorage.removeItem('algorudix-theme');
+        }
+        const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
+        if (savedTheme === 'dark') {
+          return 'dark';
         }
       }
     } catch (err) {
       console.warn('localStorage not accessible:', err);
     }
+    // Default theme is white (light mode)
     return 'light';
   });
 
@@ -33,7 +39,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       } else {
         root.classList.remove('dark');
       }
-      localStorage.setItem('algorudix-theme', theme);
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch (err) {
       console.warn('Failed to persist theme:', err);
     }

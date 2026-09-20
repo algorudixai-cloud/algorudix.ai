@@ -126,7 +126,7 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#09090b] text-slate-900 dark:text-zinc-100 font-sans selection:bg-emerald-500 selection:text-white transition-colors duration-200">
+    <div className="min-h-screen bg-white dark:bg-[#09090b] text-slate-900 dark:text-zinc-100 font-sans selection:bg-emerald-500 selection:text-white transition-colors duration-200">
 
       {/* Navigation Header */}
       <Navbar
