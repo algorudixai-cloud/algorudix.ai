@@ -1,16 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import {
-  Sparkles,
   ArrowRight,
-  Bot,
-  BarChart3,
-  Cpu,
-  ShieldCheck,
-  Zap,
-  Database,
+  Sparkles,
   CheckCircle2,
-  TrendingUp,
-  Activity
+  BarChart3,
+  Zap,
+  Bot,
+  ShieldCheck,
+  ArrowUpRight,
+  Database,
+  Globe,
+  Check,
+  Cpu,
+  Workflow,
 } from 'lucide-react';
 
 interface HeroProps {
@@ -19,299 +21,552 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenConsultation, onGetStarted }) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
-
-    const handleResize = () => {
-      if (!canvas || !canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.clientWidth;
-      height = canvas.height = canvas.parentElement.clientHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    // Particle nodes for neural network effect
-    const nodeCount = Math.min(Math.floor((width * height) / 18000), 45);
-    const nodes: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      radius: number;
-      color: string;
-      pulse: number;
-    }> = [];
-
-    const colors = ['#06b6d4', '#3b82f6', '#8b5cf6', '#38bdf8'];
-
-    for (let i = 0; i < nodeCount; i++) {
-      nodes.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        radius: Math.random() * 2.2 + 1.2,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        pulse: Math.random() * Math.PI,
-      });
-    }
-
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      // Draw connections
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 140) {
-            const alpha = (1 - dist / 140) * 0.22;
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
-            ctx.lineWidth = 0.8;
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Draw and update nodes
-      for (let i = 0; i < nodes.length; i++) {
-        const node = nodes[i];
-        node.x += node.vx;
-        node.y += node.vy;
-        node.pulse += 0.03;
-
-        if (node.x < 0 || node.x > width) node.vx *= -1;
-        if (node.y < 0 || node.y > height) node.vy *= -1;
-
-        const currentRadius = node.radius + Math.sin(node.pulse) * 0.6;
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, Math.max(0.8, currentRadius), 0, Math.PI * 2);
-        ctx.fillStyle = node.color;
-        ctx.shadowColor = node.color;
-        ctx.shadowBlur = 8;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-
   return (
-    <section id="home" className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden">
-      {/* Background Animated Canvas */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-60"
-      />
+    <section id="home" className="relative pt-32 pb-20 md:pt-36 md:pb-28 overflow-hidden bg-slate-50/50 dark:bg-[#09090b] transition-colors duration-200">
+      {/* Subtle background grid */}
+      <div className="absolute inset-0 bg-grid-subtle pointer-events-none -z-10 opacity-60" />
 
-      {/* Subtle Glow Gradients */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-cyan-500/15 via-blue-600/15 to-purple-600/10 blur-[130px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute -top-10 left-10 w-72 h-72 bg-blue-600/10 blur-[100px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-10 w-80 h-80 bg-cyan-500/10 blur-[110px] rounded-full pointer-events-none -z-10" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
 
-      {/* Tech Grid Pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none -z-10" />
+        {/* Hero Top Content (Preserved exactly as requested) */}
+        <div className="text-center max-w-4xl mx-auto mb-12 lg:mb-14">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-
-          {/* Left Column: Core Copy & CTAs */}
-          <div className="lg:col-span-7 text-center lg:text-left">
-
-            {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/30 text-cyan-400 text-xs font-semibold tracking-wide mb-6 shadow-sm shadow-cyan-950">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-              </span>
-              <span>AI Development & Business Analyst Company</span>
-            </div>
-
-            {/* Main Headline */}
-            <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white leading-[1.12] mb-6">
-              Transforming Businesses with{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300">
-                AI Development & Business Analytics
-              </span>
-            </h1>
-
-            {/* Subheadline */}
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed mb-8 font-normal">
-              At <strong className="text-white font-semibold">Algorudix.Ai</strong>, our elite engineers and senior business analysts build custom <span className="text-cyan-300 font-medium">Artificial Intelligence</span>, deliver predictive <span className="text-blue-300 font-medium">Business Intelligence</span>, automate complex workflows, and engineer scalable enterprise software.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10">
-              <button
-                id="hero-cta-get-started"
-                onClick={onGetStarted}
-                className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:via-blue-500 hover:to-indigo-500 shadow-xl shadow-cyan-950/60 hover:shadow-cyan-500/30 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer group"
-              >
-                <span>Get Started</span>
-                <ArrowRight className="w-4 h-4 ml-2 text-cyan-200 group-hover:translate-x-1 transition-transform" />
-              </button>
-
-              <button
-                id="hero-cta-book-consultation"
-                onClick={onOpenConsultation}
-                className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-xl font-semibold text-sm text-slate-200 bg-slate-900/90 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/50 hover:text-white transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shadow-lg shadow-black/40"
-              >
-                <Sparkles className="w-4 h-4 mr-2 text-cyan-400" />
-                <span>Book a Free Consultation</span>
-              </button>
-            </div>
-
-            {/* Trust Highlights Strip */}
-            <div className="pt-6 border-t border-slate-800/70 grid grid-cols-3 gap-4 max-w-xl mx-auto lg:mx-0 text-left">
-              <div>
-                <div className="font-display font-bold text-xl sm:text-2xl text-white">99.4%</div>
-                <div className="text-xs text-slate-400 mt-0.5">Model Accuracy</div>
-              </div>
-              <div className="border-l border-slate-800 pl-4">
-                <div className="font-display font-bold text-xl sm:text-2xl text-cyan-400">150+</div>
-                <div className="text-xs text-slate-400 mt-0.5">Solutions Deployed</div>
-              </div>
-              <div className="border-l border-slate-800 pl-4">
-                <div className="font-display font-bold text-xl sm:text-2xl text-indigo-400">10x</div>
-                <div className="text-xs text-slate-400 mt-0.5">Faster Decision Cycles</div>
-              </div>
-            </div>
-
+          {/* Top Pill Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-50/80 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-xs font-semibold mb-6 shadow-2xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>AI Development & Business Analyst Company</span>
           </div>
 
-          {/* Right Column: AI Technology Visual & Interactive HUD */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto max-w-md lg:max-w-none">
+          {/* Main Headline */}
+          <h1 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl text-slate-900 dark:text-white tracking-tight leading-[1.12] mb-6">
+            Transforming Businesses with{' '}
+            <span className="text-emerald-600 dark:text-emerald-400">
+              AI Development & Business Analytics
+            </span>
+          </h1>
 
-              {/* Main Futuristic Card HUD */}
-              <div className="relative rounded-2xl bg-gradient-to-b from-slate-900/90 via-[#0d1527]/95 to-slate-950/90 border border-slate-700/60 p-6 shadow-2xl backdrop-blur-xl">
+          {/* Subtitle */}
+          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl mx-auto mb-8">
+            At <strong className="font-semibold text-slate-900 dark:text-white">Algorudix.Ai</strong>, our elite engineers and senior business analysts build custom <strong className="font-medium text-slate-900 dark:text-white">Artificial Intelligence</strong>, deliver predictive <strong className="font-medium text-slate-900 dark:text-white">Business Intelligence</strong>, automate complex workflows, and engineer scalable enterprise software.
+          </p>
 
-                {/* Header Strip of HUD */}
-                <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                    <span className="text-xs font-mono text-slate-400 ml-2">ai-pipeline.engine.v4</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[11px] font-mono border border-emerald-500/20">
-                    <Activity className="w-3 h-3 animate-pulse" />
-                    <span>SYSTEM ACTIVE</span>
-                  </div>
-                </div>
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-10">
+            <button
+              id="hero-get-started-btn"
+              onClick={onGetStarted}
+              className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm text-white bg-slate-900 hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-500 shadow-xs transition-all duration-150 cursor-pointer group"
+            >
+              <span>Get Started</span>
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-0.5 transition-transform" />
+            </button>
 
-                {/* Simulated AI Agent & Data Flow Stream */}
-                <div className="space-y-3.5 mb-5">
-                  <div className="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/40 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
-                        <Bot className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-semibold text-white">Autonomous AI Agent</p>
-                        <p className="text-[11px] text-slate-400">Context Retrieval & Task Automation</p>
-                      </div>
-                    </div>
-                    <span className="text-[11px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">
-                      99.2% Sync
-                    </span>
-                  </div>
+            <button
+              id="hero-book-consultation-btn"
+              onClick={onOpenConsultation}
+              className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-3 rounded-xl font-semibold text-sm text-slate-800 hover:text-slate-950 bg-white hover:bg-slate-100 border border-slate-200 hover:border-slate-300 shadow-xs dark:bg-[#18181b] dark:text-zinc-100 dark:border-zinc-700/80 dark:hover:bg-[#27272a] dark:hover:border-zinc-600 dark:hover:text-white transition-all duration-150 cursor-pointer group"
+            >
+              <Sparkles className="w-4 h-4 mr-2 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform" />
+              <span>Book a Free Consultation</span>
+            </button>
+          </div>
 
-                  <div className="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/40 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center">
-                        <BarChart3 className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-semibold text-white"> BI & ETL Pipelines</p>
-                        <p className="text-[11px] text-slate-400">10M+ Daily Streaming Events</p>
-                      </div>
-                    </div>
-                    <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">
-                      4ms Latency
-                    </span>
-                  </div>
-
-                  <div className="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/40 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center">
-                        <Cpu className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-semibold text-white">Python RPA Automation</p>
-                        <p className="text-[11px] text-slate-400">Automated Financial Invoicing</p>
-                      </div>
-                    </div>
-                    <span className="text-[11px] font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded">
-                      100% Valid
-                    </span>
-                  </div>
-                </div>
-
-                {/* Live Model Telemetry Bar */}
-                <div className="p-3.5 rounded-xl bg-gradient-to-r from-cyan-950/40 via-blue-950/40 to-indigo-950/40 border border-cyan-500/20">
-                  <div className="flex items-center justify-between text-xs mb-1.5">
-                    <span className="text-slate-300 font-medium flex items-center gap-1.5">
-                      <Zap className="w-3.5 h-3.5 text-cyan-400" />
-                      Enterprise Compute Efficiency
-                    </span>
-                    <span className="text-cyan-400 font-mono font-bold">+84.6%</span>
-                  </div>
-                  <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div className="bg-gradient-to-r from-cyan-400 to-blue-500 h-full rounded-full w-[85%]" />
-                  </div>
-                </div>
-
+          {/* Credibility Highlights */}
+          <div className="pt-6 border-t border-slate-200/80 dark:border-zinc-800/80 grid grid-cols-3 gap-4 max-w-xl mx-auto text-center">
+            <div>
+              <div className="font-display font-bold text-2xl sm:text-3xl text-slate-900 dark:text-white tracking-tight">
+                99.4%
               </div>
-
-              {/* Floating Floating Badges */}
-              <div className="absolute -bottom-5 -left-4 sm:-left-6 bg-slate-900/95 border border-cyan-500/40 p-3 rounded-xl shadow-xl backdrop-blur-md flex items-center gap-3 animate-bounce duration-1000">
-                <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-[10px] text-slate-400 uppercase font-semibold">Cost Reduction</div>
-                  <div className="text-xs font-bold text-white">$4.2M+ Saved</div>
-                </div>
+              <div className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5 font-medium">
+                Model Accuracy
               </div>
-
-              <div className="absolute -top-4 -right-4 sm:-right-6 bg-slate-900/95 border border-indigo-500/40 p-3 rounded-xl shadow-xl backdrop-blur-md flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
-                  <ShieldCheck className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-[10px] text-slate-400 uppercase font-semibold">Security Standard</div>
-                  <div className="text-xs font-bold text-white">SOC-2 & HIPAA</div>
-                </div>
+            </div>
+            <div className="border-x border-slate-200 dark:border-zinc-800">
+              <div className="font-display font-bold text-2xl sm:text-3xl text-emerald-600 dark:text-emerald-400 tracking-tight">
+                150+
               </div>
-
+              <div className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5 font-medium">
+                Solutions Deployed
+              </div>
+            </div>
+            <div>
+              <div className="font-display font-bold text-2xl sm:text-3xl text-slate-900 dark:text-white tracking-tight">
+                3.8x
+              </div>
+              <div className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5 font-medium">
+                Average Client ROI
+              </div>
             </div>
           </div>
 
         </div>
+
+        {/* ========================================================================= */}
+        {/* ENTERPRISE DASHBOARD CONSOLE (Clean, Aligned, Balanced, Human-Designed)   */}
+        {/* ========================================================================= */}
+        <div className="max-w-6xl mx-auto mt-6">
+          <div className="rounded-2xl border border-slate-200/90 dark:border-zinc-800 bg-white dark:bg-[#121215] p-4 sm:p-6 lg:p-7 shadow-xl shadow-slate-900/5 dark:shadow-none">
+
+            {/* Dashboard Header Bar (Clean, Unified, No Unnecessary Navigation/Dropdowns) */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-zinc-800/80">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-slate-900 dark:bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <Cpu className="w-5 h-5 text-emerald-400 dark:text-slate-950" />
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white tracking-tight">
+                      Enterprise Solutions & Capabilities Console
+                    </h3>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      All Systems Active
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+                    Live enterprise analytics, AI pipelines, and workflow automation
+                  </p>
+                </div>
+              </div>
+
+              {/* Status & Action */}
+              <div className="flex items-center gap-2 self-start sm:self-auto">
+                <div className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-[#18181b] border border-slate-200/70 dark:border-zinc-700/80 text-slate-600 dark:text-zinc-300 text-xs font-medium">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                  <span>Enterprise Security & Privacy</span>
+                </div>
+                <button
+                  onClick={onOpenConsultation}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-semibold transition-all duration-150 shadow-xs cursor-pointer group"
+                >
+                  <span>Book Consultation</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </button>
+              </div>
+            </div>
+
+            {/* Row 1: 4 Key Services & Value Cards (Orange Accent Exclusively on Data Accuracy Metric) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 my-4">
+
+              {/* Metric Card 1: Data Accuracy (Claude Terracotta Orange Accent on +99.9%) */}
+              <div className="p-4.5 rounded-2xl bg-white dark:bg-[#121215] border border-emerald-400/40 dark:border-emerald-500/25 hover:border-[#D97757]/60 dark:hover:border-[#D97757]/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-9 h-9 rounded-xl bg-white dark:bg-[#18181b] text-emerald-600 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800/80 flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+                      <CheckCircle2 className="w-4.5 h-4.5" />
+                    </div>
+                    {/* Top Right Side Badge: Claude Terracotta Orange (#D97757) */}
+                    <span className="text-[11px] font-bold text-[#C15F3C] dark:text-[#F0997D] bg-[#FAF3EC] dark:bg-[#D97757]/15 px-2.5 py-0.5 rounded-full border border-[#E8B29E] dark:border-[#D97757]/35 shadow-2xs">
+                      +99.9%
+                    </span>
+                  </div>
+                  <div className="text-[10.5px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
+                    Data Accuracy
+                  </div>
+                  <div className="text-base font-bold font-display text-slate-900 dark:text-white mt-0.5">
+                    Zero Drift
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-zinc-300 mt-1 leading-relaxed">
+                    Automated schema validation pipelines and continuous data integrity checks.
+                  </p>
+                </div>
+                <div className="mt-3.5 pt-2.5 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px]">
+                  <span className="text-slate-500 dark:text-zinc-400 font-medium">Validation</span>
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">Automated</span>
+                </div>
+              </div>
+
+              {/* Metric Card 2: Business Dashboards */}
+              <div className="p-4.5 rounded-2xl bg-white dark:bg-[#121215] border border-emerald-400/40 dark:border-emerald-500/25 hover:border-[#D97757]/60 dark:hover:border-[#D97757]/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-9 h-9 rounded-xl bg-white dark:bg-[#18181b] text-emerald-600 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800/80 flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+                      <BarChart3 className="w-4.5 h-4.5" />
+                    </div>
+                    {/* Top Right Side Badge: Claude Terracotta Orange (#D97757) */}
+                    <span className="text-[11px] font-bold text-[#C15F3C] dark:text-[#F0997D] bg-[#FAF3EC] dark:bg-[#D97757]/15 px-2.5 py-0.5 rounded-full border border-[#E8B29E] dark:border-[#D97757]/35 shadow-2xs">
+                      Live Sync
+                    </span>
+                  </div>
+                  <div className="text-[10.5px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
+                    Business Dashboards
+                  </div>
+                  <div className="text-base font-bold font-display text-slate-900 dark:text-white mt-0.5">
+                    Instant KPIs
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-zinc-300 mt-1 leading-relaxed">
+                    Interactive Power BI, Domo & Tableau executive cockpits with multi-source blending.
+                  </p>
+                </div>
+                <div className="mt-3.5 pt-2.5 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px]">
+                  <span className="text-slate-500 dark:text-zinc-400 font-medium">Platforms</span>
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">Power BI · Domo · Tableau</span>
+                </div>
+              </div>
+
+              {/* Metric Card 3: Process Automation */}
+              <div className="p-4.5 rounded-2xl bg-white dark:bg-[#121215] border border-emerald-400/40 dark:border-emerald-500/25 hover:border-[#D97757]/60 dark:hover:border-[#D97757]/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-9 h-9 rounded-xl bg-white dark:bg-[#18181b] text-emerald-600 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800/80 flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+                      <Zap className="w-4.5 h-4.5" />
+                    </div>
+                    {/* Top Right Side Badge: Claude Terracotta Orange (#D97757) */}
+                    <span className="text-[11px] font-bold text-[#C15F3C] dark:text-[#F0997D] bg-[#FAF3EC] dark:bg-[#D97757]/15 px-2.5 py-0.5 rounded-full border border-[#E8B29E] dark:border-[#D97757]/35 shadow-2xs">
+                      80% Saved
+                    </span>
+                  </div>
+                  <div className="text-[10.5px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
+                    Automation
+                  </div>
+                  <div className="text-base font-bold font-display text-slate-900 dark:text-white mt-0.5">
+                    Zero Manual Ops
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-zinc-300 mt-1 leading-relaxed">
+                    Scheduled RPA, CRM/ERP synchronization, and hands-free workflow automation.
+                  </p>
+                </div>
+                <div className="mt-3.5 pt-2.5 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px]">
+                  <span className="text-slate-500 dark:text-zinc-400 font-medium">Workflows</span>
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">Scheduled & Sync</span>
+                </div>
+              </div>
+
+              {/* Metric Card 4: AI & Agent Solutions */}
+              <div className="p-4.5 rounded-2xl bg-white dark:bg-[#121215] border border-emerald-400/40 dark:border-emerald-500/25 hover:border-[#D97757]/60 dark:hover:border-[#D97757]/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-9 h-9 rounded-xl bg-white dark:bg-[#18181b] text-emerald-600 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800/80 flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+                      <Bot className="w-4.5 h-4.5" />
+                    </div>
+                    {/* Top Right Side Badge: Claude Terracotta Orange (#D97757) */}
+                    <span className="text-[11px] font-bold text-[#C15F3C] dark:text-[#F0997D] bg-[#FAF3EC] dark:bg-[#D97757]/15 px-2.5 py-0.5 rounded-full border border-[#E8B29E] dark:border-[#D97757]/35 shadow-2xs">
+                      Autonomous
+                    </span>
+                  </div>
+                  <div className="text-[10.5px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
+                    AI & Agent Solutions
+                  </div>
+                  <div className="text-base font-bold font-display text-slate-900 dark:text-white mt-0.5">
+                    Custom LLMs & Agents
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                    Private RAG knowledge retrieval and autonomous 24/7 digital task workers.
+                  </p>
+                </div>
+                <div className="mt-3.5 pt-2.5 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px]">
+                  <span className="text-slate-500 dark:text-zinc-400 font-medium">Digital Workers</span>
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">Private RAG</span>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Row 2: Solutions Pipelines (Left 7 Cols) + Redesigned Two Smaller Cards (Right 5 Cols) */}
+            {/* Small & Consistent gap-3.5 between columns and matching heights */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch">
+
+              {/* Left Column (7 cols): Active Enterprise Service Pipelines */}
+              <div className="lg:col-span-7 p-4 sm:p-5 rounded-xl bg-slate-50/70 dark:bg-[#121215] border border-slate-200/70 dark:border-zinc-800 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-200/60 dark:border-zinc-800/80">
+                    <div>
+                      <h4 className="font-display font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                        Active Enterprise Service Pipelines
+                      </h4>
+                      <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+                        Live execution status across business systems
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs font-semibold text-[#C15F3C] dark:text-[#F0997D] bg-[#FAF3EC] dark:bg-[#D97757]/15 px-2.5 py-1 rounded-full border border-[#E8B29E] dark:border-[#D97757]/35 shrink-0 shadow-2xs">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#D97757] animate-pulse" />
+                      <span>Active Stream</span>
+                    </div>
+                  </div>
+
+                  {/* 4 Pipeline Service Rows */}
+                  <div className="space-y-2.5">
+                    {/* Item 1: Agent Building & AI Engineering */}
+                    <div className="p-3 rounded-lg bg-white dark:bg-[#18181b] border border-slate-200/70 dark:border-zinc-800/90 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:border-[#D97757]/50 transition-colors duration-150 group">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                          <Bot className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
+                            Agent Building & Custom AI
+                          </div>
+                          <div className="text-[11px] text-slate-500 dark:text-zinc-400">
+                            Autonomous task workers • Private RAG knowledge retrieval • Guardrails
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0">
+                        {/* Top Right / End Badge: Claude Terracotta Orange (#D97757) */}
+                        <span className="text-[10px] font-bold text-[#C15F3C] dark:text-[#F0997D] bg-[#FAF3EC] dark:bg-[#D97757]/15 px-2 py-0.5 rounded border border-[#E8B29E] dark:border-[#D97757]/35 shadow-2xs">
+                          Operational
+                        </span>
+                        <button
+                          onClick={onOpenConsultation}
+                          className="text-xs font-semibold text-slate-700 dark:text-zinc-300 group-hover:text-[#C15F3C] dark:group-hover:text-[#F0997D] inline-flex items-center transition-colors cursor-pointer"
+                        >
+                          <span>Explore</span>
+                          <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Item 2: Data Analytics & Business Insights */}
+                    <div className="p-3 rounded-lg bg-white dark:bg-[#18181b] border border-slate-200/70 dark:border-zinc-800/90 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:border-[#D97757]/50 transition-colors duration-150 group">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                          <BarChart3 className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
+                            Data Analytics & Business Insights
+                          </div>
+                          <div className="text-[11px] text-slate-500 dark:text-zinc-400">
+                            Predictive trend modeling • Executive Domo & Power BI cockpits
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0">
+                        {/* Top Right / End Badge: Claude Terracotta Orange (#D97757) */}
+                        <span className="text-[10px] font-bold text-[#C15F3C] dark:text-[#F0997D] bg-[#FAF3EC] dark:bg-[#D97757]/15 px-2 py-0.5 rounded border border-[#E8B29E] dark:border-[#D97757]/35 shadow-2xs">
+                          Live Sync
+                        </span>
+                        <button
+                          onClick={onOpenConsultation}
+                          className="text-xs font-semibold text-slate-700 dark:text-zinc-300 group-hover:text-[#C15F3C] dark:group-hover:text-[#F0997D] inline-flex items-center transition-colors cursor-pointer"
+                        >
+                          <span>Explore</span>
+                          <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Item 3: Data Engineering & Lakehouses */}
+                    <div className="p-3 rounded-lg bg-white dark:bg-[#18181b] border border-slate-200/70 dark:border-zinc-800/90 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:border-[#D97757]/50 transition-colors duration-150 group">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                          <Database className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
+                            Data Engineering & Lakehouses
+                          </div>
+                          <div className="text-[11px] text-slate-500 dark:text-zinc-400">
+                            Databricks, Snowflake, BigQuery & dbt • Zero-drift pipeline architecture
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0">
+                        {/* Top Right / End Badge: Claude Terracotta Orange (#D97757) */}
+                        <span className="text-[10px] font-bold text-[#C15F3C] dark:text-[#F0997D] bg-[#FAF3EC] dark:bg-[#D97757]/15 px-2 py-0.5 rounded border border-[#E8B29E] dark:border-[#D97757]/35 shadow-2xs">
+                          Connected
+                        </span>
+                        <button
+                          onClick={onOpenConsultation}
+                          className="text-xs font-semibold text-slate-700 dark:text-zinc-300 group-hover:text-[#C15F3C] dark:group-hover:text-[#F0997D] inline-flex items-center transition-colors cursor-pointer"
+                        >
+                          <span>Explore</span>
+                          <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Item 4: Website & Full-Stack Development */}
+                    <div className="p-3 rounded-lg bg-white dark:bg-[#18181b] border border-slate-200/70 dark:border-zinc-800/90 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:border-[#D97757]/50 transition-colors duration-150 group">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                          <Globe className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
+                            Website & Full-Stack Development
+                          </div>
+                          <div className="text-[11px] text-slate-500 dark:text-zinc-400">
+                            Next.js & React enterprise web applications • Speed optimized
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0">
+                        {/* Top Right / End Badge: Claude Terracotta Orange (#D97757) */}
+                        <span className="text-[10px] font-bold text-[#C15F3C] dark:text-[#F0997D] bg-[#FAF3EC] dark:bg-[#D97757]/15 px-2 py-0.5 rounded border border-[#E8B29E] dark:border-[#D97757]/35 shadow-2xs">
+                          Production
+                        </span>
+                        <button
+                          onClick={onOpenConsultation}
+                          className="text-xs font-semibold text-slate-700 dark:text-zinc-300 group-hover:text-[#C15F3C] dark:group-hover:text-[#F0997D] inline-flex items-center transition-colors cursor-pointer"
+                        >
+                          <span>Explore</span>
+                          <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Trust Note */}
+                <div className="mt-3.5 pt-3 border-t border-slate-200/60 dark:border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-zinc-400">
+                  <span className="flex items-center gap-1.5 text-[11px]">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                    Direct engineer collaboration via shared Slack or Teams channels
+                  </span>
+                  <span className="font-semibold text-[11px] text-slate-700 dark:text-zinc-300 shrink-0">
+                    Sprint Guaranteed
+                  </span>
+                </div>
+              </div>
+
+              {/* Right Column (5 cols): The TWO REDESIGNED SMALLER CARDS */}
+              {/* Stacked vertically with small & consistent gap-3.5 to match the left card height exactly */}
+              <div className="lg:col-span-5 flex flex-col gap-3.5 justify-between">
+
+                {/* Smaller Card 1: Delivery Flow (Structured 5-Stage Delivery Flow) */}
+                <div className="p-4.5 sm:p-5 rounded-2xl bg-white dark:bg-[#121215] border border-emerald-400/40 dark:border-emerald-500/25 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-md transition-all duration-200 flex flex-col justify-between flex-1">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
+                          <Workflow className="w-4 h-4" />
+                        </div>
+                        <h4 className="font-display font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
+                          Client Delivery Flow
+                        </h4>
+                      </div>
+                      {/* Top Right Side Badge: Claude Terracotta Orange (#D97757) */}
+                      <span className="text-[10px] font-bold text-[#C15F3C] dark:text-[#F0997D] bg-[#FAF3EC] dark:bg-[#D97757]/15 px-2.5 py-0.5 rounded-full border border-[#E8B29E] dark:border-[#D97757]/35 shadow-2xs">
+                        End-to-End
+                      </span>
+                    </div>
+
+                    {/* Horizontal flow breadcrumb */}
+                    <div className="flex items-center gap-1 overflow-x-auto pb-1 text-[10px] font-semibold text-slate-500 dark:text-zinc-400 mb-2.5">
+                      <span className="text-emerald-600 dark:text-emerald-400 shrink-0">B&M</span>
+                      <span className="text-slate-300 dark:text-zinc-600">→</span>
+                      <span className="shrink-0">Dev</span>
+                      <span className="text-slate-300 dark:text-zinc-600">→</span>
+                      <span className="shrink-0">Validation</span>
+                      <span className="text-slate-300 dark:text-zinc-600">→</span>
+                      <span className="shrink-0">Sign-off</span>
+                      <span className="text-slate-300 dark:text-zinc-600">→</span>
+                      <span className="text-emerald-600 dark:text-emerald-400 shrink-0">Production</span>
+                    </div>
+
+                    {/* 5-Step Delivery Flow List */}
+                    <div className="space-y-1.5 mb-3">
+                      <div className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#18181b] border border-slate-200/60 dark:border-zinc-800 text-[11px]">
+                        <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          <span className="font-medium text-slate-800 dark:text-zinc-200">1. B&M (Business & Modeling)</span>
+                        </div>
+                        <span className="text-slate-500 dark:text-zinc-400 font-medium text-[10px]">Blueprint & Scope</span>
+                      </div>
+                      <div className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#18181b] border border-slate-200/60 dark:border-zinc-800 text-[11px]">
+                        <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          <span className="font-medium text-slate-800 dark:text-zinc-200">2. Development</span>
+                        </div>
+                        <span className="text-slate-500 dark:text-zinc-400 font-medium text-[10px]">AI, BI & Engineering</span>
+                      </div>
+                      <div className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#18181b] border border-slate-200/60 dark:border-zinc-800 text-[11px]">
+                        <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          <span className="font-medium text-slate-800 dark:text-zinc-200">3. Testing & Validation</span>
+                        </div>
+                        <span className="text-slate-500 dark:text-zinc-400 font-medium text-[10px]">Quality & Security</span>
+                      </div>
+                      <div className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#18181b] border border-slate-200/60 dark:border-zinc-800 text-[11px]">
+                        <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          <span className="font-medium text-slate-800 dark:text-zinc-200">4. Sign-off</span>
+                        </div>
+                        <span className="text-slate-500 dark:text-zinc-400 font-medium text-[10px]">Client Acceptance</span>
+                      </div>
+                      <div className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#18181b] border border-slate-200/60 dark:border-zinc-800 text-[11px]">
+                        <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          <span className="font-medium text-slate-800 dark:text-zinc-200">5. Production</span>
+                        </div>
+                        <span className="text-emerald-600 dark:text-emerald-400 font-semibold text-[10px]">Live Launch</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={onOpenConsultation}
+                    className="w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all duration-150 shadow-xs cursor-pointer group"
+                  >
+                    <span>Initiate Project Flow</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </button>
+                </div>
+
+                {/* Smaller Card 2: Trust, Data Privacy & Security */}
+                <div className="p-4.5 sm:p-5 rounded-2xl bg-white dark:bg-[#121215] border border-emerald-400/40 dark:border-emerald-500/25 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-md transition-all duration-200 flex flex-col justify-between flex-1">
+                  <div>
+                    <div className="flex items-center justify-between mb-2.5">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-lg bg-slate-900 dark:bg-zinc-800 text-emerald-400 flex items-center justify-center shrink-0 border border-slate-800 dark:border-zinc-700 shadow-2xs">
+                          <ShieldCheck className="w-4 h-4" />
+                        </div>
+                        <h4 className="font-display font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
+                          Trust, Privacy & Security
+                        </h4>
+                      </div>
+                      {/* Top Right Side Badge: Claude Terracotta Orange (#D97757) */}
+                      <span className="text-[10px] font-bold text-[#C15F3C] dark:text-[#F0997D] bg-[#FAF3EC] dark:bg-[#D97757]/15 px-2.5 py-0.5 rounded-full border border-[#E8B29E] dark:border-[#D97757]/35 shadow-2xs">
+                        Enterprise Standard
+                      </span>
+                    </div>
+
+                    <div className="space-y-2 text-[11px] text-slate-600 dark:text-zinc-300 mt-2.5">
+                      <div className="flex items-start gap-2">
+                        <div className="w-4 h-4 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                          <Check className="w-2.5 h-2.5 stroke-[3]" />
+                        </div>
+                        <div>
+                          <strong className="font-semibold text-slate-900 dark:text-white">100% Client Code & IP Ownership:</strong> Complete source code, models, and repositories transferred directly upon sign-off.
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-4 h-4 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                          <Check className="w-2.5 h-2.5 stroke-[3]" />
+                        </div>
+                        <div>
+                          <strong className="font-semibold text-slate-900 dark:text-white">Data Privacy & Isolation:</strong> Zero client data utilized for public AI training; encrypted pipelines and strict confidentiality.
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-4 h-4 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                          <Check className="w-2.5 h-2.5 stroke-[3]" />
+                        </div>
+                        <div>
+                          <strong className="font-semibold text-slate-900 dark:text-white">Tailored to Client Requirements:</strong> Transparent sprint deliverables, agile reviews, and zero vendor lock-in.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 pt-2.5 border-t border-slate-200/60 dark:border-zinc-800/80 flex items-center justify-between text-[10px] text-slate-500 dark:text-zinc-400">
+                    <span>Strict NDA & Confidentiality</span>
+                    <span className="font-medium text-emerald-600 dark:text-emerald-400">Secure Architecture</span>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </section>
   );
 };
+
+
+

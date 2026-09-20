@@ -8,8 +8,7 @@ import { Process } from './components/Process';
 import { Technologies } from './components/Technologies';
 import { Industries } from './components/Industries';
 import { Portfolio } from './components/Portfolio';
-import { Blog } from './components/Blog';
-import { RoiEstimator } from './components/RoiEstimator';
+import { DevelopmentHub } from './components/DevelopmentHub';
 import { CTA } from './components/CTA';
 import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
@@ -19,12 +18,14 @@ import { CaseStudyModal } from './components/CaseStudyModal';
 import { PolicyModal, PolicyType } from './components/PolicyModal';
 import { ServiceItem, CaseStudyItem } from './types';
 import { COMPANY_CONFIG } from './data/companyData';
-export default function App() {
+import { ThemeProvider } from './context/ThemeContext';
+
+function MainApp() {
   const companyName = COMPANY_CONFIG.defaultName;
 
-  // Page Routing state: 'home' vs 'blog'
-  const [activePage, setActivePage] = useState<'home' | 'blog'>(() => {
-    return window.location.hash === '#blog' ? 'blog' : 'home';
+  // Page Routing state: 'home' vs 'devhub'
+  const [activePage, setActivePage] = useState<'home' | 'devhub'>(() => {
+    return window.location.hash === '#development-hub' ? 'devhub' : 'home';
   });
 
   // Modals state
@@ -45,8 +46,8 @@ export default function App() {
   // Handle URL hash changes
   useEffect(() => {
     const handleHashChange = () => {
-      if (window.location.hash === '#blog') {
-        setActivePage('blog');
+      if (window.location.hash === '#development-hub') {
+        setActivePage('devhub');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         setActivePage('home');
@@ -57,10 +58,10 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const handleNavigate = (page: 'home' | 'blog', targetId?: string) => {
+  const handleNavigate = (page: 'home' | 'devhub', targetId?: string) => {
     setActivePage(page);
-    if (page === 'blog') {
-      window.location.hash = '#blog';
+    if (page === 'devhub') {
+      window.location.hash = '#development-hub';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       window.location.hash = targetId ? `#${targetId}` : '#home';
@@ -109,20 +110,6 @@ export default function App() {
     }
   };
 
-  const handleApplyRoiEstimate = (scope: { service: string; hoursSaved: number; costSavings: number }) => {
-    setFormPrefillService(scope.service);
-    setFormPrefillDesc(
-      `Inquiry generated from ROI Estimator: We are interested in ${scope.service} to save ~${scope.hoursSaved.toLocaleString()} hours/month and achieve estimated ~$${scope.costSavings.toLocaleString()}/yr in operational efficiencies.`
-    );
-    if (activePage !== 'home') {
-      handleNavigate('home', 'contact');
-    } else {
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
 
   const handleStartSimilarProject = (projectTitle: string) => {
     setFormPrefillService('AI & Custom Software Development');
@@ -138,7 +125,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-slate-100 font-sans selection:bg-cyan-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#09090b] text-slate-900 dark:text-zinc-100 font-sans selection:bg-emerald-500 selection:text-white transition-colors duration-200">
 
       {/* Navigation Header */}
       <Navbar
@@ -151,11 +138,10 @@ export default function App() {
 
       {/* Main View Area */}
       <main>
-        {activePage === 'blog' ? (
-          /* Separate Standalone Blog Page View */
-          <Blog
-            onOpenConsultation={handleOpenConsultation}
-            onBackToHome={() => handleNavigate('home', 'home')}
+        {activePage === 'devhub' ? (
+          /* Separate Standalone Development Hub View */
+          <DevelopmentHub
+            onNavigateHome={() => handleNavigate('home', 'home')}
           />
         ) : (
           /* Homepage Single Page View */
@@ -200,10 +186,6 @@ export default function App() {
               onSelectCaseStudy={(study) => setSelectedCaseStudy(study)}
             />
 
-            {/* Interactive Scope & ROI Estimator */}
-            <RoiEstimator
-              onApplyScopeToContact={handleApplyRoiEstimate}
-            />
 
             {/* 9. Call to Action Section */}
             <CTA
@@ -255,5 +237,13 @@ export default function App() {
       />
 
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <MainApp />
+    </ThemeProvider>
   );
 }

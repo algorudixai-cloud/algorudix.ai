@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Sparkles,
   Menu,
   X,
   ChevronRight,
-  PhoneCall,
-  ShieldCheck,
-  BrainCircuit,
-  ArrowRight
+  Sun,
+  Moon,
+  ArrowRight,
+  Layers,
+  Sparkles,
+  PhoneCall
 } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 interface NavbarProps {
   companyName: string;
-  activePage: 'home' | 'blog';
-  onNavigate: (page: 'home' | 'blog', targetId?: string) => void;
+  activePage: 'home' | 'devhub';
+  onNavigate: (page: 'home' | 'devhub', targetId?: string) => void;
   onOpenConsultation: (preselectedService?: string) => void;
   onOpenContact: () => void;
 }
@@ -25,6 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenConsultation,
   onOpenContact
 }) => {
+  const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -35,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       if (activePage === 'home') {
         const sections = ['home', 'about', 'services', 'why-us', 'process', 'technologies', 'industries', 'portfolio', 'calculator', 'contact'];
-        const current = sections.find(section => {
+        const current = sections.find((section) => {
           const el = document.getElementById(section);
           if (el) {
             const rect = el.getBoundingClientRect();
@@ -54,24 +57,38 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navLinks = [
     { label: 'About', href: '#about' },
     { label: 'Services', href: '#services' },
-    { label: 'Why Choose Us', href: '#why-us' },
+    { label: 'Why Us', href: '#why-us' },
     { label: 'Process', href: '#process' },
-    { label: 'Technologies', href: '#technologies' },
+    { label: 'Tech Stack', href: '#technologies' },
     { label: 'Industries', href: '#industries' },
     { label: 'Case Studies', href: '#portfolio' },
-    { label: 'Blog', href: '#blog' },
+    { label: 'Development Hub', href: '#development-hub' },
     { label: 'Contact', href: '#contact' },
   ];
 
   return (
     <header
       id="main-navbar"
-      className={`fixed top-2 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? 'bg-[#0b0f19]/90 backdrop-blur-md border-b border-slate-800/80 shadow-lg shadow-black/40 py-3'
-          : 'bg-transparent py-4'
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-6 lg:px-8 ${
+        scrolled ? 'pt-2.5 pb-1' : 'pt-3 pb-1'
+      }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Top Translucent Blur Shield: Completely shields the top gap above the floating navbar when scrolling */}
+      <div
+        className={`fixed top-0 left-0 right-0 h-20 -z-10 pointer-events-none transition-all duration-300 ${
+          scrolled
+            ? 'opacity-100 bg-gradient-to-b from-white via-white/85 to-transparent dark:from-[#09090b] dark:via-[#09090b]/85 dark:to-transparent backdrop-blur-md'
+            : 'opacity-0'
+        }`}
+      />
+
+      <div
+        className={`max-w-7xl mx-auto rounded-2xl transition-all duration-200 ${
+          scrolled
+            ? 'bg-white/95 dark:bg-[#121215]/95 backdrop-blur-md border border-slate-200/90 dark:border-zinc-800 shadow-sm py-2.5 px-4 sm:px-6'
+            : 'bg-white/80 dark:bg-[#121215]/80 backdrop-blur-md border border-slate-200/70 dark:border-zinc-800/80 shadow-xs py-3 px-4 sm:px-6'
+        }`}
+      >
         <div className="flex items-center justify-between">
 
           {/* Logo & Brand */}
@@ -82,28 +99,29 @@ export const Navbar: React.FC<NavbarProps> = ({
               e.preventDefault();
               onNavigate('home', 'home');
             }}
-            className="flex items-center gap-3 group text-left focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-lg p-1 cursor-pointer"
+            className="flex items-center gap-2.5 group text-left focus:outline-none rounded-lg cursor-pointer"
           >
-            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-md shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-all duration-300">
-              <BrainCircuit className="w-5 h-5 text-white animate-pulse" />
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-300 -z-10" />
+            <div className="w-9 h-9 rounded-xl bg-slate-900 dark:bg-emerald-500/10 border border-slate-900/10 dark:border-emerald-500/30 flex items-center justify-center text-white dark:text-emerald-400 shadow-sm transition-transform duration-200 group-hover:scale-105">
+              <Layers className="w-4 h-4 text-emerald-400 dark:text-emerald-400" />
             </div>
             <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-display font-bold text-lg sm:text-xl tracking-tight text-white group-hover:text-cyan-300 transition-colors">
-                  {companyName}
+              <div className="flex items-center gap-1">
+                <span className="font-display font-bold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white">
+                  Algorudix<span className="text-emerald-600 dark:text-emerald-400">.ai</span>
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 font-medium tracking-wide">AI Development & Business Analysis</p>
+              <p className="hidden sm:block text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-tight">
+                AI Engineering & Business Analytics
+              </p>
             </div>
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 bg-slate-900/60 p-1.5 rounded-full border border-slate-800/80 backdrop-blur-md">
+          <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => {
               const targetId = link.href.replace('#', '');
-              const isActive = activePage === 'blog'
-                ? targetId === 'blog'
+              const isActive = activePage === 'devhub'
+                ? targetId === 'development-hub'
                 : activeSection === targetId;
 
               return (
@@ -113,16 +131,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                   href={link.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    if (targetId === 'blog') {
-                      onNavigate('blog');
+                    if (targetId === 'development-hub') {
+                      onNavigate('devhub');
                     } else {
                       onNavigate('home', targetId);
                     }
                   }}
-                  className={`px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-medium transition-all duration-200 cursor-pointer ${isActive
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-sm shadow-cyan-500/30 font-semibold'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
-                    }`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer ${
+                    isActive
+                      ? 'bg-slate-100 dark:bg-zinc-800 text-slate-950 dark:text-white font-semibold'
+                      : 'text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-zinc-800/50'
+                  }`}
                 >
                   {link.label}
                 </a>
@@ -130,27 +149,51 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Action CTAs */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Right Controls: Theme Switcher & Actions */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Theme Toggle Button */}
+            <button
+              id="theme-toggle-btn"
+              onClick={toggleTheme}
+              aria-label="Toggle light or dark theme"
+              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              className="p-2 rounded-xl text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 transition cursor-pointer"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4 text-amber-400" />
+              ) : (
+                <Moon className="w-4 h-4 text-slate-600" />
+              )}
+            </button>
+
+            {/* Book Consultation Button */}
             <button
               id="nav-consultation-btn"
               onClick={() => onOpenConsultation()}
-              className="relative inline-flex items-center justify-center px-4 py-2 text-xs font-semibold text-white rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:via-blue-500 hover:to-indigo-500 shadow-md shadow-blue-900/40 hover:shadow-cyan-500/30 transition-all duration-300 transform active:scale-95 group cursor-pointer"
+              className="hidden md:inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-800 dark:text-zinc-100 bg-slate-100/90 hover:bg-slate-200/90 dark:bg-[#18181b] dark:hover:bg-zinc-800 border border-slate-200/90 dark:border-zinc-700/80 rounded-xl transition-all duration-150 cursor-pointer shadow-2xs"
             >
-              <Sparkles className="w-3.5 h-3.5 mr-1.5 text-cyan-200 group-hover:rotate-12 transition-transform" />
-              <span>Book Consultation</span>
+              <PhoneCall className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <span>Book Call</span>
             </button>
-          </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex items-center lg:hidden">
+            {/* Primary Action Button */}
+            <button
+              id="nav-get-started-btn"
+              onClick={onOpenContact}
+              className="inline-flex items-center justify-center px-4 py-2 text-xs font-semibold text-white bg-slate-900 hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-xl shadow-xs transition-all duration-150 cursor-pointer group"
+            >
+              <span>Get started</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+
+            {/* Mobile Menu Toggle */}
             <button
               id="nav-mobile-toggle"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              className="p-2 rounded-xl lg:hidden text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
 
@@ -161,9 +204,9 @@ export const Navbar: React.FC<NavbarProps> = ({
       {mobileMenuOpen && (
         <div
           id="mobile-drawer"
-          className="lg:hidden fixed inset-x-0 top-full bg-[#0b0f19]/98 border-b border-slate-800 backdrop-blur-2xl px-6 py-6 shadow-2xl transition-all animate-in slide-in-from-top duration-200"
+          className="lg:hidden mt-2 max-w-7xl mx-auto rounded-2xl bg-white dark:bg-[#121215] border border-slate-200 dark:border-zinc-800 p-5 shadow-xl transition-all duration-200"
         >
-          <div className="flex flex-col space-y-3">
+          <div className="flex flex-col space-y-1.5">
             {navLinks.map((link) => {
               const targetId = link.href.replace('#', '');
               return (
@@ -173,30 +216,30 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={(e) => {
                     e.preventDefault();
                     setMobileMenuOpen(false);
-                    if (targetId === 'blog') {
-                      onNavigate('blog');
+                    if (targetId === 'development-hub') {
+                      onNavigate('devhub');
                     } else {
                       onNavigate('home', targetId);
                     }
                   }}
-                  className="flex items-center justify-between px-4 py-3 rounded-lg text-slate-200 hover:text-cyan-400 hover:bg-slate-900/80 border border-transparent hover:border-slate-800 transition cursor-pointer"
+                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 transition cursor-pointer"
                 >
                   <span className="font-medium text-sm">{link.label}</span>
-                  <ChevronRight className="w-4 h-4 text-slate-500" />
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
                 </a>
               );
             })}
 
-            <div className="pt-4 border-t border-slate-800/80 flex flex-col gap-2.5">
+            <div className="pt-4 mt-2 border-t border-slate-100 dark:border-zinc-800 flex flex-col gap-2">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenConsultation();
                 }}
-                className="w-full py-3 px-4 rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-900/50"
+                className="w-full py-2.5 px-4 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-100 font-semibold text-xs flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-zinc-800"
               >
-                <Sparkles className="w-4 h-4 text-cyan-200" />
-                <span>Book a Free Consultation</span>
+                <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
+                <span>Book a Consultation</span>
               </button>
 
               <button
@@ -204,10 +247,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenContact();
                 }}
-                className="w-full py-2.5 px-4 rounded-lg bg-slate-900 border border-slate-700 text-slate-200 font-medium text-sm flex items-center justify-center gap-2 hover:bg-slate-800"
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 dark:bg-emerald-600 text-white font-semibold text-xs flex items-center justify-center gap-1.5"
               >
-                <span>Contact Our Engineers</span>
-                <ArrowRight className="w-4 h-4 text-cyan-400" />
+                <span>Get started</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>

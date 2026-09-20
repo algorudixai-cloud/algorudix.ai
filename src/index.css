@@ -1,82 +1,110 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
+  :root {
+    --accent-primary: #10b981;
+    --accent-hover: #059669;
+    --accent-soft: rgba(16, 185, 129, 0.1);
+  }
+
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  .font-display {
-    font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Plus Jakarta Sans', 'Space Grotesk', system-ui, sans-serif;
+    letter-spacing: -0.025em;
   }
 }
 
-/* Custom glassmorphism and glow effects */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Crisp, professional card styling */
+.clean-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-card {
-  background: linear-gradient(135deg, rgba(26, 34, 53, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.dark .clean-card {
+  background-color: #121215;
+  border-color: #27272a;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
 }
 
-.glass-card:hover {
-  border-color: rgba(56, 189, 248, 0.35);
-  box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.2);
+.clean-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
 }
 
-.glow-pill {
-  position: relative;
+.dark .clean-card:hover {
+  border-color: #3f3f46;
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.7);
 }
 
-.glow-pill::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0.5;
-  filter: blur(8px);
-}
-
-/* Tech Grid Background */
-.bg-grid-pattern {
-  background-size: 40px 40px;
+/* Subtle background patterns */
+.bg-grid-subtle {
+  background-size: 32px 32px;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
 }
 
-.bg-dots-pattern {
+.dark .bg-grid-subtle {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.bg-dots-subtle {
   background-size: 24px 24px;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
 }
 
-/* Smooth custom scrollbar */
+.dark .bg-dots-subtle {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Custom refined scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0b0f19;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Explicit dark theme hover for secondary action buttons to prevent white flashing */
+.dark #hero-book-consultation-btn:hover {
+  background-color: #27272a !important;
+  border-color: #3f3f46 !important;
+  color: #ffffff !important;
+}
+
+.dark #nav-consultation-btn:hover {
+  background-color: #27272a !important;
+  border-color: #3f3f46 !important;
+  color: #ffffff !important;
 }
