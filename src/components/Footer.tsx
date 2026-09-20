@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Layers,
   Linkedin,
   Twitter,
   Instagram,
@@ -12,6 +11,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { COMPANY_CONFIG } from '../data/companyData';
+import { BrandLogo } from './BrandLogo';
 
 interface FooterProps {
   companyName: string;
@@ -79,8 +79,8 @@ export const Footer: React.FC<FooterProps> = ({ companyName, onOpenConsultation,
               }}
               className="flex items-center gap-2 group cursor-pointer"
             >
-              <div className="w-8 h-8 rounded-lg bg-slate-900 dark:bg-emerald-500 text-white flex items-center justify-center">
-                <Layers className="w-4 h-4 text-emerald-400 dark:text-slate-950" />
+              <div className="w-8 h-8 flex items-center justify-center transition-transform duration-200 group-hover:scale-105 shrink-0">
+                <BrandLogo className="w-full h-full object-contain" />
               </div>
               <span className="font-display font-bold text-lg text-slate-900 dark:text-white">
                 Algorudix<span className="text-emerald-600 dark:text-emerald-400">.ai</span>

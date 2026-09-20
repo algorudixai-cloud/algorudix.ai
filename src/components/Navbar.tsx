@@ -11,6 +11,7 @@ import {
   PhoneCall
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { BrandLogo } from './BrandLogo';
 
 interface NavbarProps {
   companyName: string;
@@ -101,8 +102,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             }}
             className="flex items-center gap-2.5 group text-left focus:outline-none rounded-lg cursor-pointer"
           >
-            <div className="w-9 h-9 rounded-xl bg-slate-900 dark:bg-emerald-500/10 border border-slate-900/10 dark:border-emerald-500/30 flex items-center justify-center text-white dark:text-emerald-400 shadow-sm transition-transform duration-200 group-hover:scale-105">
-              <Layers className="w-4 h-4 text-emerald-400 dark:text-emerald-400" />
+            <div className="w-9 h-9 flex items-center justify-center transition-transform duration-200 group-hover:scale-105 shrink-0">
+              <BrandLogo className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="flex items-center gap-1">
