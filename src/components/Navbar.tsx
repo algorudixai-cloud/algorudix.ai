@@ -224,7 +224,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="pt-4 mt-2 border-t border-slate-100 dark:border-zinc-800 flex flex-col gap-2">
               <div className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-zinc-900/60 border border-slate-200/60 dark:border-zinc-800 mb-1">
                 <span className="text-xs font-semibold text-slate-700 dark:text-zinc-300">Theme Mode</span>
-                <ThemeToggleSwitch />
+                <ThemeToggleSwitch id="mobile-theme-toggle-btn" />
               </div>
 
               <button
