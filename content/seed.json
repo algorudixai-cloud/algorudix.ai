@@ -1,0 +1,456 @@
+{
+  "meta": {
+    "created": "2026-11-04",
+    "note": "Initial content. Migrated from src/data/companyData.ts, src/data/devHubData.ts and the policy text in PolicyModal.tsx, plus the copy for the redesign. After launch the admin edits content/site.db; this file is only used to rebuild it."
+  },
+  "tables": {
+    "settings": [
+      {
+        "id": "site", "sort": 0, "visible": true,
+        "name": "Algorudix.ai",
+        "tagline": "AI automation, data and software for your business",
+        "description": "Algorudix is a Bengaluru team of business analysts and engineers. We study how your business runs, then build the AI automation, dashboards and software that take repeated work off your people.",
+        "email": "contact@algorudixai.com",
+        "phones": ["+91 63692 66589", "+91 63510 70355"],
+        "location": "Bengaluru, Karnataka, India",
+        "hours": "Monday to Friday, 8:00 to 18:00 IST",
+        "support_note": "24/7 priority support for live systems",
+        "linkedin": "", "x": "", "github": "", "instagram": "", "facebook": "",
+        "seo_title": "Algorudix.ai | AI automation, data and software from Bengaluru",
+        "seo_description": "A Bengaluru team of business analysts and engineers. We study how your business runs, then build the AI automation, dashboards and custom software that take repeated work off your people.",
+        "sheets_webhook": "https://script.google.com/macros/s/AKfycbzs9VW022IbkJi5Omc717Cn2eA-pVH42mGRfkcgBTT8VavWev3tu6Sec7710Rw28qoL6g/exec",
+        "consultation_slots": ["10:00 AM (IST)", "12:00 PM (IST)", "02:30 PM (IST)", "04:30 PM (IST)", "06:30 PM (IST)"]
+      }
+    ],
+    "sections": [
+      {
+        "id": "hero", "sort": 10, "visible": true, "nav_label": "",
+        "heading": "AI for the work you repeat",
+        "intro": "Algorudix is a Bengaluru team of business analysts and engineers. We study how your business runs, then build the AI automation, dashboards and software that take repeated work off your people.",
+        "body": "", "cta_label": "Book a free consultation", "images": []
+      },
+      {
+        "id": "intro", "sort": 20, "visible": true, "nav_label": "",
+        "heading": "We start with how you work",
+        "intro": "Most businesses already know which work eats their week: copying data between systems, building the same report every Monday, answering the same questions. Our business analysts sit with your team and map that work as it really happens. Then our engineers automate the parts a machine should do, and leave the decisions with your people.",
+        "body": "", "cta_label": "", "images": []
+      },
+      {
+        "id": "tasks", "sort": 30, "visible": true, "nav_label": "",
+        "heading": "Pick a task your team repeats",
+        "intro": "See how we would automate it: what the AI does, what a person still checks, and what you get at the end.",
+        "body": "", "cta_label": "Ask us about your task", "images": []
+      },
+      {
+        "id": "services", "sort": 40, "visible": true, "nav_label": "Services",
+        "heading": "What we build",
+        "intro": "We build AI assistants [img] that answer from your own documents, dashboards [img] that put every number in one place, data pipelines [img] that keep your systems in step, and the custom software [img] that ties it all together.",
+        "body": "Six services, one team. Every project starts with a free consultation.",
+        "cta_label": "Book a free consultation", "images": []
+      },
+      {
+        "id": "process", "sort": 50, "visible": true, "nav_label": "How we work",
+        "heading": "How a project runs",
+        "intro": "Five stages, about ten weeks from the first call to a live system. You see working software at a demo every two weeks.",
+        "body": "", "cta_label": "", "images": []
+      },
+      {
+        "id": "work", "sort": 60, "visible": true, "nav_label": "Work",
+        "heading": "Selected work",
+        "intro": "Four projects, from an AI assistant to a business management platform. Choose one to read how it was done.",
+        "body": "", "cta_label": "", "images": []
+      },
+      {
+        "id": "industries", "sort": 70, "visible": true, "nav_label": "",
+        "heading": "Industries we work in",
+        "intro": "The details change from one industry to the next. The problems rarely do: repeated tasks, scattered data and reports that arrive too late.",
+        "body": "", "cta_label": "Book a free consultation", "images": []
+      },
+      {
+        "id": "about", "sort": 80, "visible": true, "nav_label": "About",
+        "heading": "Who we are",
+        "intro": "Algorudix is a team of business analysts and engineers in Bengaluru. Analysts and engineers work side by side on every project, from the first workshop to the day it goes live, so what we build fits how your business really works. You own everything we make for you: the code, the models and the data.",
+        "body": "Tools we work with", "cta_label": "", "images": []
+      },
+      {
+        "id": "faq", "sort": 90, "visible": true, "nav_label": "",
+        "heading": "Questions",
+        "intro": "", "body": "", "cta_label": "", "images": []
+      },
+      {
+        "id": "contact", "sort": 100, "visible": true, "nav_label": "",
+        "heading": "Tell us what to automate",
+        "intro": "Describe the work and the systems involved. We will come back with a short plan for how we would automate it.",
+        "body": "Thank you. Your enquiry has reached us and we will be in touch soon.",
+        "cta_label": "Send enquiry", "images": []
+      },
+      {
+        "id": "footer", "sort": 110, "visible": true, "nav_label": "",
+        "heading": "Talk to us",
+        "intro": "", "body": "All rights reserved.", "cta_label": "", "images": []
+      },
+      {
+        "id": "devhub", "sort": 120, "visible": true, "nav_label": "Dev Hub",
+        "heading": "Development Hub",
+        "intro": "Projects, tools and resources from the Algorudix team, in one place.",
+        "body": "", "cta_label": "", "images": []
+      }
+    ],
+    "tasks": [
+      {
+        "id": "invoice-matching", "sort": 10, "visible": true,
+        "name": "Matching invoices to payments",
+        "today": "Someone downloads the bank statement, opens each invoice and ticks off the payments by hand in a spreadsheet.",
+        "steps": [
+          { "who": "ai", "text": "Reads every invoice and bank line as they arrive" },
+          { "who": "ai", "text": "Matches payments to invoices, including partial and combined payments" },
+          { "who": "person", "text": "Reviews only the items the AI could not match" },
+          { "who": "ai", "text": "Updates your accounting system and flags overdue invoices" }
+        ],
+        "result": "Reconciliation runs every day instead of once a month.",
+        "built_with": "Business process automation, with Python and your accounting system's API"
+      },
+      {
+        "id": "weekly-report", "sort": 20, "visible": true,
+        "name": "Building the weekly report",
+        "today": "Every Monday someone exports data from three systems, pastes it into Excel, fixes the formulas and emails a PDF.",
+        "steps": [
+          { "who": "ai", "text": "Pulls the numbers from each system on a schedule" },
+          { "who": "ai", "text": "Checks for gaps and unusual changes" },
+          { "who": "ai", "text": "Updates a live Power BI dashboard and emails a short summary" },
+          { "who": "person", "text": "Reads the summary and decides what to do" }
+        ],
+        "result": "The report is ready before the Monday meeting, every week.",
+        "built_with": "Business analysis and data intelligence, with Power BI and Python"
+      },
+      {
+        "id": "customer-questions", "sort": 30, "visible": true,
+        "name": "Answering repeat customer questions",
+        "today": "Support staff answer the same questions about orders, prices and policies, searching old emails for the right reply.",
+        "steps": [
+          { "who": "ai", "text": "Reads the question and finds the answer in your own documents" },
+          { "who": "ai", "text": "Replies in seconds and logs the conversation" },
+          { "who": "person", "text": "Takes over anything unusual, with the full history in front of them" }
+        ],
+        "result": "Your team spends its time on the questions that need a person.",
+        "built_with": "Custom AI development, with an assistant that answers from your documents"
+      },
+      {
+        "id": "copying-data", "sort": 40, "visible": true,
+        "name": "Copying data between systems",
+        "today": "Orders, stock and customer details are typed from one system into another, and the copies slowly drift apart.",
+        "steps": [
+          { "who": "ai", "text": "Connects your systems through their APIs or file exports" },
+          { "who": "ai", "text": "Moves and checks the data on a schedule" },
+          { "who": "ai", "text": "Alerts the team when something fails or looks wrong" },
+          { "who": "person", "text": "Fixes the source when an alert needs a decision" }
+        ],
+        "result": "One set of numbers that everyone can trust.",
+        "built_with": "Data engineering and ETL, with pipelines on your cloud"
+      }
+    ],
+    "services": [
+      {
+        "id": "custom-ai", "sort": 10, "visible": true,
+        "title": "Custom AI development",
+        "category": "AI and machine learning",
+        "summary": "AI assistants, agents and prediction models built around your own data, documents and workflows.",
+        "description": "Our AI engineers build bespoke artificial intelligence systems tailored to your business workflows. From generative models and knowledge assistants that answer from your documents to real-time predictive analytics, we turn AI research into production-ready software.",
+        "features": ["Custom AI model development and fine-tuning", "Generative AI solutions and RAG pipelines", "AI chatbots and agent workflows", "Predictive machine learning models", "AI business process automation"],
+        "deliverables": ["Custom LLM fine-tuning and vector RAG architectures", "Autonomous agent pipelines", "Classification and forecasting models", "Guardrails and model monitoring"],
+        "tech": ["OpenAI", "Claude", "Gemini", "PyTorch", "LangChain", "FastAPI", "Vector databases"],
+        "use_cases": ["Customer support answers drawn from your own knowledge base", "Document parsing and contract summaries", "Lead qualification and quoting"]
+      },
+      {
+        "id": "business-analysis", "sort": 20, "visible": true,
+        "title": "Business analysis & data intelligence",
+        "category": "Business analysis and BI",
+        "summary": "We map how your business runs, find the bottlenecks and build Power BI and Domo dashboards your leaders actually use.",
+        "description": "Our business analysts and BI architects connect business strategy with technical execution. We audit processes, find operational bottlenecks, design the data model and build interactive dashboards that support confident decisions.",
+        "features": ["Business requirements analysis and process mapping", "Power BI and Domo dashboards", "KPI modelling and performance analytics", "Data visualisation and reporting", "Gap analysis and operational improvement", "Decision support"],
+        "deliverables": ["Business requirements documents and gap reports", "KPI and revenue dashboards", "Automated blending of data from many sources", "Scheduled self-service reports"],
+        "tech": ["Power BI", "Domo", "Tableau", "Looker Studio", "SQL", "DAX", "Python"],
+        "use_cases": ["Process gap analysis and workflow redesign", "Financial performance tracking across departments", "Retail sales and stock monitoring across channels"]
+      },
+      {
+        "id": "data-engineering", "sort": 30, "visible": true,
+        "title": "Data engineering & ETL",
+        "category": "Data infrastructure",
+        "summary": "Pipelines and cloud warehouses that collect, clean and move your data between systems automatically.",
+        "description": "We build data architectures that become the single source of truth for your organisation: pipelines that collect, clean and synchronise data across older and modern platforms.",
+        "features": ["Data integration", "ETL pipeline development", "Data migration", "API integration", "SFTP automation", "Cloud data solutions"],
+        "deliverables": ["Lakehouse and cloud warehouse architecture", "Streaming and batch ETL pipelines", "Data cleaning, validation and governance", "Migration from legacy databases to the cloud"],
+        "tech": ["Databricks", "Snowflake", "Microsoft Fabric", "Apache Spark", "dbt", "Airflow", "PostgreSQL"],
+        "use_cases": ["Bringing several ERP systems' transactions into Snowflake", "Automated SFTP imports from logistics partners", "Real-time change data capture for operational databases"]
+      },
+      {
+        "id": "process-automation", "sort": 40, "visible": true,
+        "title": "Business process automation",
+        "category": "Automation",
+        "summary": "We take repetitive manual tasks off your team with Python, RPA and AI-powered workflows that plug into your tools.",
+        "description": "Free your team from error-prone, repetitive work with robotic process automation and custom Python workflows that connect to the tools you already use.",
+        "features": ["Workflow automation", "Automated reporting", "Python automation", "AI-powered workflows", "Process improvement"],
+        "deliverables": ["End-to-end workflow scripts", "Automated email, invoice and order handling", "Webhook and scraping pipelines between systems", "Error handling and failure alerts"],
+        "tech": ["Python", "n8n", "Zapier", "Selenium", "Celery", "Redis", "AWS Lambda"],
+        "use_cases": ["Reconciling invoices against bank transactions", "Daily email digests with generated charts", "Keeping supplier stock and catalogues in sync"]
+      },
+      {
+        "id": "custom-software", "sort": 50, "visible": true,
+        "title": "Custom software development",
+        "category": "Software engineering",
+        "summary": "Web applications, internal tools, client portals and SaaS products, built to your exact requirements.",
+        "description": "We build software to your exact specification, from internal operations platforms to customer-facing SaaS applications, with clean architecture and a clear user experience.",
+        "features": ["Web applications", "Business management systems", "Internal business tools", "Custom dashboards", "SaaS applications"],
+        "deliverables": ["Full-stack web applications (React, Next.js, Node)", "Role-based access control", "REST and GraphQL APIs", "Cloud deployment with CI/CD pipelines"],
+        "tech": ["React", "Next.js", "TypeScript", "Node.js", "Tailwind CSS", "PostgreSQL", "Docker"],
+        "use_cases": ["An ERP system for multi-location manufacturing", "A subscription analytics portal with Stripe billing", "Field service dispatch and technician tracking"]
+      },
+      {
+        "id": "cloud", "sort": 60, "visible": true,
+        "title": "Cloud & modern technology",
+        "category": "Cloud infrastructure",
+        "summary": "Secure, scalable cloud setups, databases and APIs on Azure, AWS and Google Cloud.",
+        "description": "We design, deploy and manage cloud environments built for reliability, speed and sensible running costs.",
+        "features": ["Cloud solutions", "Database solutions", "API development", "Scalable infrastructure"],
+        "deliverables": ["Architecture on Azure, AWS and Google Cloud", "Infrastructure as code (Terraform, CloudFormation)", "High-availability databases and backup plans", "Containers with Docker and Kubernetes"],
+        "tech": ["Microsoft Azure", "AWS", "Google Cloud", "Terraform", "Kubernetes", "Docker", "Redis"],
+        "use_cases": ["Moving on-premise servers to Microsoft Azure without downtime", "APIs that scale with traffic spikes", "Database replication and disaster recovery"]
+      }
+    ],
+    "process_steps": [
+      {
+        "id": "understand", "sort": 10, "visible": true,
+        "title": "Understand", "duration": "Weeks 1–2",
+        "summary": "We understand your business, challenges and requirements.",
+        "description": "Discovery sessions map your current bottlenecks, existing systems, business goals and how ready your data is.",
+        "activities": ["Stakeholder interviews and pain-point mapping", "Data and system compatibility audit", "Feasibility and ROI scoping"],
+        "deliverables": ["Discovery brief", "Technical scope document", "Project roadmap"]
+      },
+      {
+        "id": "strategy", "sort": 20, "visible": true,
+        "title": "Strategy", "duration": "Weeks 2–3",
+        "summary": "We choose the right technology and solution for your business.",
+        "description": "Our architects plan the technical roadmap and choose the frameworks, AI models and cloud services that suit your scale.",
+        "activities": ["AI and data model architecture", "Database and pipeline design", "Wireframes and clickable prototypes"],
+        "deliverables": ["System architecture blueprint", "UI and UX prototypes", "Security plan"]
+      },
+      {
+        "id": "build", "sort": 30, "visible": true,
+        "title": "Build", "duration": "Weeks 3–8",
+        "summary": "Our team designs and develops the solution.",
+        "description": "We build in sprints, integrate the AI models, configure the databases and write clean, tested code.",
+        "activities": ["Sprints with a demo every two weeks", "Model training, fine-tuning and prompt tuning", "Unit testing and code reviews"],
+        "deliverables": ["Working core codebase", "API endpoints", "Test coverage reports"]
+      },
+      {
+        "id": "implement", "sort": 40, "visible": true,
+        "title": "Implement", "duration": "Weeks 8–10",
+        "summary": "We deploy the solution and connect it to your business.",
+        "description": "We deploy without downtime, connect the live databases and train your team.",
+        "activities": ["Deployment on secure cloud infrastructure", "Data migration and switch-over", "Staff training and documentation"],
+        "deliverables": ["Live production system", "Admin manuals", "Team training"]
+      },
+      {
+        "id": "support", "sort": 50, "visible": true,
+        "title": "Support & scale", "duration": "Ongoing",
+        "summary": "We look after the system and help your business grow.",
+        "description": "We monitor system health, keep AI accuracy high, apply security updates and add features as your business grows.",
+        "activities": ["Round-the-clock monitoring and alerts", "Regular model retraining", "Quarterly technology roadmaps"],
+        "deliverables": ["Monthly performance reports", "SLA support", "Feature updates"]
+      }
+    ],
+    "case_studies": [
+      {
+        "id": "ai-business-assistant", "sort": 10, "visible": true,
+        "title": "AI business assistant",
+        "tagline": "An assistant that handles customer questions and internal requests",
+        "industry": "Enterprise services & SaaS",
+        "disciplines": "AI assistant, integrations",
+        "description": "An AI assistant that automates customer conversations, ticket routing and internal knowledge lookups.",
+        "challenge": "The client received more than 8,000 customer queries a month, with an average response time of 14 hours and high costs across several support desks.",
+        "solution": "We built a secure retrieval-augmented assistant connected to the client's documentation, CRM and ticketing systems, able to carry out routine actions on its own.",
+        "results": ["78% of support tickets resolved without a person stepping in", "Average response time down from 14 hours to 8 seconds", "Customer satisfaction up from 3.6 to 4.9 out of 5"],
+        "metrics": [{ "label": "Resolved automatically", "value": "78%" }, { "label": "Response time", "value": "8 sec" }, { "label": "Cost reduction", "value": "$380k/yr" }],
+        "technologies": ["OpenAI GPT-4o", "LangChain", "Python FastAPI", "Pinecone", "React"],
+        "figure": "assistant", "image": "", "image_alt": ""
+      },
+      {
+        "id": "retail-analytics-dashboard", "sort": 20, "visible": true,
+        "title": "Retail analytics dashboard",
+        "tagline": "One view of sales and stock for a multi-store retail chain",
+        "industry": "Retail & e-commerce",
+        "disciplines": "Power BI, data modelling",
+        "description": "A business intelligence dashboard with sales, stock and performance for more than 120 stores, with alerts.",
+        "challenge": "Leadership relied on weekly spreadsheets from each store. Reordering was slow, items ran out of stock and sales were lost.",
+        "solution": "A Power BI suite with automatic daily imports from the tills, stock-out alerts and margin analysis by product.",
+        "results": ["45 manager hours a week no longer spent assembling spreadsheets", "Out-of-stock incidents down 41% within 90 days", "Gross margin up 3.2% through better markdowns"],
+        "metrics": [{ "label": "Inventory turnover", "value": "+34%" }, { "label": "Hours saved a week", "value": "45" }, { "label": "Margin gain", "value": "+3.2%" }],
+        "technologies": ["Power BI", "Microsoft Fabric", "SQL Server", "Azure Synapse", "Python"],
+        "figure": "dashboard", "image": "", "image_alt": ""
+      },
+      {
+        "id": "automated-data-pipeline", "sort": 30, "visible": true,
+        "title": "Automated data pipeline",
+        "tagline": "A pipeline that moves more than 10 million events a day",
+        "industry": "Fintech & banking",
+        "disciplines": "Data engineering",
+        "description": "An automated ETL pipeline that collects, transforms and delivers data to the compliance, risk and marketing teams.",
+        "challenge": "Old batch jobs regularly crashed during the morning load, so compliance officers worked with stale data and transactions were delayed.",
+        "solution": "A self-scaling pipeline on Snowflake and dbt with automatic data quality checks, schema change handling and Slack alerts.",
+        "results": ["Pipeline delay down from 6 hours to 4 minutes", "Data freshness targets met for every regulatory audit", "Warehouse compute costs down 35%"],
+        "metrics": [{ "label": "Pipeline delay", "value": "4 min" }, { "label": "Events a day", "value": "10M+" }, { "label": "Compute cost saved", "value": "35%" }],
+        "technologies": ["Snowflake", "dbt", "Apache Airflow", "AWS S3 and Lambda", "Python"],
+        "figure": "pipeline", "image": "", "image_alt": ""
+      },
+      {
+        "id": "business-management-app", "sort": 40, "visible": true,
+        "title": "Business management application",
+        "tagline": "One platform for jobs, drivers, invoices and customers",
+        "industry": "Logistics & supply chain",
+        "disciplines": "Custom software",
+        "description": "A custom application that brings daily operations, dispatch, invoicing and client communication into one place.",
+        "challenge": "The business used six disconnected tools. Data was typed in twice, deliveries were missed and invoices went out late.",
+        "solution": "One web application with job scheduling, live driver tracking, automatic PDF invoices and a customer portal.",
+        "results": ["Six software subscriptions replaced by one platform", "Invoices sent immediately instead of after 12 days", "Team productivity up 52%"],
+        "metrics": [{ "label": "Productivity", "value": "+52%" }, { "label": "Invoice turnaround", "value": "Instant" }, { "label": "Tools replaced", "value": "6 to 1" }],
+        "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "Docker"],
+        "figure": "app", "image": "", "image_alt": ""
+      }
+    ],
+    "industries": [
+      {
+        "id": "retail", "sort": 10, "visible": true, "name": "Retail & e-commerce",
+        "tagline": "Pricing, demand forecasts and personal recommendations.",
+        "description": "Real-time stock forecasts, automated returns handling and recommendation engines that raise the average order value.",
+        "use_cases": [{ "label": "Alerts before items run out of stock", "value": "AI model" }, { "label": "Personal product recommendations", "value": "AI model" }, { "label": "Orders kept in sync across channels", "value": "Data pipeline" }],
+        "impact": "+38% inventory efficiency"
+      },
+      {
+        "id": "healthcare", "sort": 20, "visible": true, "name": "Healthcare & life sciences",
+        "tagline": "Compliant clinical data flows and admin automation.",
+        "description": "Patient record management, appointment scheduling and clinical data summaries, built to strict compliance standards.",
+        "use_cases": [{ "label": "Medical record summaries", "value": "AI assistant" }, { "label": "Patient flow analytics", "value": "Dashboard" }, { "label": "Insurance pre-authorisation", "value": "Automation" }],
+        "impact": "65% less time on admin work"
+      },
+      {
+        "id": "finance", "sort": 30, "visible": true, "name": "Finance & banking",
+        "tagline": "Reconciliation, risk scoring and fraud detection.",
+        "description": "Fraud detection, automated ledger reconciliation and portfolio performance dashboards.",
+        "use_cases": [{ "label": "Automated financial reconciliation", "value": "Automation" }, { "label": "Credit risk models", "value": "AI model" }, { "label": "Real-time compliance checks", "value": "Data pipeline" }],
+        "impact": "99.8% reconciliation accuracy"
+      },
+      {
+        "id": "manufacturing", "sort": 40, "visible": true, "name": "Manufacturing & industrial",
+        "tagline": "Predictive maintenance and shop-floor analytics.",
+        "description": "Sensor and machine data connected to prediction models that catch equipment failures before they cause downtime.",
+        "use_cases": [{ "label": "Predictive equipment maintenance", "value": "AI model" }, { "label": "Supplier lead-time forecasts", "value": "AI model" }, { "label": "Visual quality inspection", "value": "AI model" }],
+        "impact": "−42% unplanned downtime"
+      },
+      {
+        "id": "startups", "sort": 50, "visible": true, "name": "Startups & growing companies",
+        "tagline": "Fast first versions, lean architecture and AI features.",
+        "description": "Production-ready SaaS foundations with AI features and cloud setups that grow with the business.",
+        "use_cases": [{ "label": "A first AI product, built fast", "value": "Software" }, { "label": "A multi-tenant SaaS foundation", "value": "Software" }, { "label": "Cost-efficient serverless setup", "value": "Cloud" }],
+        "impact": "4x faster launch"
+      },
+      {
+        "id": "education", "sort": 60, "visible": true, "name": "Education & edtech",
+        "tagline": "Adaptive learning and admin automation.",
+        "description": "Tutoring assistants, automated grading and dashboards that track student progress and retention.",
+        "use_cases": [{ "label": "An AI study tutor", "value": "AI assistant" }, { "label": "Automated grading", "value": "Automation" }, { "label": "Early warnings for students at risk", "value": "Dashboard" }],
+        "impact": "+50% student engagement"
+      },
+      {
+        "id": "logistics", "sort": 70, "visible": true, "name": "Logistics & supply chain",
+        "tagline": "Route planning, fleet tracking and warehouse automation.",
+        "description": "Shipping data from every carrier in one place, automated customs paperwork and smarter delivery routes.",
+        "use_cases": [{ "label": "Route and fuel optimisation", "value": "AI model" }, { "label": "Freight documents read automatically", "value": "Automation" }, { "label": "Carrier performance comparison", "value": "Dashboard" }],
+        "impact": "−22% fleet operating cost"
+      }
+    ],
+    "technologies": [
+      { "id": "openai", "sort": 10, "visible": true, "name": "OpenAI", "category": "AI", "description": "GPT models and embeddings for reasoning and search" },
+      { "id": "claude", "sort": 20, "visible": true, "name": "Claude", "category": "AI", "description": "Anthropic models for long documents and analysis" },
+      { "id": "gemini", "sort": 30, "visible": true, "name": "Gemini", "category": "AI", "description": "Google models for fast multimodal work" },
+      { "id": "machine-learning", "sort": 40, "visible": true, "name": "PyTorch and scikit-learn", "category": "AI", "description": "Predictive models" },
+      { "id": "power-bi", "sort": 50, "visible": true, "name": "Power BI", "category": "Analytics", "description": "Dashboards and DAX data models" },
+      { "id": "domo", "sort": 60, "visible": true, "name": "Domo", "category": "Analytics", "description": "Cloud business intelligence and alerts" },
+      { "id": "tableau", "sort": 70, "visible": true, "name": "Tableau", "category": "Analytics", "description": "Visual analytics" },
+      { "id": "python", "sort": 80, "visible": true, "name": "Python", "category": "Analytics", "description": "Pandas, NumPy and automation scripts" },
+      { "id": "sql", "sort": 90, "visible": true, "name": "SQL", "category": "Analytics", "description": "Queries and database design" },
+      { "id": "databricks", "sort": 100, "visible": true, "name": "Databricks", "category": "Data engineering", "description": "Spark lakehouse" },
+      { "id": "snowflake", "sort": 110, "visible": true, "name": "Snowflake", "category": "Data engineering", "description": "Cloud data warehouse" },
+      { "id": "fabric", "sort": 120, "visible": true, "name": "Microsoft Fabric", "category": "Data engineering", "description": "Unified data platform" },
+      { "id": "etl", "sort": 130, "visible": true, "name": "dbt and Airflow", "category": "Data engineering", "description": "Data transformation and scheduling" },
+      { "id": "react", "sort": 140, "visible": true, "name": "React", "category": "Development", "description": "User interfaces" },
+      { "id": "nextjs", "sort": 150, "visible": true, "name": "Next.js", "category": "Development", "description": "Full-stack web applications" },
+      { "id": "typescript", "sort": 160, "visible": true, "name": "TypeScript", "category": "Development", "description": "Typed, maintainable code" },
+      { "id": "python-backend", "sort": 170, "visible": true, "name": "FastAPI and Django", "category": "Development", "description": "Python back ends" },
+      { "id": "apis", "sort": 180, "visible": true, "name": "REST, GraphQL and webhooks", "category": "Development", "description": "Integrations between systems" },
+      { "id": "azure", "sort": 190, "visible": true, "name": "Microsoft Azure", "category": "Cloud", "description": "Azure OpenAI, Synapse and app hosting" },
+      { "id": "aws", "sort": 200, "visible": true, "name": "AWS", "category": "Cloud", "description": "Lambda, S3, RDS and ECS" },
+      { "id": "gcp", "sort": 210, "visible": true, "name": "Google Cloud", "category": "Cloud", "description": "BigQuery, Vertex AI and Cloud Run" }
+    ],
+    "highlights": [
+      { "id": "model-accuracy", "sort": 10, "visible": true, "value": "99.4%", "label": "Model accuracy" },
+      { "id": "solutions-deployed", "sort": 20, "visible": true, "value": "150+", "label": "Solutions deployed" },
+      { "id": "client-roi", "sort": 30, "visible": true, "value": "3.8x", "label": "Average client ROI" }
+    ],
+    "faqs": [
+      { "id": "ownership", "sort": 10, "visible": true, "question": "Who owns the code and the models?", "answer": "You do. Once the final invoice is paid, you own all the code, trained models, prompt templates and database designs we created for your project." },
+      { "id": "data-training", "sort": 20, "visible": true, "question": "Will our data be used to train AI models?", "answer": "No. We set up AI services with zero data retention, so your data is never used to train public models. We never sell or share your information." },
+      { "id": "nda", "sort": 30, "visible": true, "question": "Will you sign an NDA?", "answer": "Yes. We sign a non-disclosure agreement before we look at your systems or your data." },
+      { "id": "timeline", "sort": 40, "visible": true, "question": "How long does a project take?", "answer": "Most projects follow our five stages and go live in about ten weeks. We confirm the timeline in the project plan before any work starts." },
+      { "id": "scope", "sort": 50, "visible": true, "question": "How do you agree scope and cost?", "answer": "Every project has a written statement of work with milestones and acceptance criteria, so the scope, the timeline and the cost are clear before we begin." },
+      { "id": "progress", "sort": 60, "visible": true, "question": "How do we follow progress?", "answer": "You see working software at a demo every two weeks, and you can talk to the engineers directly in a shared Slack or Teams channel." },
+      { "id": "after-launch", "sort": 70, "visible": true, "question": "What happens after launch?", "answer": "We monitor the system, fix problems, retrain models when their accuracy drifts and add features as you grow. Live systems get 24/7 priority support." },
+      { "id": "existing-tools", "sort": 80, "visible": true, "question": "Can you work with the tools we already use?", "answer": "Yes. We connect to your existing ERP, CRM, spreadsheets, databases and cloud through APIs, SFTP or direct database connections." },
+      { "id": "industries", "sort": 90, "visible": true, "question": "Which industries do you work with?", "answer": "Retail, healthcare, finance, manufacturing, education, logistics and fast-growing startups. The problems are similar everywhere: repeated tasks, scattered data and slow reports." },
+      { "id": "location", "sort": 100, "visible": true, "question": "Where are you based?", "answer": "In Bengaluru, India. We work Monday to Friday, 8:00 to 18:00 IST." },
+      { "id": "start", "sort": 110, "visible": true, "question": "How do we start?", "answer": "Book a free consultation. We talk through the work you want to automate, then send you a short plan for how we would do it." }
+    ],
+    "testimonials": [
+      { "id": "testimonial-1", "sort": 10, "visible": false, "quote": "Algorudix.ai's AI development team and business analysts transformed our customer operations. We reduced resolution times by 80% while our customer satisfaction reached an all-time high.", "author": "Sarah Jenkins", "role": "Chief Operating Officer", "company": "Vanguard Global Tech" },
+      { "id": "testimonial-2", "sort": 20, "visible": false, "quote": "The Power BI dashboards and Snowflake pipeline they built changed how we make decisions. We now see store performance across 100+ locations with no manual effort.", "author": "Marcus Chen", "role": "VP of Enterprise Analytics", "company": "Apex Retail Group" },
+      { "id": "testimonial-3", "sort": 30, "visible": false, "quote": "From the first strategy session to the final deployment, their engineering team delivered beyond expectations. The custom platform replaced five clunky tools.", "author": "Elena Rostova", "role": "Founder & CEO", "company": "Synthetix Logistics" }
+    ],
+    "dev_hub_items": [
+      { "id": "dev-1", "sort": 10, "visible": true, "title": "Algorudix AI Agent Studio", "description": "A playground for orchestrating several AI agents: prompt evaluation, RAG pipeline benchmarks and vector index testing.", "url": "https://github.com/algorudix/ai-agent-studio", "category": "Projects", "badge": "Production", "updated": "2026-03-10" },
+      { "id": "dev-2", "sort": 20, "visible": true, "title": "Databricks & Domo sync connectors", "description": "Two-way streaming connectors and dbt transformations between Delta lakehouses and BI dashboards.", "url": "https://docs.algorudixai.com/connectors", "category": "Tools", "badge": "Integration", "updated": "2026-03-12" },
+      { "id": "dev-3", "sort": 30, "visible": true, "title": "Algorudix cloud console", "description": "Internal developer portal for monitoring services, API errors and cloud costs.", "url": "https://console.algorudixai.com", "category": "Websites", "badge": "Live portal", "updated": "2026-03-14" },
+      { "id": "dev-4", "sort": 40, "visible": true, "title": "Full-stack SaaS starter", "description": "A Next.js, TypeScript and Tailwind CSS starter with role-based access and Stripe billing.", "url": "https://github.com/algorudix/enterprise-saas-starter", "category": "Resources", "badge": "Open source", "updated": "2026-03-15" },
+      { "id": "dev-5", "sort": 50, "visible": true, "title": "Vector search benchmark", "description": "An open test harness comparing Pinecone, Qdrant, Milvus and pgvector on more than 10 million embeddings.", "url": "https://benchmarks.algorudixai.com", "category": "Tools", "badge": "Benchmark", "updated": "2026-03-18" },
+      { "id": "dev-6", "sort": 60, "visible": true, "title": "Developer documentation and API", "description": "Guides, OpenAPI specifications, SDK references and quick-start tutorials.", "url": "https://developers.algorudixai.com", "category": "Websites", "badge": "Docs", "updated": "2026-03-19" }
+    ],
+    "policies": [
+      {
+        "id": "privacy", "sort": 10, "visible": true, "title": "Privacy policy",
+        "summary": "We respect your data privacy. We collect only what is essential to respond to your consultation requests, scope custom AI projects and provide our engineering services.",
+        "blocks": [
+          { "heading": "Information we collect", "text": "When you submit forms on our website or book a consultation, we collect your name, work email address, phone number, company name and project description." },
+          { "heading": "No training on your data", "text": "We never sell, rent or share your contact or project information with third-party advertisers. All AI endpoints we set up are configured with strict zero data retention, so your proprietary data is never used to train public foundation models." }
+        ],
+        "updated": "September 2026"
+      },
+      {
+        "id": "terms", "sort": 20, "visible": true, "title": "Terms of service",
+        "summary": "By using the Algorudix website or engaging our consulting and development services, you agree to these clear and transparent terms.",
+        "blocks": [
+          { "heading": "100% intellectual property ownership", "text": "Upon final payment for contracted deliverables, clients retain 100% intellectual property ownership of all bespoke code, trained model weights, prompt templates and custom database schemas created specifically for their engagement." },
+          { "heading": "Project scoping and delivery milestones", "text": "All software development and data analysis projects run under formal statements of work with defined milestone acceptance criteria, regular sprint demos and transparent timelines." }
+        ],
+        "updated": "September 2026"
+      },
+      {
+        "id": "security", "sort": 30, "visible": true, "title": "Security",
+        "summary": "Security is part of every layer of our engineering work, from private cloud deployments to automated security scanning in our CI/CD pipelines.",
+        "blocks": [
+          { "heading": "Data encryption", "text": "AES-256 encryption at rest and TLS 1.3 encryption in transit for all client data streams and API integrations." },
+          { "heading": "Isolated AI pipelines", "text": "Enterprise OpenAI, Azure and AWS endpoints are configured with zero retention, so your proprietary data stays yours." }
+        ],
+        "updated": "September 2026"
+      }
+    ],
+    "credits": []
+  }
+}
