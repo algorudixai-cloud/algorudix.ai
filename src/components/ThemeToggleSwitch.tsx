@@ -1,10 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useId, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
 
-export const ThemeToggleSwitch: React.FC = () => {
+interface ThemeToggleSwitchProps {
+  /** Must be unique on the page: the navbar renders a second switch inside the mobile menu. */
+  id?: string;
+}
+
+export const ThemeToggleSwitch: React.FC<ThemeToggleSwitchProps> = ({ id = 'theme-toggle-btn' }) => {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
   const switchRef = useRef<HTMLButtonElement>(null);
+  // Per-instance SVG mask id, reduced to characters that are safe inside url(#...).
+  const maskId = `theme-morph-mask-${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     // If clicked via keyboard or edge cases without coordinates, calculate from button center
@@ -25,7 +32,7 @@ export const ThemeToggleSwitch: React.FC = () => {
   return (
     <button
       ref={switchRef}
-      id="theme-toggle-btn"
+      id={id}
       type="button"
       role="switch"
       aria-checked={isDark}
@@ -90,7 +97,7 @@ export const ThemeToggleSwitch: React.FC = () => {
           }}
         >
           {/* Mask that cuts into the center circle to form the crescent moon */}
-          <mask id="theme-morph-mask">
+          <mask id={maskId}>
             <rect x="0" y="0" width="24" height="24" fill="white" />
             <circle
               cx={isDark ? '17' : '28'}
@@ -107,7 +114,7 @@ export const ThemeToggleSwitch: React.FC = () => {
             cy="12"
             r={isDark ? '7.5' : '4.5'}
             fill="currentColor"
-            mask="url(#theme-morph-mask)"
+            mask={`url(#${maskId})`}
             className="transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
           />
 

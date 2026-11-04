@@ -112,14 +112,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                   Algorudix<span className="text-emerald-600 dark:text-emerald-400">.ai</span>
                 </span>
               </div>
-              <p className="hidden sm:block text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-tight">
+              {/* Hidden at xl only: the full desktop link row needs that space until 2xl */}
+              <p className="hidden sm:block xl:hidden 2xl:block whitespace-nowrap text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-tight">
                 AI Engineering & Business Analytics
               </p>
             </div>
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1">
+          {/* Desktop Navigation Links (xl+; below that the hamburger menu is used, as 9 links don't fit) */}
+          <nav className="hidden xl:flex items-center gap-0.5">
             {navLinks.map((link) => {
               const targetId = link.href.replace('#', '');
               const isActive = activePage === 'devhub'
@@ -139,7 +140,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       onNavigate('home', targetId);
                     }
                   }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer ${
+                  className={`px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-150 cursor-pointer ${
                     isActive
                       ? 'bg-slate-100 dark:bg-zinc-800 text-slate-950 dark:text-white font-semibold'
                       : 'text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-zinc-800/50'
@@ -160,7 +161,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-consultation-btn"
               onClick={() => onOpenConsultation()}
-              className="hidden md:inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-800 dark:text-zinc-100 bg-slate-100/90 hover:bg-slate-200/90 dark:bg-[#18181b] dark:hover:bg-zinc-800 border border-slate-200/90 dark:border-zinc-700/80 rounded-xl transition-all duration-150 cursor-pointer shadow-2xs"
+              className="hidden md:inline-flex items-center justify-center gap-1.5 px-3.5 py-2 whitespace-nowrap text-xs font-semibold text-slate-800 dark:text-zinc-100 bg-slate-100/90 hover:bg-slate-200/90 dark:bg-[#18181b] dark:hover:bg-zinc-800 border border-slate-200/90 dark:border-zinc-700/80 rounded-xl transition-all duration-150 cursor-pointer shadow-2xs"
             >
               <PhoneCall className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>Book Call</span>
@@ -170,7 +171,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-get-started-btn"
               onClick={onOpenContact}
-              className="hidden sm:inline-flex items-center justify-center px-4 py-2 text-xs font-semibold text-white bg-slate-900 hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-xl shadow-xs transition-all duration-150 cursor-pointer group"
+              className="hidden sm:inline-flex items-center justify-center px-4 py-2 whitespace-nowrap text-xs font-semibold text-white bg-slate-900 hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-xl shadow-xs transition-all duration-150 cursor-pointer group"
             >
               <span>Get started</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
@@ -180,7 +181,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-mobile-toggle"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl lg:hidden text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800"
+              className="p-2 rounded-xl xl:hidden text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -194,7 +195,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {mobileMenuOpen && (
         <div
           id="mobile-drawer"
-          className="lg:hidden mt-2 max-w-7xl mx-auto rounded-2xl bg-white dark:bg-[#121215] border border-slate-200 dark:border-zinc-800 p-5 shadow-xl transition-all duration-200"
+          className="xl:hidden mt-2 max-w-7xl mx-auto rounded-2xl bg-white dark:bg-[#121215] border border-slate-200 dark:border-zinc-800 p-5 shadow-xl transition-all duration-200"
         >
           <div className="flex flex-col space-y-1.5">
             {navLinks.map((link) => {
@@ -223,7 +224,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="pt-4 mt-2 border-t border-slate-100 dark:border-zinc-800 flex flex-col gap-2">
               <div className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-zinc-900/60 border border-slate-200/60 dark:border-zinc-800 mb-1">
                 <span className="text-xs font-semibold text-slate-700 dark:text-zinc-300">Theme Mode</span>
-                <ThemeToggleSwitch />
+                <ThemeToggleSwitch id="mobile-theme-toggle-btn" />
               </div>
 
               <button
