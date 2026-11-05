@@ -1,8 +1,9 @@
-import { useId, useRef, useState, type KeyboardEvent } from 'react';
+import { useId, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import { section, site } from '../content';
+import { Arrow, Icon, iconFor } from './icons';
 import { Rise } from './Rise';
 
-/** "Day tabs, banded agenda": industries as tabs, their example uses as bands. */
+/** Industries as pill tabs; the chosen one shows where automation helps there. */
 export function Industries({ onBook }: { onBook: () => void }) {
   const s = section('industries');
   const list = site.industries;
@@ -24,51 +25,48 @@ export function Industries({ onBook }: { onBook: () => void }) {
   };
 
   return (
-    <section id="industries" className="section on-rest" aria-labelledby="industries-title">
-      <div className="frame">
-        <div className="axis-grid">
-          <div className="side" />
-          <div className="main industries__head">
-            <div>
-              <Rise id="industries-title" className="t-head" text={s.heading} />
-              {s.intro && <p className="t-body measure" style={{ marginTop: '1.25rem' }}>{s.intro}</p>}
-            </div>
-            {s.cta_label && <button type="button" className="btn" onClick={onBook}>{s.cta_label}</button>}
-          </div>
+    <section id="industries" className="section section--soft" aria-labelledby="industries-title">
+      <div className="wrap">
+        <div className="head">
+          <Rise id="industries-title" className="h2" text={s.heading} />
+          {s.intro && <p className="lead" data-reveal>{s.intro}</p>}
         </div>
-        <div className="axis-grid industries__layout">
-          <div className="side ind-tabs" role="tablist" aria-label="Industries">
-            {list.map((x, i) => (
-              <button
-                key={x.id}
-                ref={(el) => { tabs.current[i] = el; }}
-                id={`${base}-tab-${i}`}
-                type="button"
-                role="tab"
-                className="ind-tab"
-                aria-selected={i === active}
-                aria-controls={`${base}-panel`}
-                tabIndex={i === active ? 0 : -1}
-                onClick={() => setActive(i)}
-                onKeyDown={(e) => onKey(e, i)}
-              >
-                {x.name}
-              </button>
+        <div className="pills" role="tablist" aria-label="Industries" data-reveal>
+          {list.map((x, i) => (
+            <button
+              key={x.id}
+              ref={(el) => { tabs.current[i] = el; }}
+              id={`${base}-tab-${i}`}
+              type="button"
+              role="tab"
+              className="pill-tab"
+              aria-selected={i === active}
+              aria-controls={`${base}-panel`}
+              tabIndex={i === active ? 0 : -1}
+              onClick={() => setActive(i)}
+              onKeyDown={(e) => onKey(e, i)}
+            >
+              {x.name}
+            </button>
+          ))}
+        </div>
+        <div key={ind.id} className="card ind" id={`${base}-panel`} role="tabpanel" aria-labelledby={`${base}-tab-${active}`}>
+          <div>
+            <h3 className="h3" style={{ fontSize: 'clamp(24px, 2.4vw, 32px)' }}>{ind.name}</h3>
+            <p className="lead">{ind.description}</p>
+            {ind.impact && <span className="chip ind__impact"><Icon name="bolt" className="icon" />Example result: {ind.impact}</span>}
+            {s.cta_label && (
+              <div className="ind__cta"><button type="button" className="btn btn--primary" onClick={onBook}>{s.cta_label}<Arrow /></button></div>
+            )}
+          </div>
+          <ul className="ind__uses" aria-label={`Where we help in ${ind.name.toLowerCase()}`}>
+            {ind.use_cases.map((u, i) => (
+              <li key={u.label} className="ind__use" style={{ ['--i' as string]: i } as CSSProperties}>
+                <i><Icon name={iconFor(`${u.value} ${u.label}`)} /></i>
+                <div><b>{u.label}</b><span>{u.value}</span></div>
+              </li>
             ))}
-          </div>
-          <div className="main" id={`${base}-panel`} role="tabpanel" aria-labelledby={`${base}-tab-${active}`}>
-            <h3 className="t-lead-head">{ind.name}</h3>
-            <p className="t-body measure" style={{ marginTop: '0.75rem' }}>{ind.description}</p>
-            <ul className="bands">
-              {ind.use_cases.map((u) => (
-                <li key={u.label} className="band">
-                  <span className="band__name">{u.label}</span>
-                  <span className="band__kind">{u.value}</span>
-                </li>
-              ))}
-            </ul>
-            {ind.impact && <p className="t-small muted ind__result">Example result: {ind.impact}</p>}
-          </div>
+          </ul>
         </div>
       </div>
     </section>

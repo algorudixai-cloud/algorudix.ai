@@ -1,60 +1,30 @@
-import { Fragment } from 'react';
-import { mediaSrc, section, site, type Service } from '../content';
+import { section, site, type Service } from '../content';
+import { Arrow, Icon, iconFor } from './icons';
 import { Rise } from './Rise';
-
-/** Text with [img] markers, each replaced in order by an inline picture slot. */
-function PictureWords({ text, images }: { text: string; images: { src: string; alt: string }[] }) {
-  const parts = text.split('[img]');
-  return (
-    <>
-      {parts.map((part, i) => {
-        const img = i < parts.length - 1 ? images[i] : undefined;
-        return (
-          <Fragment key={i}>
-            {part}
-            {img && (
-              <span className="slot">
-                <img className="photo" src={mediaSrc(img.src)} alt={img.alt} width={228} height={120} loading="lazy" decoding="async" />
-              </span>
-            )}
-          </Fragment>
-        );
-      })}
-    </>
-  );
-}
 
 export function Services({ onOpen, onBook }: { onOpen: (s: Service) => void; onBook: () => void }) {
   const s = section('services');
   return (
-    <section id="services" className="section on-rest" aria-labelledby="services-title">
-      <div className="frame">
-        <div className="axis-grid">
-          <div className="side" />
-          <Rise id="services-title" className="main t-head" text={s.heading} />
+    <section id="services" className="section" aria-labelledby="services-title">
+      <div className="wrap">
+        <div className="head">
+          <Rise id="services-title" className="h2" text={s.heading} />
+          {s.intro && <p className="lead" data-reveal>{s.intro}</p>}
         </div>
-        <p className="words" data-reveal style={{ ['--i' as string]: 1 }}>
-          <PictureWords text={s.intro} images={s.images} />
-        </p>
-        <div className="axis-grid services__more">
-          <div className="side" />
-          <div className="main">
-            {s.body && <p className="t-body measure" data-reveal>{s.body}</p>}
-            <ul className="service-list">
-              {site.services.map((svc, i) => (
-                <li key={svc.id} className="service" data-reveal style={{ ['--i' as string]: i % 2 }}>
-                  <h3 className="t-lead-head">{svc.title}</h3>
-                  <p className="t-body">{svc.summary}</p>
-                  <button type="button" className="link" onClick={() => onOpen(svc)} aria-label={`Details: ${svc.title}`}>Details</button>
-                </li>
-              ))}
-            </ul>
-            {s.cta_label && (
-              <div style={{ marginTop: 'clamp(2.5rem, 5vw, 3.5rem)' }}>
-                <button type="button" className="btn" onClick={onBook}>{s.cta_label}</button>
-              </div>
-            )}
-          </div>
+        <ul className="cards">
+          {site.services.map((svc, i) => (
+            <li key={svc.id} className="card svc" data-reveal style={{ ['--i' as string]: i % 3 }}>
+              <span className="svc__icon"><Icon name={iconFor(`${svc.title} ${svc.category}`)} /></span>
+              <span className="cat">{svc.category}</span>
+              <h3 className="h3">{svc.title}</h3>
+              <p>{svc.summary}</p>
+              <button type="button" className="link" onClick={() => onOpen(svc)} aria-label={`Explore: ${svc.title}`}>Explore <Arrow /></button>
+            </li>
+          ))}
+        </ul>
+        <div className="services__more" data-reveal>
+          {s.body && <p className="muted">{s.body}</p>}
+          {s.cta_label && <button type="button" className="btn btn--primary" onClick={onBook}>{s.cta_label}<Arrow /></button>}
         </div>
       </div>
     </section>

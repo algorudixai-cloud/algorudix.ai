@@ -14,6 +14,7 @@ import { About } from './site/About';
 import { Faq } from './site/Faq';
 import { Contact } from './site/Contact';
 import { Footer } from './site/Footer';
+import { Tools } from './site/Tools';
 import { DevHub } from './site/DevHub';
 import { CaseStudyDialog, ConsultationDialog, PolicyDialog, ServiceDialog } from './site/dialogs';
 import { useReveal } from './site/hooks';
@@ -41,13 +42,16 @@ function Site() {
   const [prefill, setPrefill] = useState<{ service?: string; message?: string; n: number }>({ n: 0 });
 
   useEffect(() => {
-    const onHash = () => setRoute(routeFromHash());
+    const onHash = () => {
+      const next = routeFromHash();
+      setRoute((cur) => { if (next !== cur && next === 'devhub') window.scrollTo(0, 0); return next; });
+    };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
   useEffect(() => {
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#050f16' : '#ff7a1f');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#080b22' : '#ffffff');
   }, [theme]);
 
   useReveal([route]);
@@ -74,7 +78,7 @@ function Site() {
 
   if (route === 'admin') {
     return (
-      <Suspense fallback={<p className="frame section t-body">Loading the admin…</p>}>
+      <Suspense fallback={<p className="wrap section lead">Loading the admin…</p>}>
         <Admin onExit={() => { window.history.pushState(null, '', '#home'); setRoute('home'); }} />
       </Suspense>
     );
@@ -90,14 +94,15 @@ function Site() {
         ) : (
           <>
             <Hero onBook={() => book()} onShowTasks={() => scrollToId('tasks')} />
-            {isShown('intro') && <Intro />}
-            {isShown('tasks') && <Tasks onAsk={(task) => toContact(undefined, `We would like to automate: ${task.toLowerCase()}.`)} />}
             {isShown('services') && <Services onOpen={setService} onBook={() => book()} />}
+            {isShown('intro') && <Intro />}
+            {isShown('tools') && <Tools onBook={() => toContact()} />}
+            {isShown('tasks') && <Tasks onAsk={(task) => toContact(undefined, `We would like to automate: ${task.toLowerCase()}.`)} />}
             {isShown('process') && <Process />}
             {isShown('work') && <Work onOpen={setStudy} />}
             {isShown('industries') && <Industries onBook={() => book()} />}
-            {isShown('about') && <About />}
-            {isShown('faq') && <Faq />}
+            {isShown('about') && <About onBook={() => book()} />}
+            {isShown('faq') && <Faq onBook={() => book()} />}
             {isShown('contact') && <Contact key={prefill.n} prefillService={prefill.service} prefillMessage={prefill.message} />}
           </>
         )}

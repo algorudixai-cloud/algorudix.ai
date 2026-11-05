@@ -1,5 +1,5 @@
 import { section, site, telHref, type Policy } from '../content';
-import { useFitText } from './hooks';
+import { Mark } from './icons';
 import type { Page } from './Nav';
 
 interface FooterProps {
@@ -12,25 +12,23 @@ const SOCIALS: [keyof typeof site.settings, string][] = [
   ['linkedin', 'LinkedIn'], ['x', 'X'], ['github', 'GitHub'], ['instagram', 'Instagram'], ['facebook', 'Facebook'],
 ];
 
-/** "Name first, places under it": the wordmark opens the footer at full width. */
 export function Footer({ onNavigate, onPolicy, onBook }: FooterProps) {
   const { settings } = site;
   const f = section('footer');
-  const mark = useFitText<HTMLParagraphElement>(settings.name);
   const links = Object.values(site.sections).filter((s) => s.visible && s.nav_label).sort((a, b) => a.sort - b.sort);
   const socials = SOCIALS.map(([k, label]) => [String(settings[k] || ''), label] as const).filter(([url]) => url);
 
   return (
-    <footer id="main-footer" className="footer frame on-block">
-      <div><p ref={mark} className="footer__mark" aria-hidden="true">{settings.name}</p></div>
-      <div className="footer__row">
-        <div className="footer__places">
-          <h2 className="sr-only">{f.heading || 'Contact'}</h2>
-          <a href={`mailto:${settings.email}`}>{settings.email}</a>
-          {settings.phones.map((p) => <a key={p} href={telHref(p)}>{p}</a>)}
-          <p>{settings.location}</p>
-        </div>
-        <div className="footer__cols">
+    <footer id="main-footer" className="footer">
+      <div className="wrap">
+        <div className="footer__top">
+          <div className="footer__about">
+            <a className="brand" href="#home" onClick={(e) => { e.preventDefault(); onNavigate('home'); }}><Mark /><span>{settings.name}</span></a>
+            <p>{settings.tagline || settings.description}</p>
+            {socials.length > 0 && (
+              <div className="socials">{socials.map(([url, label]) => <a key={label} href={url} rel="noopener noreferrer" target="_blank">{label}</a>)}</div>
+            )}
+          </div>
           <nav aria-label="Site">
             <h2>Site</h2>
             <ul>
@@ -47,41 +45,34 @@ export function Footer({ onNavigate, onPolicy, onBook }: FooterProps) {
           </nav>
           <div>
             <h2>Legal</h2>
-            <ul>
-              {site.policies.map((p) => <li key={p.id}><button type="button" onClick={() => onPolicy(p.id)}>{p.title}</button></li>)}
-            </ul>
+            <ul>{site.policies.map((p) => <li key={p.id}><button type="button" onClick={() => onPolicy(p.id)}>{p.title}</button></li>)}</ul>
           </div>
           <div>
-            <h2>{socials.length ? 'Follow' : 'Talk to us'}</h2>
+            <h2>{f.heading || 'Talk to us'}</h2>
             <ul>
-              {socials.length
-                ? socials.map(([url, label]) => <li key={label}><a href={url} rel="noopener noreferrer" target="_blank">{label}</a></li>)
-                : (
-                  <>
-                    <li><button type="button" onClick={onBook}>Book a free consultation</button></li>
-                    <li><a href={`mailto:${settings.email}`}>Email us</a></li>
-                  </>
-                )}
+              <li><a href={`mailto:${settings.email}`}>{settings.email}</a></li>
+              {settings.phones.map((p) => <li key={p}><a href={telHref(p)}>{p}</a></li>)}
+              <li><button type="button" onClick={onBook}>Book a free consultation</button></li>
             </ul>
           </div>
         </div>
-      </div>
-      {site.credits.length > 0 && (
-        <p className="t-small muted footer__credits">
-          Pictures:{' '}
-          {site.credits.map((c, i) => (
-            <span key={c.id}>
-              {c.source ? <a href={c.source} rel="noopener noreferrer" target="_blank">{c.title}</a> : c.title}
-              {c.creator ? `, ${c.creator}` : ''}{c.licence ? ` (${c.licence})` : ''}{i < site.credits.length - 1 ? '; ' : '.'}
-            </span>
-          ))}
-        </p>
-      )}
-      <div className="footer__legal t-small">
-        <p>© {new Date().getFullYear()} {settings.name}. {f.body}</p>
-        <div className="footer__legal-links">
-          <a href="#admin">Site admin</a>
-          <a href="#home" onClick={(e) => { e.preventDefault(); onNavigate('home'); }}>Back to top</a>
+        {site.credits.length > 0 && (
+          <p className="small muted" style={{ marginTop: 40 }}>
+            Pictures:{' '}
+            {site.credits.map((c, i) => (
+              <span key={c.id}>
+                {c.source ? <a href={c.source} rel="noopener noreferrer" target="_blank">{c.title}</a> : c.title}
+                {c.creator ? `, ${c.creator}` : ''}{c.licence ? ` (${c.licence})` : ''}{i < site.credits.length - 1 ? '; ' : '.'}
+              </span>
+            ))}
+          </p>
+        )}
+        <div className="footer__bottom">
+          <p>© {new Date().getFullYear()} {settings.name}. {f.body}</p>
+          <nav aria-label="Footer">
+            <a href="#admin">Site admin</a>
+            <a href="#home" onClick={(e) => { e.preventDefault(); onNavigate('home'); }}>Back to top</a>
+          </nav>
         </div>
       </div>
     </footer>

@@ -133,7 +133,7 @@ export function validateDump(dump: ContentDump): string[] {
     }
   }
   if ((dump.tables.settings ?? []).length !== 1) problems.push('settings: there must be exactly one row');
-  const need = ['hero', 'intro', 'tasks', 'services', 'process', 'work', 'industries', 'about', 'faq', 'contact', 'footer', 'devhub'];
+  const need = ['hero', 'intro', 'tasks', 'services', 'process', 'work', 'industries', 'about', 'faq', 'contact', 'footer', 'devhub', 'tools'];
   const have = new Set((dump.tables.sections ?? []).map((s) => s.id));
   for (const id of need) if (!have.has(id)) problems.push(`sections: missing "${id}"`);
   return problems;

@@ -43,29 +43,11 @@
         "sort": 10,
         "visible": true,
         "nav_label": "",
-        "heading": "AI for the work you repeat",
+        "heading": "AI automation for",
         "intro": "Algorudix is a Bengaluru team of business analysts and engineers. We study how your business runs, then build the AI automation, dashboards and software that take repeated work off your people.",
-        "body": "",
+        "body": "invoice matching\nweekly reports\ncustomer support\ndata entry\nstock planning",
         "cta_label": "Book a free consultation",
-        "images": [
-          {
-            "src": "media/switchboard-operators.jpg",
-            "alt": "Rows of telephone operators connecting calls by hand at a Bell System switchboard"
-          },
-          {
-            "src": "media/eniac-programmers.jpg",
-            "alt": "Glen Beck and Betty Snyder programming the ENIAC computer, around 1947"
-          },
-          {
-            "src": "media/vidhana-soudha.jpg",
-            "alt": "Vidhana Soudha, the seat of the Karnataka legislature, in Bengaluru"
-          },
-          {
-            "src": "media/automatic-exchange.mp4",
-            "alt": "Automatic telephone selectors at work in the Arnhem exchange, 1947",
-            "poster": "media/automatic-exchange-poster.jpg"
-          }
-        ]
+        "images": []
       },
       {
         "id": "intro",
@@ -74,18 +56,9 @@
         "nav_label": "",
         "heading": "We start with how you work",
         "intro": "Most businesses already know which work eats their week: copying data between systems, building the same report every Monday, answering the same questions. Our business analysts sit with your team and map that work as it really happens. Then our engineers automate the parts a machine should do, and leave the decisions with your people.",
-        "body": "The tabulating room of the Federal Housing Administration, Washington, 1937. Offices have been automating routine work for a hundred years.",
+        "body": "Email, Spreadsheets, Accounting, CRM, ERP | Dashboards, Reports, Alerts, Apps",
         "cta_label": "",
-        "images": [
-          {
-            "src": "media/tabulating-office-1937.jpg",
-            "alt": "Clerks at tabulating machines in the Federal Housing Administration office, Washington, 1937"
-          },
-          {
-            "src": "media/tabulating-office-1937-portrait.jpg",
-            "alt": "Clerks at tabulating machines in the Federal Housing Administration office, Washington, 1937"
-          }
-        ]
+        "images": []
       },
       {
         "id": "tasks",
@@ -104,27 +77,21 @@
         "visible": true,
         "nav_label": "Services",
         "heading": "What we build",
-        "intro": "We build AI assistants [img] that answer from your own documents, dashboards [img] that put every number in one place, data pipelines [img] that keep your systems in step, and the custom software [img] that ties it all together.",
+        "intro": "We build AI assistants that answer from your own documents, dashboards that put every number in one place, data pipelines that keep your systems in step, and the custom software that ties it all together.",
         "body": "Six services, one team. Every project starts with a free consultation.",
         "cta_label": "Book a free consultation",
-        "images": [
-          {
-            "src": "media/word-phones.jpg",
-            "alt": "A switchboard operator taking a call"
-          },
-          {
-            "src": "media/word-tabulator.jpg",
-            "alt": "A census tabulating machine"
-          },
-          {
-            "src": "media/word-card-sorter.jpg",
-            "alt": "A punched-card sorter"
-          },
-          {
-            "src": "media/word-eniac.jpg",
-            "alt": "Programming the ENIAC computer"
-          }
-        ]
+        "images": []
+      },
+      {
+        "id": "tools",
+        "sort": 45,
+        "visible": true,
+        "nav_label": "",
+        "heading": "Works with the tools you already use",
+        "intro": "We build on the platforms your team already knows, from Power BI and Python to Azure, AWS and the leading AI models, so nothing has to be replaced to get started.",
+        "body": "",
+        "cta_label": "Talk to our team",
+        "images": []
       },
       {
         "id": "process",
@@ -166,8 +133,8 @@
         "nav_label": "About",
         "heading": "Who we are",
         "intro": "Algorudix is a team of business analysts and engineers in Bengaluru. Analysts and engineers work side by side on every project, from the first workshop to the day it goes live, so what we build fits how your business really works. You own everything we make for you: the code, the models and the data.",
-        "body": "Tools we work with",
-        "cta_label": "",
+        "body": "",
+        "cta_label": "Talk to the team",
         "images": []
       },
       {
@@ -1393,87 +1360,6 @@
         "updated": "September 2026"
       }
     ],
-    "credits": [
-      {
-        "id": "switchboard",
-        "sort": 10,
-        "visible": true,
-        "title": "Women working at a Bell System telephone switchboard",
-        "creator": "U.S. National Archives",
-        "licence": "No known copyright restrictions",
-        "source": "https://commons.wikimedia.org/wiki/File:Photograph_of_Women_Working_at_a_Bell_System_Telephone_Switchboard_(3660047829).jpg",
-        "file": "media/switchboard-operators.jpg"
-      },
-      {
-        "id": "eniac",
-        "sort": 20,
-        "visible": true,
-        "title": "Glen Beck and Betty Snyder program the ENIAC, about 1947",
-        "creator": "Unknown author",
-        "licence": "Public domain",
-        "source": "https://commons.wikimedia.org/wiki/File:Glen_Beck_and_Betty_Snyder_program_the_ENIAC_in_building_328_at_the_Ballistic_Research_Laboratory.jpg",
-        "file": "media/eniac-programmers.jpg"
-      },
-      {
-        "id": "vidhana-soudha",
-        "sort": 30,
-        "visible": true,
-        "title": "Vidhana Soudha, Bengaluru, 2022",
-        "creator": "Wilhelm Tell DCCXLVI",
-        "licence": "CC0",
-        "source": "https://commons.wikimedia.org/wiki/File:Vidhana_Soudha,_14_February_2022_-_cropped.jpg",
-        "file": "media/vidhana-soudha.jpg"
-      },
-      {
-        "id": "fha-tabulating",
-        "sort": 40,
-        "visible": true,
-        "title": "Tabulating machines at the Federal Housing Administration, 1937",
-        "creator": "Harris & Ewing",
-        "licence": "Public domain",
-        "source": "https://commons.wikimedia.org/wiki/File:Tabulating_machines_at_F.H.A._LCCN2016871390.jpg",
-        "file": "media/tabulating-office-1937.jpg"
-      },
-      {
-        "id": "army-switchboard",
-        "sort": 50,
-        "visible": true,
-        "title": "Army switchboard operators",
-        "creator": "U.S. Army Signal Corps",
-        "licence": "Public domain",
-        "source": "https://commons.wikimedia.org/wiki/File:Army_Switchboard_Operators_-_DPLA_-_e9e128ac3f209b970b2bdc40470e1813.jpg",
-        "file": "media/word-phones.jpg"
-      },
-      {
-        "id": "census-tabulating",
-        "sort": 60,
-        "visible": true,
-        "title": "Census tabulating machines, 1909 to 1940",
-        "creator": "National Photo Company Collection",
-        "licence": "Public domain",
-        "source": "https://commons.wikimedia.org/wiki/File:Tabulating_machines,_Census_LCCN2016823353.tif",
-        "file": "media/word-tabulator.jpg"
-      },
-      {
-        "id": "card-sorter",
-        "sort": 70,
-        "visible": true,
-        "title": "Card sorter for a tabulating machine, 1940",
-        "creator": "Harris & Ewing",
-        "licence": "Public domain",
-        "source": "https://commons.wikimedia.org/wiki/File:Card_sorter_for_tabulating_machine_LCCN2016877177.jpg",
-        "file": "media/word-card-sorter.jpg"
-      },
-      {
-        "id": "arnhem-newsreel",
-        "sort": 80,
-        "visible": true,
-        "title": "Arnhem kan weer automatisch telefoneren, newsreel, 21 July 1947",
-        "creator": "Polygoon Hollands Nieuws, Nederlands Instituut voor Beeld en Geluid",
-        "licence": "Public domain",
-        "source": "https://commons.wikimedia.org/wiki/File:ARNHEM_KAN_WEER_AUTOMATISCH_TELEFONEREN-PGM4011942.webm",
-        "file": "media/automatic-exchange.mp4"
-      }
-    ]
+    "credits": []
   }
 }

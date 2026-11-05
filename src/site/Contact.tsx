@@ -1,6 +1,7 @@
 import { useEffect, useId, useState, type FormEvent } from 'react';
 import { section, site, telHref } from '../content';
 import { EMAIL_RE, sendEnquiry } from './enquiry';
+import { Arrow, Icon } from './icons';
 import { Rise } from './Rise';
 
 interface ContactProps {
@@ -11,9 +12,10 @@ interface ContactProps {
 type Field = 'name' | 'company' | 'email' | 'phone' | 'service' | 'message';
 const EMPTY: Record<Field, string> = { name: '', company: '', email: '', phone: '', service: '', message: '' };
 
-/** "Clip-out coupon form": the enquiry form as one filled coupon with a perforation. */
+/** The enquiry form on a gradient field, with every other way to reach us beside it. */
 export function Contact({ prefillService, prefillMessage }: ContactProps) {
   const s = section('contact');
+  const { settings } = site;
   const services = site.services.map((x) => x.title);
   const id = useId();
   const [form, setForm] = useState<Record<Field, string>>({ ...EMPTY, service: services[0] ?? '' });
@@ -73,27 +75,28 @@ export function Contact({ prefillService, prefillMessage }: ContactProps) {
   const err = (k: Field) => errors[k] && <span id={`${id}-${k}-err`} className="field__error" role="alert">{errors[k]}</span>;
 
   return (
-    <section id="contact" className="frame coupon-wrap on-page" aria-labelledby="contact-title">
-      <div className="coupon on-block">
-        <div className="coupon__left">
-          <div>
-            <Rise id="contact-title" className="t-head" text={s.heading} />
-            {s.intro && <p className="t-body" style={{ marginTop: '1.25rem', maxWidth: '34ch' }}>{s.intro}</p>}
-          </div>
-          <div className="coupon__direct">
-            <p className="t-small muted">Or contact us directly</p>
-            <a className="link" href={`mailto:${site.settings.email}`}>{site.settings.email}</a>
-            {site.settings.phones.map((p) => <a key={p} className="link" href={telHref(p)}>{p}</a>)}
-          </div>
+    <section id="contact" className="contact" aria-labelledby="contact-title">
+      <div className="wrap contact__grid">
+        <div>
+          <Rise id="contact-title" className="h2" text={s.heading} />
+          {s.intro && <p className="contact__intro" data-reveal>{s.intro}</p>}
+          <ul className="contact__list" data-reveal>
+            <li><i><Icon name="mail" /></i><a href={`mailto:${settings.email}`}>{settings.email}</a></li>
+            {settings.phones.map((p) => <li key={p}><i><Icon name="phone" /></i><a href={telHref(p)}>{p}</a></li>)}
+            {settings.location && <li><i><Icon name="pin" /></i><span>{settings.location}</span></li>}
+            {settings.hours && <li><i><Icon name="clock" /></i><span>{settings.hours}</span></li>}
+          </ul>
         </div>
-        <div className="coupon__right">
+        <div className="form-card" data-reveal="zoom">
           {state === 'done' ? (
-            <div role="status" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'flex-start' }}>
-              <p className="t-lead" style={{ fontWeight: 500 }}>{s.body || 'Thank you. We have your enquiry.'}</p>
-              <button type="button" className="link" onClick={() => { setForm({ ...EMPTY, service: services[0] ?? '' }); setErrors({}); setState('idle'); }}>Send another enquiry</button>
+            <div className="done" role="status">
+              <span className="done__icon"><Icon name="check" /></span>
+              <h3 className="h3">{s.body || 'Thank you. We have your enquiry.'}</h3>
+              <button type="button" className="link" onClick={() => { setForm({ ...EMPTY, service: services[0] ?? '' }); setErrors({}); setState('idle'); }}>Send another enquiry <Arrow /></button>
             </div>
           ) : (
             <form noValidate onSubmit={submit}>
+              <h3 className="h3">Tell us about the work</h3>
               <div className="fields">
                 <div className="field">
                   <label htmlFor={`${id}-name`}>Full name</label>
@@ -127,8 +130,8 @@ export function Contact({ prefillService, prefillMessage }: ContactProps) {
                   {err('message')}
                 </div>
               </div>
-              <button type="submit" className="btn btn--block coupon__submit" disabled={state === 'sending'}>
-                {state === 'sending' ? 'Sending…' : s.cta_label || 'Send enquiry'}
+              <button type="submit" className="btn btn--primary btn--block" disabled={state === 'sending'}>
+                {state === 'sending' ? 'Sending…' : s.cta_label || 'Send enquiry'}{state !== 'sending' && <Arrow />}
               </button>
             </form>
           )}

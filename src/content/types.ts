@@ -34,7 +34,7 @@ export interface Settings extends Row {
 
 export type SectionId =
   | 'hero' | 'intro' | 'tasks' | 'services' | 'process' | 'work'
-  | 'industries' | 'about' | 'faq' | 'contact' | 'footer' | 'devhub';
+  | 'industries' | 'about' | 'faq' | 'contact' | 'footer' | 'devhub' | 'tools';
 
 export interface Section extends Row {
   id: SectionId;
