@@ -165,9 +165,9 @@ export const TABLES: Record<TableName, TableDef> = {
   },
   highlights: {
     name: 'highlights', label: 'Key figures', item: 'figure', titleKey: 'label',
-    help: 'Shown in the About section. Only publish numbers you can back up.',
+    help: 'The big figures under the headline. Only publish numbers you can back up.',
     fields: [
-      { key: 'value', label: 'Value', type: 'text', required: true },
+      { key: 'value', label: 'Value', type: 'text', required: true, help: 'A number with its unit, e.g. 150+ or 99.4%. It counts up when shown.' },
       { key: 'label', label: 'Label', type: 'text', required: true },
     ],
   },

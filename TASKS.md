@@ -1,7 +1,7 @@
 # Algorudix.ai redesign: live task list
 
-**Last updated:** 2026-11-05, 11:19 IST
-**Now working on:** the premium redesign is built and tested; next up is the admin editor
+**Last updated:** 2026-11-05, 11:57 IST
+**Now working on:** the admin editor is built and tested; next is the final report and a pull request for you
 **Branch:** `claude/serene-brahmagupta-dx8kqa` (nothing goes live until you approve a PR to `main`)
 
 Legend: ✅ done · 🔄 in progress · ⏳ to do
@@ -36,9 +36,27 @@ their logo, words or pictures. Every word on the page still comes from your cont
 - ✅ Form test: empty forms show errors and **nothing is sent** (tests never email you)
 - ✅ Content check: seed → SQLite → JSON identical (14 tables, 87 rows)
 
+## ✅ The admin editor at `/#admin`
+- ✅ **Sign in with a GitHub token**: GitHub checks it, so this is real security (the old fake OTP is gone)
+  - The token is kept only in that browser tab (never saved on the computer) and forgotten when you close it
+  - Step-by-step instructions to create the token are on the sign-in page
+- ✅ **Every table is editable**: company details, page sections, tasks, services, stages, case studies,
+  industries, tools, key figures, questions, testimonials, Dev Hub, policies, picture credits
+  - Add, edit, delete (with a "Delete for good?" check), move up and down, show or hide
+  - Fields made for each kind of content: text, paragraphs, lists, steps (AI or your team), pictures
+  - Each page section explains what its fields do (for example, the hero's rotating words)
+- ✅ **Pictures**: upload PNG, JPEG, WebP or GIF up to 3 MB; they go into `public/uploads/`
+- ✅ **Publish** checks for empty required fields, then commits the database to `main`. The site updates in about 2 minutes
+- ✅ **Safe with two editors**: if someone else published first, nothing is overwritten and you're asked to load the latest version
+- ✅ Unpublished edits survive a page refresh, and you're warned before closing with unpublished edits
+- ✅ Works on phones too
+- ✅ Admin test with GitHub mocked: **23/23 passed**
+  - Covers sign-in, wrong tokens, editing, and checking that the published file really holds the edit
+  - Also: reorder, add and delete, empty fields blocked, the two-editor clash, picture upload, SVG refused, sign-out
+- ✅ Site smoke test still **26/26**
+
 ## ⏳ Next
-- ⏳ **Admin editor at `/#admin`:** log in with a GitHub token, edit every table, upload pictures, publish (the site updates in about 2 minutes)
-- ⏳ Final report and a pull request for you to review
+- ⏳ Final report and a pull request for you to review (the admin edits `main`, so it works once that PR is merged)
 
 ## History
 - ✅ Phase 1: all content moved into SQLite (`content/site.db`), commit `1e384d7`
