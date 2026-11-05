@@ -1,243 +1,115 @@
-import React, { useState, useEffect } from 'react';
-import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Services } from './components/Services';
-import { WhyChooseUs } from './components/WhyChooseUs';
-import { Process } from './components/Process';
-import { Technologies } from './components/Technologies';
-import { Industries } from './components/Industries';
-import { Portfolio } from './components/Portfolio';
-import { DevelopmentHub } from './components/DevelopmentHub';
-import { CTA } from './components/CTA';
-import { ContactForm } from './components/ContactForm';
-import { Footer } from './components/Footer';
-import { ConsultationModal } from './components/ConsultationModal';
-import { ServiceDetailModal } from './components/ServiceDetailModal';
-import { CaseStudyModal } from './components/CaseStudyModal';
-import { PolicyModal, PolicyType } from './components/PolicyModal';
-import { ServiceItem, CaseStudyItem } from './types';
-import { COMPANY_CONFIG } from './data/companyData';
-import { ThemeProvider } from './context/ThemeContext';
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
+import { isShown, type CaseStudy, type Policy, type Service } from './content';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { Nav, type Page } from './site/Nav';
+import { Hero } from './site/Hero';
+import { Intro } from './site/Intro';
+import { Tasks } from './site/Tasks';
+import { Services } from './site/Services';
+import { Process } from './site/Process';
+import { Work } from './site/Work';
+import { Industries } from './site/Industries';
+import { About } from './site/About';
+import { Faq } from './site/Faq';
+import { Contact } from './site/Contact';
+import { Footer } from './site/Footer';
+import { DevHub } from './site/DevHub';
+import { CaseStudyDialog, ConsultationDialog, PolicyDialog, ServiceDialog } from './site/dialogs';
+import { useReveal } from './site/hooks';
 
-function MainApp() {
-  const companyName = COMPANY_CONFIG.defaultName;
+// The admin is only downloaded by people who open #admin.
+const Admin = lazy(() => import('./admin/Admin'));
 
-  // Page Routing state: 'home' vs 'devhub'
-  const [activePage, setActivePage] = useState<'home' | 'devhub'>(() => {
-    return window.location.hash === '#development-hub' ? 'devhub' : 'home';
-  });
+type Route = Page | 'admin';
+const routeFromHash = (): Route =>
+  window.location.hash === '#development-hub' ? 'devhub' : window.location.hash === '#admin' ? 'admin' : 'home';
 
-  // Modals state
-  const [isConsultationOpen, setIsConsultationOpen] = useState<boolean>(false);
-  const [consultationPreselect, setConsultationPreselect] = useState<string>('Custom AI Development');
+const scrollToId = (id: string) => {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  else window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
-  const [selectedServiceDetail, setSelectedServiceDetail] = useState<ServiceItem | null>(null);
-  const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudyItem | null>(null);
+function Site() {
+  const { theme } = useTheme();
+  const [route, setRoute] = useState<Route>(routeFromHash);
+  const [booking, setBooking] = useState<{ open: boolean; service?: string }>({ open: false });
+  const [service, setService] = useState<Service | null>(null);
+  const [study, setStudy] = useState<CaseStudy | null>(null);
+  const [policy, setPolicy] = useState<{ open: boolean; id: Policy['id'] }>({ open: false, id: 'privacy' });
+  const [prefill, setPrefill] = useState<{ service?: string; message?: string; n: number }>({ n: 0 });
 
-  // Policy modal state
-  const [isPolicyOpen, setIsPolicyOpen] = useState<boolean>(false);
-  const [policyType, setPolicyType] = useState<PolicyType>('privacy');
-
-  // Pre-filled form state
-  const [formPrefillService, setFormPrefillService] = useState<string>('Custom AI Development');
-  const [formPrefillDesc, setFormPrefillDesc] = useState<string>('');
-
-  // Handle URL hash changes
   useEffect(() => {
-    const handleHashChange = () => {
-      if (window.location.hash === '#development-hub') {
-        setActivePage('devhub');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        setActivePage('home');
-      }
-    };
-
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    const onHash = () => setRoute(routeFromHash());
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  const handleNavigate = (page: 'home' | 'devhub', targetId?: string) => {
-    setActivePage(page);
+  useEffect(() => {
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#050f16' : '#ff7a1f');
+  }, [theme]);
+
+  useReveal([route]);
+
+  const navigate = useCallback((page: Page, targetId?: string) => {
+    setRoute(page);
     if (page === 'devhub') {
-      window.location.hash = '#development-hub';
+      window.history.pushState(null, '', '#development-hub');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      window.location.hash = targetId ? `#${targetId}` : '#home';
-      if (targetId) {
-        setTimeout(() => {
-          const el = document.getElementById(targetId);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-          else window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 50);
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      return;
     }
-  };
+    window.history.pushState(null, '', targetId ? `#${targetId}` : '#home');
+    if (targetId) setTimeout(() => scrollToId(targetId), 40);
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
-  const handleOpenConsultation = (serviceName?: string) => {
-    if (serviceName) setConsultationPreselect(serviceName);
-    setIsConsultationOpen(true);
+  const toContact = (service?: string, message?: string) => {
+    setService(null);
+    setStudy(null);
+    setPrefill((p) => ({ service, message, n: p.n + 1 }));
+    navigate('home', 'contact');
   };
+  const book = (s?: string) => setBooking({ open: true, service: s });
 
-  const handleOpenPolicy = (type: PolicyType) => {
-    setPolicyType(type);
-    setIsPolicyOpen(true);
-  };
-
-  const handleGetStarted = () => {
-    if (activePage !== 'home') {
-      handleNavigate('home', 'contact');
-    } else {
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
-  const handleBookService = (serviceName: string) => {
-    setFormPrefillService(serviceName);
-    if (activePage !== 'home') {
-      handleNavigate('home', 'contact');
-    } else {
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
-
-  const handleStartSimilarProject = (projectTitle: string) => {
-    setFormPrefillService('AI & Custom Software Development');
-    setFormPrefillDesc(`We are interested in building a solution similar to your case study: "${projectTitle}".`);
-    if (activePage !== 'home') {
-      handleNavigate('home', 'contact');
-    } else {
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
+  if (route === 'admin') {
+    return (
+      <Suspense fallback={<p className="frame section t-body">Loading the admin…</p>}>
+        <Admin onExit={() => { window.history.pushState(null, '', '#home'); setRoute('home'); }} />
+      </Suspense>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#09090b] text-slate-900 dark:text-zinc-100 font-sans selection:bg-emerald-500 selection:text-white transition-colors duration-200">
-
-      {/* Navigation Header */}
-      <Navbar
-        companyName={companyName}
-        activePage={activePage}
-        onNavigate={handleNavigate}
-        onOpenConsultation={() => handleOpenConsultation()}
-        onOpenContact={handleGetStarted}
-      />
-
-      {/* Main View Area */}
-      <main>
-        {activePage === 'devhub' ? (
-          /* Separate Standalone Development Hub View */
-          <DevelopmentHub
-            onNavigateHome={() => handleNavigate('home', 'home')}
-          />
+    <>
+      <a className="skip-link" href="#main">Skip to content</a>
+      <Nav page={route} onNavigate={navigate} onBook={() => book()} />
+      <main id="main" tabIndex={-1}>
+        {route === 'devhub' ? (
+          <DevHub onHome={() => navigate('home')} />
         ) : (
-          /* Homepage Single Page View */
           <>
-            {/* 1. Hero Section */}
-            <Hero
-              onOpenConsultation={() => handleOpenConsultation()}
-              onGetStarted={handleGetStarted}
-            />
-
-            {/* 2. About Us Section */}
-            <About
-              onOpenConsultation={() => handleOpenConsultation()}
-            />
-
-            {/* 3. Services Section */}
-            <Services
-              onSelectService={(service) => setSelectedServiceDetail(service)}
-              onBookService={handleBookService}
-            />
-
-            {/* 4. Why Choose Us Section */}
-            <WhyChooseUs
-              onOpenConsultation={() => handleOpenConsultation()}
-            />
-
-            {/* 5. Our Process Section */}
-            <Process
-              onOpenConsultation={() => handleOpenConsultation()}
-            />
-
-            {/* 6. Technologies We Use Section */}
-            <Technologies />
-
-            {/* 7. Industries We Serve Section */}
-            <Industries
-              onOpenConsultation={handleOpenConsultation}
-            />
-
-            {/* 8. Portfolio / Case Studies Section */}
-            <Portfolio
-              onSelectCaseStudy={(study) => setSelectedCaseStudy(study)}
-            />
-
-
-            {/* 9. Call to Action Section */}
-            <CTA
-              onStartProject={handleGetStarted}
-              onTalkToExpert={() => handleOpenConsultation('Executive Strategy Call')}
-            />
-
-            {/* 10. Contact Section */}
-            <ContactForm
-              prefilledService={formPrefillService}
-              prefilledDescription={formPrefillDesc}
-            />
+            <Hero onBook={() => book()} onShowTasks={() => scrollToId('tasks')} />
+            {isShown('intro') && <Intro />}
+            {isShown('tasks') && <Tasks onAsk={(task) => toContact(undefined, `We would like to automate: ${task.toLowerCase()}.`)} />}
+            {isShown('services') && <Services onOpen={setService} onBook={() => book()} />}
+            {isShown('process') && <Process />}
+            {isShown('work') && <Work onOpen={setStudy} />}
+            {isShown('industries') && <Industries onBook={() => book()} />}
+            {isShown('about') && <About />}
+            {isShown('faq') && <Faq />}
+            {isShown('contact') && <Contact key={prefill.n} prefillService={prefill.service} prefillMessage={prefill.message} />}
           </>
         )}
       </main>
+      <Footer onNavigate={navigate} onPolicy={(id) => setPolicy({ open: true, id })} onBook={() => book()} />
 
-      {/* Footer Section */}
-      <Footer
-        companyName={companyName}
-        onNavigate={handleNavigate}
-        onOpenConsultation={() => handleOpenConsultation()}
-        onOpenPolicy={handleOpenPolicy}
-      />
-
-      {/* Interactive Modals */}
-      <ConsultationModal
-        isOpen={isConsultationOpen}
-        onClose={() => setIsConsultationOpen(false)}
-        preselectedService={consultationPreselect}
-      />
-
-      <ServiceDetailModal
-        service={selectedServiceDetail}
-        onClose={() => setSelectedServiceDetail(null)}
-        onBookService={handleBookService}
-      />
-
-      <CaseStudyModal
-        caseStudy={selectedCaseStudy}
-        onClose={() => setSelectedCaseStudy(null)}
-        onStartSimilarProject={handleStartSimilarProject}
-      />
-
-      <PolicyModal
-        isOpen={isPolicyOpen}
-        initialType={policyType}
-        onClose={() => setIsPolicyOpen(false)}
-        onOpenContact={handleGetStarted}
-      />
-
-    </div>
+      <ConsultationDialog open={booking.open} service={booking.service} onClose={() => setBooking({ open: false })} />
+      <ServiceDialog service={service} onClose={() => setService(null)} onAsk={(title) => toContact(title)} />
+      <CaseStudyDialog study={study} onClose={() => setStudy(null)}
+        onSimilar={(title) => toContact(undefined, `We are interested in a solution similar to your case study: "${title}".`)} />
+      <PolicyDialog open={policy.open} initial={policy.id} onClose={() => setPolicy((p) => ({ ...p, open: false }))} onContact={() => toContact()} />
+    </>
   );
 }
 
@@ -245,7 +117,7 @@ export default function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider>
-        <MainApp />
+        <Site />
       </ThemeProvider>
     </ErrorBoundary>
   );

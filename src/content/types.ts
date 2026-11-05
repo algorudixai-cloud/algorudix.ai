@@ -9,7 +9,8 @@ export interface Row {
 export interface Pair { label: string; value: string }
 export interface Step { who: 'ai' | 'person'; text: string }
 export interface Block { heading: string; text: string }
-export interface Picture { src: string; alt: string }
+/** A picture, or a short silent video when `src` ends in .mp4 (with an optional poster image). */
+export interface Picture { src: string; alt: string; poster?: string }
 
 export interface Settings extends Row {
   name: string;
