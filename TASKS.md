@@ -1,8 +1,8 @@
 # Algorudix.ai redesign: live task list
 
-**Last updated:** 2026-11-05, 11:57 IST
-**Now working on:** the admin editor is built and tested; next is the final report and a pull request for you
-**Branch:** `claude/serene-brahmagupta-dx8kqa` (nothing goes live until you approve a PR to `main`)
+**Last updated:** 2026-11-05, 12:27 IST
+**Now working on:** 🎉 it's live on https://algorudixai.com. Your turn: create the token and try the admin
+**Live:** merged in PR #1 on 2026-11-05 (https://github.com/algorudixai-cloud/algorudix.ai/pull/1)
 
 Legend: ✅ done · 🔄 in progress · ⏳ to do
 
@@ -55,8 +55,12 @@ their logo, words or pictures. Every word on the page still comes from your cont
   - Also: reorder, add and delete, empty fields blocked, the two-editor clash, picture upload, SVG refused, sign-out
 - ✅ Site smoke test still **26/26**
 
-## ⏳ Next
-- ⏳ Final report and a pull request for you to review (the admin edits `main`, so it works once that PR is merged)
+## ✅ Live on algorudixai.com
+- ✅ Merged in PR #1 at your go-ahead; the deploy build passed in 22 seconds and the site was live about 30 seconds later
+- ✅ **Smoke test on the live domain: 26/26 passed** (same checks as before, against the real site)
+- ✅ **Admin on the live domain:** the sign-in page loads, and the real GitHub rejects a fake token with the friendly message (no real token was used)
+- ⏳ **Your first real publish:** create the token (steps on the sign-in page), open https://algorudixai.com/#admin, change something small, press Publish, and the site updates in about 2 minutes
+- ↩️ **To undo:** reverting the merge commit on `main` brings the old site back in about 2 minutes
 
 ## History
 - ✅ Phase 1: all content moved into SQLite (`content/site.db`), commit `1e384d7`
