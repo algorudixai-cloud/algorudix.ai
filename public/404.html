@@ -1,30 +1,39 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Algorudix.Ai | AI Development & Business Analysis</title>
-    <meta name="description" content="Algorudix.Ai builds production-ready AI systems, executive business intelligence dashboards, and enterprise automation that turn complex data into clear, confident decisions." />
-    <meta property="og:title" content="Algorudix.Ai | AI Development & Business Analysis" />
-    <meta property="og:description" content="Turn complex enterprise data into clear, confident decisions with custom AI development and business intelligence." />
-    <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#10b981" />
-    <link rel="icon" type="image/png" href="./assets/brand/logo-transparent.png" />
-    <link rel="apple-touch-icon" href="./assets/brand/logo-transparent.png" />
-    <script>
-      (function() {
-        var p = window.location.pathname;
-        if (window.location.hostname.endsWith('github.io') && p.indexOf('/algorudix.ai') === 0 && !p.endsWith('/')) {
-          window.location.replace(window.location.origin + p + '/' + window.location.search + window.location.hash);
-        }
-      })();
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>Page not found | Algorudix.ai</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,800&display=swap" rel="stylesheet" />
+    <style>
+      :root { color-scheme: light; }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-height: 100svh; display: grid; place-items: center; padding: 24px; overflow: hidden; background: #fff; color: #3b4262; font-family: Satoshi, system-ui, -apple-system, 'Segoe UI', sans-serif; text-align: center; }
+      .blob { position: fixed; border-radius: 50%; filter: blur(70px); z-index: -1; }
+      .a { width: 620px; height: 620px; right: -200px; top: -240px; background: radial-gradient(circle, #dccfff, transparent 70%); }
+      .b { width: 520px; height: 520px; left: -200px; bottom: -240px; background: radial-gradient(circle, #ffdccc, transparent 70%); }
+      .brand { display: inline-flex; align-items: center; gap: 10px; color: #0b1033; font-weight: 800; font-size: 20px; letter-spacing: -0.025em; text-decoration: none; }
+      .brand img { width: 34px; height: 34px; }
+      .code { margin: 48px 0 0; font-size: clamp(96px, 18vw, 180px); font-weight: 800; line-height: 1; letter-spacing: -0.05em; background: linear-gradient(115deg, #6c3bff, #2f6bff 55%, #19c3e6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      h1 { margin: 12px 0 0; color: #0b1033; font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.03em; }
+      p { margin: 16px auto 0; max-width: 44ch; font-size: 18px; line-height: 1.6; }
+      .btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 32px; height: 54px; padding: 0 28px; border-radius: 999px; color: #fff; font-weight: 700; text-decoration: none; background: linear-gradient(115deg, #6c3bff, #2f6bff 55%, #19c3e6); box-shadow: 0 14px 30px -12px rgba(76, 50, 255, 0.65); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+      .btn:hover { transform: translateY(-2px); }
+    </style>
   </head>
-  <body class="bg-slate-50 text-slate-900 dark:bg-[#0b0f17] dark:text-slate-100 antialiased selection:bg-emerald-500 selection:text-white font-sans transition-colors duration-200 overflow-x-hidden">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body>
+    <span class="blob a" aria-hidden="true"></span><span class="blob b" aria-hidden="true"></span>
+    <main>
+      <a class="brand" href="/"><img src="/favicon.svg" alt="" />Algorudix.ai</a>
+      <p class="code" aria-hidden="true">404</p>
+      <h1>This page has moved</h1>
+      <p>The page you were looking for is not here. Everything about our work is on the home page.</p>
+      <a class="btn" href="/">Go to the home page →</a>
+    </main>
   </body>
 </html>

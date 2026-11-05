@@ -1,5 +1,10 @@
 /// <reference types="vite/client" />
 
+declare module 'virtual:site-content' {
+  const content: import('./content/types').SiteContent;
+  export default content;
+}
+
 declare module '*.png' {
   const src: string;
   export default src;

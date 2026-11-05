@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
 import {defineConfig, Plugin} from 'vite';
+import {siteContent} from './scripts/vite-plugin-site-content';
 
 // LINT.IfChange(aistudio_media_plugin)
 function aistudioMediaPlugin(): Plugin {
@@ -67,7 +68,13 @@ function aistudioMediaPlugin(): Plugin {
 export default defineConfig(() => {
   return {
     base: './',
-    plugins: [react(), tailwindcss(), aistudioMediaPlugin()],
+    plugins: [
+      react(),
+      tailwindcss(),
+      aistudioMediaPlugin(),
+      // Site content lives in content/site.db (SQLite) and is edited from #admin.
+      siteContent(path.resolve(__dirname, 'content', 'site.db')),
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
